@@ -1,0 +1,12 @@
+{
+  home.file.".config/hypr/layouts.lua".text = ''
+    hl.config({
+        dwindle = {
+            preserve_split = true,
+        },
+        master = {
+            new_status = "master",
+        },
+    })
+  '';
+}

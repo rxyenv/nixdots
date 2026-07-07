@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
@@ -16,7 +20,7 @@
   };
 
   outputs =
-    inputs@{ nixpkgs, ... }:
+    inputs@{ nixpkgs, home-manager, ... }:
     {
       nixosConfigurations.bit = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -24,6 +28,7 @@
 
         modules = [
           ./hosts/bit/configuration.nix
+          home-manager.nixosModules.home-manager
         ];
       };
     };

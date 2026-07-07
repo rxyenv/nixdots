@@ -12,8 +12,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/kitty.nix
-    ../../modules/niri.nix
   ];
 
   # Bootloader.
@@ -81,7 +79,11 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
   programs.zsh.enable = true;
-
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true; # recommended for most users
+    xwayland.enable = true; # Xwayland can be disabled.
+  };
   users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -95,14 +97,19 @@
     ];
   };
 
-  programs.niri.enable = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    backupFileExtension = "bkp";
+    users.aman = import ../../home/aman.nix;
+  };
   programs.steam = {
     enable = true;
   };
   programs.gamemode.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -114,8 +121,7 @@
     libimobiledevice
     ifuse
     nixfmt
-    neovim
-    fastfetch    
+    neovim   
     vscode
     libsecret
     codex
