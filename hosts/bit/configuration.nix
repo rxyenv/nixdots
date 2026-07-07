@@ -78,19 +78,19 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
   programs.hyprland = {
     enable = true;
     withUWSM = true; # recommended for most users
     xwayland.enable = true; # Xwayland can be disabled.
   };
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.fish;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."aman" = {
     isNormalUser = true;
     description = "Aman K M";
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -134,6 +134,15 @@
     jetbrains-mono
     droid-sans-mono
   ];
+  hardware.bluetooth = {
+    enable = true;
+  };
+  services.tuned = {
+    enable = true;
+  };
+  services.upower = {
+    enable = true;
+  };
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
