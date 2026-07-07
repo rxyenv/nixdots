@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   imports = [
@@ -8,15 +8,6 @@
     ./programs/fastfetch.nix
     ./packages.nix
   ];
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    x11.enable = true;
-
-    package = pkgs.callPackage ../modules/sunset-cursors.nix {};
-    name = "Sunset-Cursors";
-    size = 24;
-  };
 
   home.username = "aman";
   home.homeDirectory = "/home/aman";

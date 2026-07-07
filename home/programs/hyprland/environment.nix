@@ -8,6 +8,7 @@
 
     hl.env("XCURSOR_SIZE", "24")
     hl.env("XCURSOR_THEME", "Sunset-Cursors")
+    hl.env("HYPRCURSOR_THEME", "Sunset-Cursors")
     hl.env("HYPRCURSOR_SIZE", "24")
     hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
     hl.env("XDG_CURRENT_DESKTOP", "Hyprland")

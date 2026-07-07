@@ -11,9 +11,14 @@
     grc
     jq
     fastfetch
+    localsend
     nixfmt
     ripgrep
     wget
+    sassc
+
+    # Files
+    nautilus
 
     # Browser
     librewolf
@@ -23,12 +28,14 @@
 
     # Theming
     pywalfox-native
+    nwg-look
 
     # Editors
     neovim
     vscode
 
     # Desktop
+    glib
     signal-desktop
     xwayland-satellite
 
