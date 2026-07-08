@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/hyprland.lua".text = ''
+  xdg.configFile."hypr/hyprland.lua".text = ''
     require("monitors")
     require("programs")
     require("autostart")

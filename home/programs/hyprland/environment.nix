@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/environment.lua".text = ''
+  xdg.configFile."hypr/environment.lua".text = ''
     hl.config({
         xwayland = {
             force_zero_scaling = true,

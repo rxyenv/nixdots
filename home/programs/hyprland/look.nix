@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/look.lua".text = ''
+  xdg.configFile."hypr/look.lua".text = ''
     hl.config({
         general = {
             gaps_in = 10,

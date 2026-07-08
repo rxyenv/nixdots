@@ -6,6 +6,7 @@
     ./programs/hyprland
     ./programs/fish.nix
     ./programs/fastfetch.nix
+    ./programs/neovim
     ./packages.nix
   ];
 

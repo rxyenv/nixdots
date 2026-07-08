@@ -1,10 +1,8 @@
 { pkgs, ... }:
 
 {
+  home.packages = [ pkgs.fastfetch ];
 
-  home.file.".config/fastfetch/config.jsonc".source =
-    ../../files/fastfetch/config.jsonc;
-
-  home.file.".config/fastfetch/logo.webp".source =
-    ../../files/fastfetch/logo.webp;
+  xdg.configFile."fastfetch/config.jsonc".source = ../../files/fastfetch/config.jsonc;
+  xdg.configFile."fastfetch/logo.webp".source = ../../files/fastfetch/logo.webp;
 }

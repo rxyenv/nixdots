@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/rules.lua".text = ''
+  xdg.configFile."hypr/rules.lua".text = ''
     hl.layer_rule({
       name = "noctalia",
       match = {

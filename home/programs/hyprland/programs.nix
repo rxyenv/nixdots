@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/programs.lua".text = ''
+  xdg.configFile."hypr/programs.lua".text = ''
     return {
       terminal = "kitty",
       file_manager = "nautilus",

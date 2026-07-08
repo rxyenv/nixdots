@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/binds.lua".text = ''
+  xdg.configFile."hypr/binds.lua".text = ''
     local programs = require("programs")
 
     local mainMod = "SUPER"

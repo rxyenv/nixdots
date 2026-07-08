@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/inputs.lua".text = ''
+  xdg.configFile."hypr/inputs.lua".text = ''
     hl.config({
         input = {
             kb_layout = "us",

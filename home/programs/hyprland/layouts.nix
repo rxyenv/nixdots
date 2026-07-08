@@ -1,5 +1,5 @@
 {
-  home.file.".config/hypr/layouts.lua".text = ''
+  xdg.configFile."hypr/layouts.lua".text = ''
     hl.config({
         dwindle = {
             preserve_split = true,
