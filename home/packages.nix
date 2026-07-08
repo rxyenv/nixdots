@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     # CLI utilities
     bat
-    codex
+    btop
     fd
     grc
     jq
@@ -14,6 +14,9 @@
     sassc
     nodejs
     github-cli
+
+    # Rust
+    rustup
 
     # AI
     claude-code

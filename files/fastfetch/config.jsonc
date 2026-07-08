@@ -29,7 +29,6 @@
     },
     {
       "type": "packages",
-      "format": "{} (pacman)",
       "key": "pkgs  ",
       "keyColor": "33",
     },

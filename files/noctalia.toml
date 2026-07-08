@@ -1,0 +1,98 @@
+[bar.default]
+end = [ "network", "bluetooth", "volume", "battery", "tray" ]
+font_family = "JetBrainsMono Nerd Font Propo"
+margin_ends = 18
+start = [ "workspaces" ]
+thickness = 38
+widget_spacing = 18
+
+[location]
+auto_locate = true
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@HDMI-A-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 961.0
+    output = "HDMI-A-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 640.0
+    cy = 601.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
+[shell]
+telemetry_enabled = true
+
+    [shell.launcher]
+    categories = false
+    show_icons = false
+
+[theme]
+builtin = "Catppuccin"
+community_palette = "Catppuccin Macchiato Pink"
+custom_palette = "mocha"
+mode = "dark"
+source = "custom"
+wallpaper_scheme = "m3-tonal-spot"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "hyprland", "kitty", "qt", "starship" ]
+    community_ids = [ "pywalfox", "zen-browser", "neovim", "vscode", "steam", "hyprtoolkit" ]
+
+[wallpaper]
+directory = "/home/aman/Pictures/Wallpapers"
+
+    [wallpaper.default]
+    path = "/home/aman/Pictures/Wallpapers/astronaut.png"
+
+    [wallpaper.last]
+    path = "/home/aman/Pictures/Wallpapers/astronaut.png"
+
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/aman/Pictures/Wallpapers/astronaut.png"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/aman/Pictures/Wallpapers/nixos.png"
+
+[widget.workspaces]
+display = "none"
+pill_scale = 0.84999999999999998
