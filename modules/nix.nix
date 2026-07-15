@@ -6,6 +6,8 @@
     "flakes"
   ];
   nix.settings.auto-optimise-store = true;
+  nix.settings.max-jobs = "auto";
+  nix.settings.cores = 16;
 
   nix.gc = {
     automatic = true;
@@ -16,5 +18,14 @@
   nixpkgs.config.allowUnfree = true;
 
   # let rustup-downloaded toolchains (dynamically linked) find system libs
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      openssl
+      curl
+      libgcc
+    ];
+  };
 }

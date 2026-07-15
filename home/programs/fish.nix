@@ -5,6 +5,7 @@
     enable = true;
 
     interactiveShellInit = ''
+      set -gx BAT_THEME "base16"
       set fish_greeting
 
       if status is-interactive
@@ -19,6 +20,8 @@
       lt = "eza --tree --level=2";
       lta = "eza --tree --level=3 -a";
       cat = "bat";
+      du = "dust";
+      df = "duf";
     };
 
     shellAbbrs = {
@@ -34,6 +37,8 @@
       nrs-bit = "sudo nixos-rebuild switch --flake ~/nixdots#bit";
       nrs-byte = "sudo nixos-rebuild switch --flake ~/nixdots#byte";
       nfc = "nix flake check --no-build";
+      nfu = "nix flake update";
+      j = "just";
       ".." = "cd ..";
       "..." = "cd ../..";
     };

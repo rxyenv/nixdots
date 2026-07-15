@@ -26,6 +26,7 @@
     psmisc
     wl-clipboard
     nitch
+    zenity
 
     # Rust
     rustup
@@ -37,9 +38,6 @@
     # AI
     claude-code
     opencode
-
-    #Niri
-    xwayland-satellite
 
     # Files
     nautilus
@@ -70,10 +68,10 @@
       })
       {
         plugins = with obs-studio-plugins; [
-        wlrobs
-        obs-vkcapture
-        obs-pipewire-audio-capture
-        obs-gstreamer
+          wlrobs
+          obs-vkcapture
+          obs-pipewire-audio-capture
+          obs-gstreamer
           obs-backgroundremoval
         ];
       }

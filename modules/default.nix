@@ -10,7 +10,7 @@
     ./home-manager.nix
 
     ./xserver.nix
-    ./niri.nix
+    ./hyprland.nix
     ./nvidia.nix
 
     ./hardware.nix
