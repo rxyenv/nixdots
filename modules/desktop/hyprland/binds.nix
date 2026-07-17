@@ -85,10 +85,7 @@
         end
 
         hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --raw | satty --filename -"))
-        hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("zen0x-capture-ocr"))
-        hl.bind(mainMod .. " + ALT + M", hl.dsp.exec_cmd("zen0x-audio-output-switch"))
         hl.bind(mainMod .. " + ALT + A", hl.dsp.exec_cmd("easyeffects"))
-        hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("zen0x-capture-screenrecording region"))
 
         hl.bind("SUPER + LEFT", hl.dsp.focus({ direction = "l" }))
         hl.bind("SUPER + RIGHT", hl.dsp.focus({ direction = "r" }))
@@ -114,7 +111,7 @@
             end
         end)
 
-        hl.bind("Print", hl.dsp.exec_cmd("zen0x-capture-screenshot smart"))
+        hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region --raw | satty --filename -"))
         hl.bind(mainMod .. " + mouse_down", function()
             hl.exec_cmd("hyprctl dispatch workspace e+1")
         end)
