@@ -119,6 +119,7 @@
           },
           float = true,
           center = true,
+          size = { 1600, 900 },
         })
 
         hl.window_rule({
