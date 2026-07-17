@@ -7,8 +7,8 @@
         enable = true;
         shellIntegration.enableFishIntegration = true;
         settings = {
-          font_family = "JetBrainsMono Nerd Font Mono";
-          font_size = 13;
+          font_family = "Maple Mono NF";
+          font_size = 16;
           cursor_shape = "block";
           cursor_shape_unfocused = "hollow";
           cursor_trail = 1;

@@ -112,6 +112,16 @@
         })
 
         hl.window_rule({
+          name = "float-noctalia-settings",
+          match = {
+            class = "^(dev.noctalia.Noctalia)$",
+            title = "^Noctalia Settings$",
+          },
+          float = true,
+          center = true,
+        })
+
+        hl.window_rule({
           name = "float-satty",
           match = {
             class = "^(com.gabm.satty)$",
