@@ -193,7 +193,7 @@
         })
         hl.window_rule({
           name = "ws3",
-          match = { class = "^(code|Code|vscode|VSCode)$" },
+          match = { class = "^(dev%.zed%.Zed|org%.helix%.editor)$" },
           workspace = "3",
         })
         hl.window_rule({

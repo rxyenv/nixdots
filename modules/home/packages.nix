@@ -13,7 +13,8 @@
         localsend
         nixfmt
         ripgrep
-        sassc
+        tree
+	sassc
         nodejs
         github-cli
         heroic
@@ -29,6 +30,11 @@
         psmisc
         wl-clipboard
         zenity
+	yazi
+
+        # Python
+        uv
+        pfetch-rs
 
         # Rust
         rustup
@@ -57,12 +63,14 @@
         nwg-look
 
         # Editors
-        vscode
+        zed-editor
+        helix
 
         # Desktop
         glib
         loupe
         signal-desktop
+        qbittorrent
         (
           (wrapOBS.override {
             obs-studio = obs-studio.override { cudaSupport = true; };

@@ -12,7 +12,7 @@
           cursor_shape = "block";
           cursor_shape_unfocused = "hollow";
           cursor_trail = 1;
-          background_opacity = "0.65";
+          background_opacity = "1";
           detect_urls = "yes";
           show_hyperlink_targets = "no";
           underline_hyperlinks = "hover";

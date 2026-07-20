@@ -11,7 +11,7 @@
           set fish_greeting
 
           if status is-interactive
-            fastfetch
+            pfetch
           end
         '';
 
