@@ -18,6 +18,10 @@
         powerManagement.enable = true;
       };
 
+      boot.extraModprobeConfig = ''
+        options nvidia NVreg_PreserveVideoMemoryAllocations=1
+      '';
+
       environment.sessionVariables = {
         LIBVA_DRIVER_NAME = "nvidia";
         GBM_BACKEND = "nvidia-drm";
