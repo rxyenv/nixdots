@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WALLPAPER_LINK="$HOME/.config/hypr/wallpaper.jpg"
+
+if [[ $# -lt 1 ]]; then
+  echo "Usage: zen0x-set-wallpaper <path>" >&2
+  exit 1
+fi
+
+PATH_ARG="$1"
+
+if [[ ! -f "$PATH_ARG" ]]; then
+  echo "File not found: $PATH_ARG" >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname "$WALLPAPER_LINK")"
+ln -sf "$PATH_ARG" "$WALLPAPER_LINK"
+
+pkill swaybg 2>/dev/null || true
+swaybg -i "$PATH_ARG" -m fill &

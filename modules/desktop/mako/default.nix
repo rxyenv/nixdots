@@ -4,15 +4,15 @@
 
     {
       services.mako = {
-        enable = true;
+        enable = false;
         settings = {
           font = "Maple Mono NF 13";
-          background-color = "#1e1e2ee6";
+          background-color = "#1e1e2e66";
           text-color = "#cdd6f4";
           border-color = "#313244";
           progress-color = "over #89b4fa";
           border-size = 1;
-          border-radius = 14;
+          border-radius = 16;
           padding = "12,16";
           width = 360;
           height = 120;
