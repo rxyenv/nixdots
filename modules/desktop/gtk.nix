@@ -18,8 +18,8 @@
       '';
 
       gtk.iconTheme = {
-        name = "Tela-circle";
-        package = pkgs.tela-circle-icon-theme;
+        name = "Yaru-purple-dark";
+        package = pkgs.yaru-theme;
       };
     }
 ;
