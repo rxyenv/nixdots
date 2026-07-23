@@ -18,6 +18,22 @@
         "type": "github"
       }
     },
+    "abyssal-zed-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784789338,
+        "narHash": "sha256-i4Z7rS/rB/QnKOYLzSgFanQp9W1sAL3/phcPCtxbEY4=",
+        "owner": "rxyenv",
+        "repo": "abyssal-zed-themes",
+        "rev": "642a5658a2da81043571a05086ce8f0a8e7ade63",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rxyenv",
+        "repo": "abyssal-zed-themes",
+        "type": "github"
+      }
+    },
     "dms": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -252,6 +268,7 @@
     "root": {
       "inputs": {
         "abyssal-gtk-theme": "abyssal-gtk-theme",
+        "abyssal-zed-themes": "abyssal-zed-themes",
         "dms": "dms",
         "elephant": "elephant",
         "flake-parts": "flake-parts",

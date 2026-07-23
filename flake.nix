@@ -30,6 +30,11 @@
 
     abyssal-gtk-theme.url = "github:rxyenv/abyssal-gtk-theme";
 
+    abyssal-zed-themes = {
+      url = "github:rxyenv/abyssal-zed-themes";
+      flake = false;
+    };
+
     elephant.url = "github:abenz1267/elephant";
 
     walker = {
