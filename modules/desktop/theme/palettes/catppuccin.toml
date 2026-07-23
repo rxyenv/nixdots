@@ -4,7 +4,7 @@ slug = "catppuccin"
 gtk_theme = "Abyssal-Catppuccin"
 icon_theme = "Yaru-purple-dark"
 zed_theme = "Abyssal Catppuccin"
-wallpaper = "wallpapers/dragon.jpg"
+wallpaper = "wallpapers/catppuccin.jpg"
 variant = "dark"
 topbar = "dark"
 

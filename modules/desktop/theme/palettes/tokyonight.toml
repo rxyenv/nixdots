@@ -4,7 +4,7 @@ slug = "tokyonight"
 gtk_theme = "Abyssal-Tokyonight"
 icon_theme = "Yaru-blue-dark"
 zed_theme = "Abyssal Tokyo-Night"
-wallpaper = "wallpapers/tokyo-night.png"
+wallpaper = "wallpapers/tokyonight.png"
 variant = "dark"
 topbar = "dark"
 

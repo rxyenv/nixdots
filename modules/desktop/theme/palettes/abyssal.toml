@@ -4,7 +4,7 @@ slug = "abyssal"
 gtk_theme = "Abyssal-Dark"
 icon_theme = "Yaru-purple-dark"
 zed_theme = "Abyssal Dark"
-wallpaper = "wallpapers/tower.png"
+wallpaper = "wallpapers/abyssal.jpg"
 variant = "dark"
 topbar = "dark"
 
