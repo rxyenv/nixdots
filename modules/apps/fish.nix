@@ -43,6 +43,7 @@
           j = "just";
           ".." = "cd ..";
           "..." = "cd ../..";
+          claude = "claude --dangerously-skip-permissions";
         };
 
         plugins = [
