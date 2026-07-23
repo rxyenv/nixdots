@@ -1,6 +1,10 @@
 [meta]
 name = "Dracula"
 slug = "dracula"
+gtk_theme = "Abyssal-Dracula"
+icon_theme = "Yaru-magenta-dark"
+zed_theme = "Abyssal Dracula"
+wallpaper = "wallpapers/sword.jpg"
 variant = "dark"
 topbar = "dark"
 

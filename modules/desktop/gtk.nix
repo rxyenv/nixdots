@@ -6,21 +6,12 @@
       abyssal = inputs.abyssal-gtk-theme.packages.${system}.default;
     in
     {
-      gtk.enable = true;
-      gtk.theme = {
-        name = "Abyssal-Catppuccin";
-        package = abyssal;
-      };
-      xdg.configFile."gtk-3.0/settings.ini".force = true;
-      xdg.configFile."gtk-4.0/settings.ini".force = true;
-      xdg.configFile."gtk-4.0/gtk.css".text = ''
-        @import "${abyssal}/share/themes/Abyssal-Catppuccin/gtk-4.0/libadwaita.css";
-      '';
-
-      gtk.iconTheme = {
-        name = "Yaru-purple-dark";
-        package = pkgs.yaru-theme;
-      };
+      # Theme/icon packages only; settings.ini and gtk-4.0/gtk.css are
+      # written by the zen0x theme engine so switching needs no rebuild
+      home.packages = [
+        abyssal
+        pkgs.yaru-theme
+      ];
     }
 ;
 }

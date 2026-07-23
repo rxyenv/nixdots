@@ -1,6 +1,10 @@
 [meta]
 name = "Catppuccin"
 slug = "catppuccin"
+gtk_theme = "Abyssal-Catppuccin"
+icon_theme = "Yaru-purple-dark"
+zed_theme = "Abyssal Catppuccin"
+wallpaper = "wallpapers/dragon.jpg"
 variant = "dark"
 topbar = "dark"
 

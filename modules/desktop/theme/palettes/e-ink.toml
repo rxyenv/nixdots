@@ -1,6 +1,10 @@
 [meta]
 name = "E Ink"
 slug = "e-ink"
+gtk_theme = "Abyssal-E-ink"
+icon_theme = "Yaru"
+zed_theme = "Abyssal E-Ink"
+wallpaper = "wallpapers/e-ink.jpg"
 variant = "light"
 topbar = "light"
 

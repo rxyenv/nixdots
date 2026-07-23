@@ -1,6 +1,10 @@
 [meta]
 name = "Gruvbox"
 slug = "gruvbox"
+gtk_theme = "Abyssal-Gruvbox"
+icon_theme = "Yaru-olive-dark"
+zed_theme = "Abyssal Gruvbox"
+wallpaper = "wallpapers/gruvbox.jpg"
 variant = "dark"
 topbar = "dark"
 

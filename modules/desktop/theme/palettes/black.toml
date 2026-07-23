@@ -1,6 +1,10 @@
 [meta]
 name = "Black"
 slug = "black"
+gtk_theme = "Abyssal-Black"
+icon_theme = "Yaru-dark"
+zed_theme = "Abyssal Black"
+wallpaper = "wallpapers/black.jpg"
 variant = "dark"
 topbar = "dark"
 

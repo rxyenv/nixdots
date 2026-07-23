@@ -100,6 +100,11 @@
           { class = "^(org.zen0x.impala|org.zen0x.wiremix|org.zen0x.bluetui|org.zen0x.floating-terminal)$" },
           0.55, 0.6)
 
+        -- btop wants room for all its boxes
+        float_centered("float-btop",
+          { class = "^(org.zen0x.btop)$" },
+          0.85, 0.85)
+
         -- Small utility windows
         float_centered("float-satty",
           { class = "^(com.gabm.satty)$", fullscreen = false },

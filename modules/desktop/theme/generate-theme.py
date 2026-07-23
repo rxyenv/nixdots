@@ -19,6 +19,9 @@ TEMPLATE_TARGETS = [
     ("templates/swayosd/config.toml.tpl",      "~/.config/swayosd/config.toml"),
     ("templates/swaync/colors.css.tpl",        "~/.config/swaync/colors.css"),
     ("templates/walker/colors.css.tpl",        "~/.config/walker/colors.css"),
+    ("templates/gtk/settings.ini.tpl",         "~/.config/gtk-3.0/settings.ini"),
+    ("templates/gtk/settings.ini.tpl",         "~/.config/gtk-4.0/settings.ini"),
+    ("templates/gtk/gtk.css.tpl",              "~/.config/gtk-4.0/gtk.css"),
 ]
 
 
@@ -87,6 +90,11 @@ def main() -> int:
     root = repo_root()
     data = load_theme(root, args.theme)
     data["env"] = {"home": str(Path.home())}
+    is_light = data["meta"].get("variant") == "light"
+    data["derived"] = {
+        "prefer_dark": "0" if is_light else "1",
+        "color_scheme": "prefer-light" if is_light else "prefer-dark",
+    }
     rendered = []
 
     for template_name, target_name in TEMPLATE_TARGETS:
@@ -100,6 +108,8 @@ def main() -> int:
             print(target_path)
             continue
         target_path.parent.mkdir(parents=True, exist_ok=True)
+        if target_path.is_symlink():
+            target_path.unlink()
         target_path.write_text(content)
 
     print(f"Generated theme: {data['meta']['name']} ({data['meta']['slug']})")

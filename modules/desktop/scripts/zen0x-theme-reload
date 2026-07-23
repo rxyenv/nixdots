@@ -18,8 +18,21 @@ fi
 
 command -v swayosd-server >/dev/null 2>&1 && swayosd-server &>/dev/null &
 
+# GTK4/libadwaita parses gtk-4.0/gtk.css only at startup — running apps
+# cannot hot-reload it. Restart the daemon-style ones; the rest pick the
+# new theme on next launch.
+if command -v nautilus >/dev/null 2>&1; then
+    nautilus -q 2>/dev/null || true
+fi
+command -v swaync-client >/dev/null 2>&1 && swaync-client -rs 2>/dev/null || true
+
+# Nudge GTK3 apps that watch the settings portal
 if command -v gsettings >/dev/null 2>&1; then
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null || true
+    current_gtk_theme="$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'")"
+    if [ -n "$current_gtk_theme" ]; then
+        gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita' 2>/dev/null || true
+        gsettings set org.gnome.desktop.interface gtk-theme "$current_gtk_theme" 2>/dev/null || true
+    fi
 fi
 
 if [ "$status" -eq 0 ]; then

@@ -75,6 +75,7 @@
         hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("zen0x-capture-screenrecording region"))
         hl.bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("zen0x-capture-screenrecording fullscreen"))
         hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("zen0x-toggle-nightlight"))
+        hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("zen0x-theme-menu"))
         hl.bind(mainMod .. " + CTRL + Escape", hl.dsp.exec_cmd("systemctl suspend"))
         hl.bind(mainMod .. " + ALT + A", hl.dsp.exec_cmd("easyeffects"))
 

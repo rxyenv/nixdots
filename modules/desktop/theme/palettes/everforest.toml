@@ -1,6 +1,10 @@
 [meta]
 name = "Everforest"
 slug = "everforest"
+gtk_theme = "Abyssal-Everforest"
+icon_theme = "Yaru-sage-dark"
+zed_theme = "Abyssal Everforest"
+wallpaper = "wallpapers/everforest.jpg"
 variant = "dark"
 topbar = "dark"
 

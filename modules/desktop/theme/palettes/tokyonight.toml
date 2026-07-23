@@ -1,6 +1,10 @@
 [meta]
 name = "Tokyonight"
 slug = "tokyonight"
+gtk_theme = "Abyssal-Tokyonight"
+icon_theme = "Yaru-blue-dark"
+zed_theme = "Abyssal Tokyo-Night"
+wallpaper = "wallpapers/tokyo-night.png"
 variant = "dark"
 topbar = "dark"
 
