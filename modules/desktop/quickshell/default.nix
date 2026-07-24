@@ -1,15 +1,17 @@
 {
   flake.modules.homeManager.quickshell =
+    { config, ... }:
+
     {
       programs.quickshell = {
         enable = true;
         systemd.enable = true;
+        activeConfig = "shell";
+        # Out-of-store symlink to the repo checkout: quickshell watches the
+        # real files and hot-reloads on save, no rebuild or restart needed
+        configs.shell =
+          config.lib.file.mkOutOfStoreSymlink
+            "${config.home.homeDirectory}/nixdots/modules/desktop/quickshell/shell";
       };
-
-      xdg.configFile."quickshell/shell.qml".source = ./shell.qml;
-
-      # Restart on shell.qml changes; a symlink swap alone doesn't reload
-      # the running instance
-      systemd.user.services.quickshell.Unit.X-Restart-Triggers = [ "${./shell.qml}" ];
     };
 }

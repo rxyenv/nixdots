@@ -12,7 +12,7 @@ show_audio() {
   out="$(wpctl get-volume "$node")"
   pct="$(awk '{print int($2 * 100 + 0.5)}' <<<"$out")"
   [[ "$out" == *MUTED* ]] && muted=true
-  qs ipc call osd "$ipc" "$pct" "$muted"
+  qs -c shell ipc call osd "$ipc" "$pct" "$muted"
 }
 
 case "$kind" in
@@ -34,6 +34,6 @@ case "$kind" in
     led="$(cat /sys/class/leds/input*::capslock/brightness 2>/dev/null | head -n1 || echo 0)"
     on=false
     [[ "$led" != "0" ]] && on=true
-    qs ipc call osd caps "$on"
+    qs -c shell ipc call osd caps "$on"
     ;;
 esac

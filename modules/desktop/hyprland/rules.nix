@@ -4,18 +4,6 @@
       xdg.configFile."hypr/rules.lua".text = ''
         -- ── Helpers ────────────────────────────────────────────────
 
-        -- Blurred layer surface (transparent CSS behind, see ignore_alpha)
-        local function blur_layer(name, namespace, alpha, extra)
-          local rule = {
-            name = name,
-            match = { namespace = namespace },
-            blur = true,
-            ignore_alpha = alpha,
-          }
-          for k, v in pairs(extra or {}) do rule[k] = v end
-          hl.layer_rule(rule)
-        end
-
         -- Centered floating window, size as fraction of the monitor
         local function float_centered(name, match, w, h, extra)
           local rule = {
@@ -28,10 +16,6 @@
           for k, v in pairs(extra or {}) do rule[k] = v end
           hl.window_rule(rule)
         end
-
-        -- ── Layer rules (blur for shell surfaces) ──────────────────
-
-        blur_layer("quickshell-blur", "^quickshell$", 0.3, { blur_popups = true })
 
         hl.layer_rule({
           name = "no-anim-selection",

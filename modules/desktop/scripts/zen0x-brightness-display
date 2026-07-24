@@ -53,4 +53,4 @@ fi
 brightnessctl -q -d "$device" set "$step"
 
 pct="$(brightnessctl -d "$device" -m | cut -d',' -f4 | tr -d '%')"
-qs ipc call osd brightness "$pct" || true
+qs -c shell ipc call osd brightness "$pct" || true

@@ -13,7 +13,7 @@ printf '%s\n' "${items[@]}" > "$dir/options"
 rm -f "$dir/result"
 mkfifo "$dir/result"
 
-qs ipc call menu open
+qs -c shell ipc call menu open
 
 idx="$(cat "$dir/result")"
 rm -f "$dir/result"
