@@ -14,7 +14,7 @@
         nixfmt
         ripgrep
         tree
-	sassc
+        sassc
         nodejs
         github-cli
         heroic
@@ -30,7 +30,7 @@
         psmisc
         wl-clipboard
         zenity
-	yazi
+        yazi
 
         # Python
         uv

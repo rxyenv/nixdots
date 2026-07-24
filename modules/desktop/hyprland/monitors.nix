@@ -3,17 +3,15 @@
     {
       xdg.configFile."hypr/monitors.lua".text = ''
         local function hdmi_connected()
-          for _, path in ipairs({
-            "/sys/class/drm/card0/card0-HDMI-A-1/status",
-            "/sys/class/drm/card1/card1-HDMI-A-1/status",
-          }) do
-            local f = io.open(path, "r")
-            if f then
-              local status = f:read("*l")
-              f:close()
-              if status == "connected" then
-                return true
-              end
+          local p = io.popen("cat /sys/class/drm/card*-HDMI-A-1/status 2>/dev/null")
+          if not p then
+            return false
+          end
+          local out = p:read("*a")
+          p:close()
+          for line in out:gmatch("[^\n]+") do
+            if line == "connected" then
+              return true
             end
           end
           return false

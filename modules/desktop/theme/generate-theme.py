@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import getpass
 import re
 import sys
 import tomllib
@@ -9,7 +10,6 @@ from pathlib import Path
 TEMPLATE_TARGETS = [
     ("templates/btop/theme.theme.tpl",         "~/.config/btop/themes/zen0x-current.theme"),
     ("templates/kitty/colors.conf.tpl",        "~/.config/kitty/colors.conf"),
-    ("templates/zsh/fzf-theme.zsh.tpl",        "~/.config/zen0x/fzf-theme.zsh"),
     ("templates/hyprland/colors.conf.tpl",     "~/.config/hypr/colors.conf"),
     ("templates/hyprland/colors.lua.tpl",      "~/.config/hypr/colors.lua"),
     ("templates/hyprland/hyprlock.conf.tpl",   "~/.config/hypr/hyprlock.conf"),
@@ -88,7 +88,7 @@ def main() -> int:
 
     root = repo_root()
     data = load_theme(root, args.theme)
-    data["env"] = {"home": str(Path.home())}
+    data["env"] = {"home": str(Path.home()), "user": getpass.getuser()}
     is_light = data["meta"].get("variant") == "light"
     data["derived"] = {
         "prefer_dark": "0" if is_light else "1",

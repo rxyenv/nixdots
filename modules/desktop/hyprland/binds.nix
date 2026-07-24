@@ -21,13 +21,13 @@
         hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 
         hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("uwsm-app -- walker"))
-        hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
-        hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("zeditor"))
-        hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("kitty --class org.helix.editor -e hx"))
-        hl.bind("SUPER + SHIFT + Escape", hl.dsp.exec_cmd("zen0x-powermenu"))
-        hl.bind("SUPER + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
-        hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
-        hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd("zen0x-launch-wifi"))
+        hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+        hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zeditor"))
+        hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty --class org.helix.editor -e hx"))
+        hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("zen0x-powermenu"))
+        hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
+        hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
+        hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("zen0x-launch-wifi"))
 
         hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
         hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))
@@ -79,15 +79,15 @@
         hl.bind(mainMod .. " + CTRL + Escape", hl.dsp.exec_cmd("systemctl suspend"))
         hl.bind(mainMod .. " + ALT + A", hl.dsp.exec_cmd("easyeffects"))
 
-        hl.bind("SUPER + LEFT", hl.dsp.focus({ direction = "l" }))
-        hl.bind("SUPER + RIGHT", hl.dsp.focus({ direction = "r" }))
-        hl.bind("SUPER + UP", hl.dsp.focus({ direction = "u" }))
-        hl.bind("SUPER + DOWN", hl.dsp.focus({ direction = "d" }))
+        hl.bind(mainMod .. " + LEFT", hl.dsp.focus({ direction = "l" }))
+        hl.bind(mainMod .. " + RIGHT", hl.dsp.focus({ direction = "r" }))
+        hl.bind(mainMod .. " + UP", hl.dsp.focus({ direction = "u" }))
+        hl.bind(mainMod .. " + DOWN", hl.dsp.focus({ direction = "d" }))
 
-        hl.bind("SUPER + SHIFT + LEFT", hl.dsp.window.swap({ direction = "l" }))
-        hl.bind("SUPER + SHIFT + RIGHT", hl.dsp.window.swap({ direction = "r" }))
-        hl.bind("SUPER + SHIFT + UP", hl.dsp.window.swap({ direction = "u" }))
-        hl.bind("SUPER + SHIFT + DOWN", hl.dsp.window.swap({ direction = "d" }))
+        hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.swap({ direction = "l" }))
+        hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.swap({ direction = "r" }))
+        hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.swap({ direction = "u" }))
+        hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.swap({ direction = "d" }))
 
         hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
         hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("zen0x-clipboard"))
@@ -103,8 +103,8 @@
         hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
         hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
-        hl.bind("SUPER + mouse:272", hl.dsp.window.drag())
-        hl.bind("SUPER + mouse:273", hl.dsp.window.resize())
+        hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
+        hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 
         hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise"))
         hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower"))
@@ -118,7 +118,7 @@
         hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
         hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-        hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -a"))
+        hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -a"))
       '';
     }
 ;
