@@ -1,13 +1,23 @@
 { config, inputs, ... }:
 
+let
+  # Shared nixos modules minus nvidia (desktop-only)
+  sharedModules = builtins.filter
+    (m: m != config.flake.modules.nixos.nvidia)
+    (builtins.attrValues config.flake.modules.nixos);
+in
+
 {
   flake.nixosConfigurations.bit = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
 
     modules = [
-      ./_bit-hardware.nix
+      ./hardware.nix
+      ./disko.nix
       inputs.home-manager.nixosModules.home-manager
+      inputs.disko.nixosModules.disko
+      config.flake.modules.nixos.nvidia
 
       {
         networking.hostName = "bit";
@@ -22,6 +32,6 @@
         };
       }
     ]
-    ++ builtins.attrValues config.flake.modules.nixos;
+    ++ sharedModules;
   };
 }
