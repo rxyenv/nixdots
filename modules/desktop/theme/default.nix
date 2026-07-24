@@ -102,7 +102,7 @@
             else
               echo "   $theme"
             fi
-          done | walker --dmenu --nosearch --width 280 --maxheight 420)
+          done | zen0x-qsmenu)
           [ -z "$selected" ] && exit 0
           selected="$(printf '%s' "$selected" | sed 's/^[[:space:]✓]*//')"
           zen0x-apply-theme "$selected"

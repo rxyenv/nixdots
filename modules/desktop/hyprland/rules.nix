@@ -31,8 +31,7 @@
 
         -- ── Layer rules (blur for shell surfaces) ──────────────────
 
-        blur_layer("waybar-blur", "^waybar$", 0.3, { blur_popups = true })
-        blur_layer("walker-blur", "^walker$", 0.5)
+        blur_layer("quickshell-blur", "^quickshell$", 0.3, { blur_popups = true })
         blur_layer("swayosd-blur", "^swayosd$", 0.2)
         blur_layer("swaync-blur", "^swaync-notification-window$", 0.5)
         blur_layer("swaync-cc-blur", "^swaync-control-center$", 0.5)
@@ -54,7 +53,7 @@
         hl.window_rule({
           name = "airy-floating-windows",
           match = { float = true },
-          rounding = 16,
+          rounding = 18,
           border_size = 3,
           opacity = "0.97 0.92",
         })

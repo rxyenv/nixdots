@@ -20,7 +20,7 @@
         hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(programs.browser))
         hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 
-        hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("uwsm-app -- walker"))
+        hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
         hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zeditor"))
         hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty --class org.helix.editor -e hx"))
         hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("zen0x-powermenu"))

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# dmenu-style picker backed by the quickshell island: options on stdin,
+# selection on stdout, non-zero exit when dismissed
+set -euo pipefail
+
+dir="${XDG_RUNTIME_DIR:-/tmp}/zen0x-menu"
+mkdir -p "$dir"
+
+mapfile -t items
+[ "${#items[@]}" -gt 0 ] || exit 1
+
+printf '%s\n' "${items[@]}" > "$dir/options"
+rm -f "$dir/result"
+mkfifo "$dir/result"
+
+qs ipc call menu open
+
+idx="$(cat "$dir/result")"
+rm -f "$dir/result"
+
+[[ "$idx" =~ ^[0-9]+$ ]] || exit 1
+printf '%s\n' "${items[$idx]}"

@@ -10,8 +10,7 @@ ENTRIES=(
     "  Logout"
 )
 
-selected=$(printf '%s\n' "${ENTRIES[@]}" \
-    | walker --dmenu --nosearch --width 280 --maxheight 260)
+selected=$(printf '%s\n' "${ENTRIES[@]}" | zen0x-qsmenu)
 
 case "$selected" in
     *Lock)      hyprlock ;;

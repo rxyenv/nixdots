@@ -10,13 +10,14 @@
         noto-fonts
         noto-fonts-color-emoji
         maple-mono.NF
+        google-fonts
       ]);
 
       fonts.fontconfig = {
         enable = true;
         defaultFonts = {
           emoji = [ "Noto Color Emoji" ];
-          monospace = [ "JetBrainsMono Nerd Font" ];
+          monospace = [ "JetBrainsMono Nerd Font Mono" ];
           sansSerif = [ "Droid Sans Mono Nerd Font" "Noto Sans Telugu" ];
           serif = [ "Droid Sans Mono Nerd Font" "Noto Serif Telugu" ];
         };

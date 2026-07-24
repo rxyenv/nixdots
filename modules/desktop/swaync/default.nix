@@ -73,14 +73,14 @@
             background: alpha(@bg, .55);
             box-shadow: 0 0 8px 0 rgba(0,0,0,.6);
             border: 1px solid @accent;
-            border-radius: 16px;
+            border-radius: 18px;
             margin: 16px;
             padding: 0;
           }
 
           .floating-notifications.background .notification-row .notification-background .notification {
             padding: 6px;
-            border-radius: 12px;
+            border-radius: 18px;
           }
 
           .floating-notifications.background .notification-row .notification-background .notification.critical {
@@ -96,7 +96,7 @@
           }
 
           .floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action {
-            border-radius: 8px;
+            border-radius: 18px;
             background-color: alpha(@elevated, 0.4);
             margin: 6px;
             border: 1px solid transparent;
@@ -128,7 +128,7 @@
           .floating-notifications.background .notification-row .notification-background .close-button {
             margin: 6px;
             padding: 2px;
-            border-radius: 8px;
+            border-radius: 18px;
             background-color: transparent;
             border: 1px solid transparent;
           }
@@ -164,7 +164,7 @@
 
           .control-center {
             background: alpha(@bg, .55);
-            border-radius: 16px;
+            border-radius: 18px;
             border: 1px solid @accent;
             box-shadow: 0 0 10px 0 rgba(0,0,0,.6);
             margin: 18px;
@@ -174,7 +174,7 @@
           .control-center .notification-row .notification-background,
           .control-center .notification-row .notification-background .notification.critical {
             background-color: alpha(@elevated, .4);
-            border-radius: 12px;
+            border-radius: 18px;
             margin: 4px 0px;
             padding: 4px;
           }
@@ -195,7 +195,7 @@
           .control-center .notification-row .notification-background .notification > *:last-child > * .notification-action {
             background: alpha(@accent, .6);
             color: @fg;
-            border-radius: 12px;
+            border-radius: 18px;
             margin: 6px;
           }
 
@@ -209,7 +209,7 @@
 
           .control-center .notification-row .notification-background .close-button {
             background: transparent;
-            border-radius: 8px;
+            border-radius: 18px;
             color: @fg;
             margin: 0px;
             padding: 4px;
@@ -226,7 +226,7 @@
           progressbar,
           progress,
           trough {
-            border-radius: 8px;
+            border-radius: 18px;
           }
 
           progressbar {
@@ -253,7 +253,7 @@
             background: transparent;
             color: @fg;
             margin: 4px;
-            border-radius: 8px;
+            border-radius: 18px;
             padding: 4px;
           }
 
@@ -269,7 +269,7 @@
 
           .widget-title button {
             background: alpha(@elevated, .4);
-            border-radius: 8px;
+            border-radius: 18px;
             padding: 4px 16px;
           }
 
@@ -289,7 +289,7 @@
           .widget-dnd > switch {
             background: alpha(@elevated, .4);
             font-size: initial;
-            border-radius: 8px;
+            border-radius: 18px;
             box-shadow: none;
             padding: 2px;
           }
@@ -308,26 +308,26 @@
 
           .widget-dnd > switch slider {
             background: @fg;
-            border-radius: 8px;
+            border-radius: 18px;
           }
 
           .widget-mpris {
             background: alpha(@elevated, 0.45);
-            border-radius: 12px;
+            border-radius: 18px;
             color: @fg;
             margin: 20px 6px;
           }
 
           .widget-mpris-player {
             background-color: alpha(@bg, 0.6);
-            border-radius: 12px;
+            border-radius: 18px;
             padding: 6px 14px;
             margin: 6px;
           }
 
           .widget-mpris > box > button {
             color: @fg;
-            border-radius: 8px;
+            border-radius: 18px;
           }
 
           .widget-mpris button {
@@ -339,7 +339,7 @@
           }
 
           .widget-mpris-album-art {
-            border-radius: 12px;
+            border-radius: 18px;
           }
 
           .widget-mpris-title {
@@ -361,7 +361,7 @@
             color: @fg;
             padding: 4px;
             margin: 6px;
-            border-radius: 8px;
+            border-radius: 18px;
           }
 
           .widget-backlight {
@@ -369,7 +369,7 @@
             color: @fg;
             padding: 4px;
             margin: 6px;
-            border-radius: 8px;
+            border-radius: 18px;
           }
         '';
       };
