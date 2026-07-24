@@ -20,6 +20,12 @@
             },
         })
 
+        -- Touchpad: re-enable accel (global is flat for mouse)
+        hl.device({
+            name = ".*touchpad.*",
+            accel_profile = "adaptive",
+        })
+
         -- Touchpad gestures
         hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
         hl.gesture({ fingers = 4, direction = "up", action = "fullscreen" })

@@ -178,7 +178,7 @@
         local workspace_assignments = {
           { ws = "1", match = { class = "^(zen|Zen)$" } },
           { ws = "2", match = { class = "^(kitty|Kitty|Alacritty|WezTerm|foot)$" } },
-          { ws = "3", match = { class = "^(dev%.zed%.Zed|org%.helix%.editor)$" } },
+          { ws = "3", match = { class = "^(dev.zed.Zed|org.helix.editor)$" } },
           { ws = "4", match = { class = "^(Spotify)$" } },
           { ws = "5", match = { class = "^(steam|Steam|heroic|Heroic)$" } },
           { ws = "6", match = { title = "^(.*%.exe|.*game|.*Game)$" } },
