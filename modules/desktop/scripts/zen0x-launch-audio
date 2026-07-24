@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # zen0x:summary=Launch the Zen0x audio controls TUI (provided by wiremix).
 

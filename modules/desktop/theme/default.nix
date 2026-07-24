@@ -12,7 +12,11 @@
     in
     {
       home.activation.generateTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        set -euo pipefail
         THEME=$(cat "$HOME/.current_theme" 2>/dev/null || echo catppuccin)
+        case "$THEME" in
+          *[!a-zA-Z0-9_-]*) THEME=catppuccin ;;
+        esac
         if [ ! -f ${themeDir}/palettes/"$THEME".toml ]; then
           THEME=catppuccin
         fi
@@ -21,6 +25,7 @@
 
       home.packages = [
         (pkgs.writeShellScriptBin "zen0x-generate-theme" ''
+          set -euo pipefail
           exec ${python}/bin/python3 ${themeDir}/generate-theme.py "$@"
         '')
 
@@ -79,7 +84,8 @@
           zed_settings="$HOME/.config/zed/settings.json"
           if [ -n "$zed_theme" ] && [ -f "$zed_settings" ]; then
             zed_tmp=$(mktemp)
-            sed "s/^\(\s*\"theme\":\s*\)\"[^\"]*\"/\1\"$zed_theme\"/" "$zed_settings" > "$zed_tmp"
+            zed_theme_escaped=$(printf '%s\n' "$zed_theme" | sed 's|[\\&|]|\\&|g')
+            sed "s|^\(\s*\"theme\":\s*\)\"[^\"]*\"|\1\"$zed_theme_escaped\"|" "$zed_settings" > "$zed_tmp"
             cp "$zed_tmp" "$zed_settings"
             rm -f "$zed_tmp"
           fi
