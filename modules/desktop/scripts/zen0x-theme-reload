@@ -12,10 +12,7 @@ fi
 
 if command -v pkill >/dev/null 2>&1; then
     pkill -SIGUSR1 kitty 2>/dev/null || true
-    pkill swayosd-server 2>/dev/null || true
 fi
-
-command -v swayosd-server >/dev/null 2>&1 && swayosd-server &>/dev/null &
 
 # GTK4/libadwaita parses gtk-4.0/gtk.css only at startup — running apps
 # cannot hot-reload it. Restart the daemon-style ones; the rest pick the
@@ -23,7 +20,6 @@ command -v swayosd-server >/dev/null 2>&1 && swayosd-server &>/dev/null &
 if command -v nautilus >/dev/null 2>&1; then
     nautilus -q 2>/dev/null || true
 fi
-command -v swaync-client >/dev/null 2>&1 && swaync-client -rs 2>/dev/null || true
 
 # Nudge GTK3 apps that watch the settings portal
 if command -v gsettings >/dev/null 2>&1; then

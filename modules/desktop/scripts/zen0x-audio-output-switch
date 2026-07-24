@@ -5,9 +5,7 @@ set -euo pipefail
 
 notify_audio() {
   local message="$1"
-  if command -v swayosd-client >/dev/null 2>&1; then
-    swayosd-client --custom-message "$message"
-  elif command -v notify-send >/dev/null 2>&1; then
+  if command -v notify-send >/dev/null 2>&1; then
     notify-send "Audio output" "$message"
   fi
 }

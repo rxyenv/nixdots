@@ -25,6 +25,7 @@
         "zen0x-launch-or-focus-tui"
         "zen0x-launch-tui"
         "zen0x-launch-wifi"
+        "zen0x-osd"
         "zen0x-powermenu"
         "zen0x-qsmenu"
         "zen0x-terminal-cwd"
@@ -60,8 +61,6 @@
           wiremix
           bluetui
           impala
-          swayosd
-          swaynotificationcenter
           swaybg
           jq
           python3

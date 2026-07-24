@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import Quickshell.Services.Notifications
 import Quickshell.Wayland
 
 ShellRoot {
@@ -12,6 +13,42 @@ ShellRoot {
     property string mode: "clock"
     readonly property bool open: mode !== "clock"
     property string query: ""
+    readonly property bool hasNotifs: notifServer.trackedNotifications.values.length > 0
+
+    // Transient OSD (volume / mic / brightness / caps lock) shown in the pill
+    property string osdKind: ""
+    property int osdValue: 0
+    property bool osdFlag: false
+    readonly property bool osdVisible: osdTimer.running
+
+    function showOsd(kind: string, value: int, flag: bool) {
+        osdKind = kind;
+        osdValue = value;
+        osdFlag = flag;
+        osdTimer.restart();
+    }
+
+    Timer {
+        id: osdTimer
+        interval: 1500
+    }
+
+    IpcHandler {
+        target: "osd"
+
+        function volume(pct: int, muted: bool): void {
+            root.showOsd("volume", pct, muted);
+        }
+        function mic(pct: int, muted: bool): void {
+            root.showOsd("mic", pct, muted);
+        }
+        function brightness(pct: int): void {
+            root.showOsd("brightness", pct, false);
+        }
+        function caps(on: bool): void {
+            root.showOsd("caps", 0, on);
+        }
+    }
     property var menuItems: []
     property bool resultSent: false
 
@@ -153,17 +190,27 @@ ShellRoot {
             id: island
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            width: root.mode === "clock" ? pillLabel.implicitWidth + 48
+            width: root.mode === "clock"
+                     ? (root.osdVisible ? 280
+                        : root.hasNotifs ? 420
+                        : pillLabel.implicitWidth + 48)
                  : root.mode === "menu" ? 380
                  : 600
-            height: root.mode === "clock" ? 42
+            height: root.mode === "clock"
+                      ? (!root.osdVisible && root.hasNotifs
+                          ? Math.min(toastColumn.implicitHeight + 24, 480)
+                          : 42)
                   : root.mode === "menu"
                       ? Math.min(74 + root.results.length * 46, 480)
                       : 480
-            radius: root.open ? 24 : height / 2
+            radius: root.open || (root.hasNotifs && !root.osdVisible)
+                ? 24 : height / 2
             color: Qt.alpha(root.c("panel_alt", "#1e1e2e"), 0.65)
             border.width: 1
-            border.color: root.c("accent", "#89b4fa")
+            border.color: notifServer.trackedNotifications.values
+                    .some(n => n.urgency === NotificationUrgency.Critical)
+                ? root.c("danger", "#f38ba8")
+                : root.c("accent", "#89b4fa")
             clip: true
 
             Behavior on width {
@@ -191,7 +238,7 @@ ShellRoot {
                 id: mouse
                 anchors.fill: parent
                 hoverEnabled: true
-                visible: !root.open
+                visible: !root.open && !root.hasNotifs
                 onClicked: root.openApps()
             }
 
@@ -204,7 +251,7 @@ ShellRoot {
                 font.pixelSize: 16
                 font.weight: Font.DemiBold
                 color: root.c("fg", "#cdd6f4")
-                opacity: root.open ? 0 : 1
+                opacity: root.open || root.hasNotifs || root.osdVisible ? 0 : 1
                 visible: opacity > 0
                 text: Qt.formatDateTime(clock.date,
                     mouse.containsMouse ? "hh:mm AP  ·  ddd, MMM d" : "hh:mm AP")
@@ -223,6 +270,67 @@ ShellRoot {
                         PropertyAction {}
                         NumberAnimation { target: pillLabel; property: "opacity"; to: 1; duration: 220; easing.type: Easing.OutCubic }
                     }
+                }
+            }
+
+            // ── OSD (volume / mic / brightness / caps) ─────────────
+
+            RowLayout {
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: 42
+                spacing: 12
+                opacity: root.osdVisible && !root.open ? 1 : 0
+                visible: opacity > 0
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 150 }
+                }
+
+                Text {
+                    font.family: "JetBrainsMono Nerd Font Propo"
+                    font.pixelSize: 16
+                    color: root.osdFlag
+                        ? root.c("danger", "#f38ba8")
+                        : root.c("fg", "#cdd6f4")
+                    text: root.osdKind === "volume" ? (root.osdFlag ? "󰝟" : "󰕾")
+                        : root.osdKind === "mic" ? (root.osdFlag ? "󰍭" : "󰍬")
+                        : root.osdKind === "brightness" ? "󰃠"
+                        : "󰪛"
+                }
+
+                Rectangle {
+                    visible: root.osdKind !== "caps"
+                    Layout.preferredWidth: 150
+                    Layout.alignment: Qt.AlignVCenter
+                    height: 6
+                    radius: 3
+                    color: Qt.alpha(root.c("border", "#313244"), 0.8)
+
+                    Rectangle {
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width * Math.min(root.osdValue, 100) / 100
+                        height: parent.height
+                        radius: parent.radius
+                        color: root.osdFlag
+                            ? root.c("muted", "#6c7086")
+                            : root.c("accent", "#89b4fa")
+
+                        Behavior on width {
+                            NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+                        }
+                    }
+                }
+
+                Text {
+                    font.family: "JetBrainsMono Nerd Font Propo"
+                    font.pixelSize: 13
+                    font.weight: Font.DemiBold
+                    color: root.c("fg", "#cdd6f4")
+                    text: root.osdKind === "caps"
+                        ? ("Caps Lock " + (root.osdFlag ? "on" : "off"))
+                        : root.osdValue + "%"
                 }
             }
 
@@ -373,6 +481,192 @@ ShellRoot {
                     }
                 }
             }
+
+        ColumnLayout {
+            id: toastColumn
+            anchors.top: parent.top
+            anchors.topMargin: 12
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - 24
+            spacing: 10
+            opacity: root.hasNotifs && !root.open && !root.osdVisible ? 1 : 0
+            visible: opacity > 0
+
+            Behavior on opacity {
+                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+            }
+
+            Repeater {
+                model: notifServer.trackedNotifications
+
+                delegate: Rectangle {
+                    id: toast
+                    required property Notification modelData
+                    required property int index
+
+                    Layout.fillWidth: true
+                    implicitHeight: toastContent.implicitHeight + 16
+                    color: "transparent"
+
+                    // Divider between stacked notifications
+                    Rectangle {
+                        visible: toast.index > 0
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.margins: 6
+                        height: 1
+                        color: Qt.alpha(root.c("border", "#313244"), 0.8)
+                    }
+
+                    opacity: 0
+                    Component.onCompleted: opacity = 1
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 250
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+
+                    Timer {
+                        interval: toast.modelData.expireTimeout > 0
+                            ? toast.modelData.expireTimeout : 6000
+                        running: toast.modelData.urgency !== NotificationUrgency.Critical
+                        onTriggered: toast.modelData.expire()
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            const def = toast.modelData.actions
+                                .find(a => a.identifier === "default");
+                            if (def)
+                                def.invoke();
+                            else
+                                toast.modelData.dismiss();
+                        }
+                    }
+
+                    ColumnLayout {
+                        id: toastContent
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.margins: 6
+                        anchors.topMargin: 10
+                        spacing: 8
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 12
+
+                            Image {
+                                readonly property string src: toast.modelData.image !== ""
+                                    ? toast.modelData.image
+                                    : toast.modelData.appIcon !== ""
+                                        ? Quickshell.iconPath(toast.modelData.appIcon, true)
+                                        : ""
+                                visible: src !== ""
+                                source: src
+                                Layout.preferredWidth: 36
+                                Layout.preferredHeight: 36
+                                sourceSize.width: 36
+                                sourceSize.height: 36
+                                fillMode: Image.PreserveAspectFit
+                                asynchronous: true
+                            }
+
+                            ColumnLayout {
+                                Layout.fillWidth: true
+                                spacing: 4
+
+                                Text {
+                                    Layout.fillWidth: true
+                                    font.family: "JetBrainsMono Nerd Font Propo"
+                                    font.pixelSize: 14
+                                    font.weight: Font.DemiBold
+                                    color: root.c("fg", "#cdd6f4")
+                                    text: toast.modelData.summary
+                                    elide: Text.ElideRight
+                                }
+
+                                Text {
+                                    Layout.fillWidth: true
+                                    visible: text !== ""
+                                    font.family: "JetBrainsMono Nerd Font Propo"
+                                    font.pixelSize: 12
+                                    color: root.c("muted", "#6c7086")
+                                    text: toast.modelData.body
+                                    wrapMode: Text.Wrap
+                                    maximumLineCount: 3
+                                    elide: Text.ElideRight
+                                    textFormat: Text.StyledText
+                                }
+                            }
+
+                            Text {
+                                Layout.alignment: Qt.AlignTop
+                                font.family: "JetBrainsMono Nerd Font Propo"
+                                font.pixelSize: 12
+                                color: closeMouse.containsMouse
+                                    ? root.c("danger", "#f38ba8")
+                                    : root.c("muted", "#6c7086")
+                                text: "✕"
+
+                                MouseArea {
+                                    id: closeMouse
+                                    anchors.fill: parent
+                                    anchors.margins: -6
+                                    hoverEnabled: true
+                                    onClicked: toast.modelData.dismiss()
+                                }
+                            }
+                        }
+
+                        RowLayout {
+                            visible: actionRepeater.count > 0
+                            Layout.fillWidth: true
+                            spacing: 8
+
+                            Repeater {
+                                id: actionRepeater
+                                model: toast.modelData.actions
+                                    .filter(a => a.identifier !== "default")
+
+                                delegate: Rectangle {
+                                    required property var modelData
+
+                                    implicitWidth: actionLabel.implicitWidth + 24
+                                    implicitHeight: 28
+                                    radius: 14
+                                    color: actionMouse.containsMouse
+                                        ? Qt.alpha(root.c("accent", "#89b4fa"), 0.25)
+                                        : Qt.alpha(root.c("panel_alt", "#1e1e2e"), 0.8)
+                                    border.width: 1
+                                    border.color: Qt.alpha(root.c("border", "#313244"), 0.8)
+
+                                    Text {
+                                        id: actionLabel
+                                        anchors.centerIn: parent
+                                        font.family: "JetBrainsMono Nerd Font Propo"
+                                        font.pixelSize: 11
+                                        color: root.c("fg", "#cdd6f4")
+                                        text: parent.modelData.text
+                                    }
+
+                                    MouseArea {
+                                        id: actionMouse
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked: parent.modelData.invoke()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         }
 
         Connections {
@@ -382,5 +676,15 @@ ShellRoot {
                     search.forceActiveFocus();
             }
         }
+    }
+
+    // ── Notifications ──────────────────────────────────────────────
+
+    NotificationServer {
+        id: notifServer
+        actionsSupported: true
+        bodySupported: true
+        imageSupported: true
+        onNotification: notif => notif.tracked = true
     }
 }

@@ -52,6 +52,5 @@ fi
 
 brightnessctl -q -d "$device" set "$step"
 
-if command -v notify-send >/dev/null 2>&1; then
-  notify-send "Brightness" "$(brightnessctl -d "$device" -m | cut -d',' -f4)"
-fi
+pct="$(brightnessctl -d "$device" -m | cut -d',' -f4 | tr -d '%')"
+qs ipc call osd brightness "$pct" || true

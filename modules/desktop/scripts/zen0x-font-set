@@ -22,7 +22,6 @@ replace_font() {
   perl -0pi -e 's/JetBrainsMono Nerd Font (?:Mono|Propo)?/'"$font_name"'/g' "$file"
 }
 
-replace_font "$config_root/swaync/style.css"
 
 command -v pkill >/dev/null 2>&1 && pkill -USR1 kitty 2>/dev/null || true
 command -v notify-send >/dev/null 2>&1 && notify-send "Font updated" "$font_name"

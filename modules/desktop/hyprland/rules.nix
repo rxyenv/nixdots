@@ -32,9 +32,6 @@
         -- ── Layer rules (blur for shell surfaces) ──────────────────
 
         blur_layer("quickshell-blur", "^quickshell$", 0.3, { blur_popups = true })
-        blur_layer("swayosd-blur", "^swayosd$", 0.2)
-        blur_layer("swaync-blur", "^swaync-notification-window$", 0.5)
-        blur_layer("swaync-cc-blur", "^swaync-control-center$", 0.5)
 
         hl.layer_rule({
           name = "no-anim-selection",

@@ -105,12 +105,13 @@
         hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
         hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 
-        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise"))
-        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower"))
-        hl.bind("XF86AudioMute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"))
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("zen0x-osd volume raise"))
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("zen0x-osd volume lower"))
+        hl.bind("XF86AudioMute", hl.dsp.exec_cmd("zen0x-osd volume mute"))
         hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("zen0x-brightness-display +5%"))
         hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("zen0x-brightness-display 5%-"))
-        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"))
+        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("zen0x-osd mic mute"))
+        hl.bind("Caps_Lock", hl.dsp.exec_cmd("zen0x-osd caps"), { locked = true })
 
         hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
         hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })

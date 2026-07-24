@@ -5,7 +5,6 @@
 
       xdg.configFile."hypr/autostart.lua".text = ''
         hl.on("hyprland.start", function()
-            hl.exec_cmd("uwsm app -- swaync")
             -- restore last theme's wallpaper (symlink kept by zen0x-set-wallpaper)
             hl.exec_cmd([[sh -c 'zen0x-set-wallpaper "$(readlink -f ~/.config/hypr/wallpaper.jpg 2>/dev/null || echo ~/Pictures/Wallpapers/dragon.jpg)"']])
             hl.exec_cmd("uwsm app -- udiskie --no-automount --smart-tray")
