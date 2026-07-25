@@ -5,15 +5,13 @@ import Quickshell.Wayland
 PanelWindow {
     id: bar
     anchors.top: true
-    // Match hyprland gaps_out so the gap above the pill equals the gap
-    // to the tiled windows below it
-    margins.top: 20
+    margins.top: Config.topMargin
     // Surface never resizes (resizing mid-animation smears frames);
     // the island morphs inside it and the mask keeps clicks passing
     // through everywhere else
     implicitWidth: 640
     implicitHeight: 500
-    exclusiveZone: 42
+    exclusiveZone: Config.topMargin + Config.pillHeight
     color: "transparent"
 
     WlrLayershell.keyboardFocus: ShellState.open
@@ -28,38 +26,38 @@ PanelWindow {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         width: ShellState.mode === "clock"
-                 ? (ShellState.osdVisible ? 280
-                    : ShellState.hasNotifs ? 420
+                 ? (ShellState.osdVisible ? Config.osdWidth
+                    : ShellState.hasNotifs ? Config.notifWidth
                     : pill.implicitWidth + 48)
-             : ShellState.mode === "menu" ? 380
-             : 600
+             : ShellState.mode === "menu" ? Config.menuWidth
+             : Config.launcherWidth
         height: ShellState.mode === "clock"
                   ? (!ShellState.osdVisible && ShellState.hasNotifs
                       ? Math.min(toasts.implicitHeight + 24, 480)
-                      : 42)
+                      : Config.pillHeight)
               : ShellState.mode === "menu"
                   ? Math.min(74 + ShellState.results.length * 46, 480)
                   : 480
         radius: ShellState.open || (ShellState.hasNotifs && !ShellState.osdVisible)
-            ? 24 : height / 2
-        color: "black"
+            ? 24 : Config.pillHeight / 2
+        color: Config.islandColor
         clip: true
 
         Behavior on width {
             NumberAnimation {
-                duration: 400
+                duration: Config.animDuration
                 easing.type: Easing.OutQuint
             }
         }
         Behavior on height {
             NumberAnimation {
-                duration: 400
+                duration: Config.animDuration
                 easing.type: Easing.OutQuint
             }
         }
         Behavior on radius {
             NumberAnimation {
-                duration: 400
+                duration: Config.animDuration
                 easing.type: Easing.OutQuint
             }
         }
@@ -86,12 +84,14 @@ PanelWindow {
         NotificationStack {
             id: toasts
         }
+
+        Settings {}
     }
 
     Connections {
         target: ShellState
         function onModeChanged() {
-            if (ShellState.open)
+            if (ShellState.mode === "apps" || ShellState.mode === "menu")
                 launcher.focusSearch();
         }
     }

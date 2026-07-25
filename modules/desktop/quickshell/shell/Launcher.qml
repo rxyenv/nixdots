@@ -12,9 +12,9 @@ ColumnLayout {
     anchors.fill: parent
     anchors.margins: 16
     spacing: 10
-    opacity: ShellState.open ? 1 : 0
+    opacity: (ShellState.mode === "apps" || ShellState.mode === "menu") ? 1 : 0
     visible: opacity > 0
-    enabled: ShellState.open
+    enabled: ShellState.mode === "apps" || ShellState.mode === "menu"
 
     Behavior on opacity {
         NumberAnimation {
@@ -32,7 +32,7 @@ ColumnLayout {
 
         Text {
             font.family: Theme.font
-            font.pixelSize: 16
+            font.pixelSize: Config.launcherFontSize
             color: Theme.c("muted", "#6c7086")
             text: "󰍉"
         }
@@ -41,7 +41,7 @@ ColumnLayout {
             id: search
             Layout.fillWidth: true
             font.family: Theme.font
-            font.pixelSize: 15
+            font.pixelSize: Config.launcherFontSize
             font.weight: Font.Medium
             color: Theme.c("fg", "#cdd6f4")
             selectionColor: Qt.alpha(Theme.c("accent", "#89b4fa"), 0.4)
@@ -126,7 +126,7 @@ ColumnLayout {
                 Text {
                     Layout.fillWidth: true
                     font.family: Theme.font
-                    font.pixelSize: 14
+                    font.pixelSize: Config.launcherItemFontSize
                     font.weight: Font.Medium
                     color: Theme.c("fg", "#cdd6f4")
                     text: isMenu ? modelData.text : modelData.name
@@ -136,7 +136,7 @@ ColumnLayout {
                 Text {
                     visible: !isMenu
                     font.family: Theme.font
-                    font.pixelSize: 11
+                    font.pixelSize: Config.launcherSubtextSize
                     color: Theme.c("muted", "#6c7086")
                     text: isMenu ? "" : (modelData.genericName || "")
                     elide: Text.ElideRight

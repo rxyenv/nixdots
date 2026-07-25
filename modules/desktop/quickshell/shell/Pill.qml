@@ -9,9 +9,9 @@ Text {
 
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: parent.top
-    anchors.topMargin: (42 - height) / 2
+    anchors.topMargin: (Config.pillHeight - height) / 2
     font.family: Theme.font
-    font.pixelSize: 16
+    font.pixelSize: Config.clockFontSize
     font.weight: Font.DemiBold
     color: Theme.c("fg", "#cdd6f4")
     // Separate fade factor so the text-swap animation below never
@@ -20,8 +20,12 @@ Text {
     opacity: (ShellState.open || ShellState.hasNotifs || ShellState.osdVisible ? 0 : 1)
         * textFade
     visible: opacity > 0
+
+    readonly property string timeFormat: Config.use24h ? "HH:mm" : "hh:mm AP"
     text: Qt.formatDateTime(clock.date,
-        expanded ? "hh:mm AP  ·  ddd, MMM d" : "hh:mm AP")
+        expanded && Config.showDate
+            ? timeFormat + "  ·  ddd, MMM d"
+            : timeFormat)
 
     SystemClock {
         id: clock

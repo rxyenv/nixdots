@@ -5,7 +5,7 @@ import QtQuick.Layouts
 RowLayout {
     anchors.top: parent.top
     anchors.horizontalCenter: parent.horizontalCenter
-    height: 42
+    height: Config.pillHeight
     spacing: 12
     opacity: ShellState.osdVisible && !ShellState.open ? 1 : 0
     visible: opacity > 0

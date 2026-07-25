@@ -1,3 +1,4 @@
+singleton Config Config.qml
 singleton Theme Theme.qml
 singleton ShellState ShellState.qml
 Island Island.qml
@@ -5,3 +6,4 @@ Pill Pill.qml
 Osd Osd.qml
 Launcher Launcher.qml
 NotificationStack NotificationStack.qml
+Settings Settings.qml

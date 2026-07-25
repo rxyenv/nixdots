@@ -8,7 +8,7 @@ import Quickshell.Services.Notifications
 Singleton {
     id: root
 
-    // "clock" (pill), "apps" (launcher), "menu" (dmenu picker for scripts)
+    // "clock" (pill), "apps" (launcher), "menu" (dmenu picker), "settings"
     property string mode: "clock"
     readonly property bool open: mode !== "clock"
     property string query: ""
@@ -36,6 +36,10 @@ Singleton {
     function openApps() {
         root.query = "";
         root.mode = "apps";
+    }
+
+    function openSettings() {
+        root.mode = "settings";
     }
 
     function closeIsland() {
@@ -92,7 +96,7 @@ Singleton {
 
     Timer {
         id: osdTimer
-        interval: 1500
+        interval: Config.osdDisplayMs
     }
 
     NotificationServer {
@@ -116,6 +120,14 @@ Singleton {
 
         function open(): void {
             menuProc.running = true;
+        }
+    }
+
+    IpcHandler {
+        target: "settings"
+
+        function open(): void {
+            root.openSettings();
         }
     }
 

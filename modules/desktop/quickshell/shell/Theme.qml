@@ -13,7 +13,7 @@ Singleton {
         return root.theme && root.theme[name] ? root.theme[name] : fallback;
     }
 
-    readonly property string font: "JetBrainsMono Nerd Font Propo"
+    property string font: Config.font
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/quickshell/colors.json"

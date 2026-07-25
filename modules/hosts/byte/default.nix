@@ -1,24 +1,13 @@
 { config, inputs, ... }:
 
-let
-  # Shared nixos modules minus nvidia (byte uses AMD GPU)
-  sharedModules = builtins.filter
-    (m: m != config.flake.modules.nixos.nvidia)
-    (builtins.attrValues config.flake.modules.nixos);
-in
-
-
 {
   flake.nixosConfigurations.byte = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
 
     modules = [
-      ./hardware.nix
-      ./disko.nix
+      ./_hardware.nix
       inputs.home-manager.nixosModules.home-manager
-      inputs.disko.nixosModules.disko
-      config.flake.modules.nixos.amd
 
       {
         networking.hostName = "byte";
@@ -33,6 +22,6 @@ in
         };
       }
     ]
-    ++ sharedModules;
+    ++ builtins.attrValues (builtins.removeAttrs config.flake.modules.nixos [ "nvidia" ]);
   };
 }
