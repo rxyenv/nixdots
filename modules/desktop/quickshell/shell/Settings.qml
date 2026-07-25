@@ -333,6 +333,66 @@ ColumnLayout {
                     value: Config.islandColor
                     onChanged: (val) => { Config.islandColor = val; settingsRoot.scheduleSave(); }
                 }
+                ToggleRow {
+                    labelText: "Use theme engine"
+                    checked: Config.useThemeColors
+                    onChanged: (val) => { Config.useThemeColors = val; settingsRoot.scheduleSave(); }
+                }
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 2
+                    visible: !Config.useThemeColors
+                    ColorRow {
+                        labelText: "Foreground"
+                        value: Config.colorFg
+                        onChanged: (val) => { Config.colorFg = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Muted"
+                        value: Config.colorMuted
+                        onChanged: (val) => { Config.colorMuted = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Accent"
+                        value: Config.colorAccent
+                        onChanged: (val) => { Config.colorAccent = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Danger"
+                        value: Config.colorDanger
+                        onChanged: (val) => { Config.colorDanger = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Background"
+                        value: Config.colorBg
+                        onChanged: (val) => { Config.colorBg = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Panel"
+                        value: Config.colorPanel
+                        onChanged: (val) => { Config.colorPanel = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Panel alt"
+                        value: Config.colorPanelAlt
+                        onChanged: (val) => { Config.colorPanelAlt = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Border"
+                        value: Config.colorBorder
+                        onChanged: (val) => { Config.colorBorder = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Success"
+                        value: Config.colorSuccess
+                        onChanged: (val) => { Config.colorSuccess = val; settingsRoot.scheduleSave(); }
+                    }
+                    ColorRow {
+                        labelText: "Warning"
+                        value: Config.colorWarning
+                        onChanged: (val) => { Config.colorWarning = val; settingsRoot.scheduleSave(); }
+                    }
+                }
 
                 Item { Layout.preferredHeight: 8 }
             }

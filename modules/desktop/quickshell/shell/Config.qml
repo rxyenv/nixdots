@@ -14,6 +14,19 @@ Singleton {
     property int launcherItemFontSize: 14
     property int launcherSubtextSize: 11
 
+    // Colors — useThemeColors: pull from colors.json; false: use properties below
+    property bool useThemeColors: true
+    property string colorBg: "#1e1e2e"
+    property string colorPanel: "#181825"
+    property string colorPanelAlt: "#1e1e2e"
+    property string colorFg: "#cdd6f4"
+    property string colorMuted: "#6c7086"
+    property string colorAccent: "#89b4fa"
+    property string colorDanger: "#f38ba8"
+    property string colorBorder: "#313244"
+    property string colorSuccess: "#a6e3a1"
+    property string colorWarning: "#fab387"
+
     // Layout
     property int topMargin: 20
     property int pillHeight: 42
@@ -40,7 +53,20 @@ Singleton {
                 clockFontSize: root.clockFontSize,
                 launcherFontSize: root.launcherFontSize,
                 launcherItemFontSize: root.launcherItemFontSize,
-                launcherSubtextSize: root.launcherSubtextSize
+                launcherSubtextSize: root.launcherSubtextSize,
+                useThemeColors: root.useThemeColors,
+                colors: {
+                    bg: root.colorBg,
+                    panel: root.colorPanel,
+                    panel_alt: root.colorPanelAlt,
+                    fg: root.colorFg,
+                    muted: root.colorMuted,
+                    accent: root.colorAccent,
+                    danger: root.colorDanger,
+                    border: root.colorBorder,
+                    success: root.colorSuccess,
+                    warning: root.colorWarning
+                }
             },
             layout: {
                 topMargin: root.topMargin,
@@ -78,12 +104,24 @@ Singleton {
                 const n = d.animation || {};
                 const c = d.clock || {};
                 const o = d.osd || {};
+                const col = a.colors || {};
                 if (a.font !== undefined) root.font = a.font;
                 if (a.islandColor !== undefined) root.islandColor = a.islandColor;
                 if (a.clockFontSize !== undefined) root.clockFontSize = a.clockFontSize;
                 if (a.launcherFontSize !== undefined) root.launcherFontSize = a.launcherFontSize;
                 if (a.launcherItemFontSize !== undefined) root.launcherItemFontSize = a.launcherItemFontSize;
                 if (a.launcherSubtextSize !== undefined) root.launcherSubtextSize = a.launcherSubtextSize;
+                if (a.useThemeColors !== undefined) root.useThemeColors = a.useThemeColors;
+                if (col.bg !== undefined) root.colorBg = col.bg;
+                if (col.panel !== undefined) root.colorPanel = col.panel;
+                if (col.panel_alt !== undefined) root.colorPanelAlt = col.panel_alt;
+                if (col.fg !== undefined) root.colorFg = col.fg;
+                if (col.muted !== undefined) root.colorMuted = col.muted;
+                if (col.accent !== undefined) root.colorAccent = col.accent;
+                if (col.danger !== undefined) root.colorDanger = col.danger;
+                if (col.border !== undefined) root.colorBorder = col.border;
+                if (col.success !== undefined) root.colorSuccess = col.success;
+                if (col.warning !== undefined) root.colorWarning = col.warning;
                 if (l.topMargin !== undefined) root.topMargin = l.topMargin;
                 if (l.pillHeight !== undefined) root.pillHeight = l.pillHeight;
                 if (l.osdWidth !== undefined) root.osdWidth = l.osdWidth;
