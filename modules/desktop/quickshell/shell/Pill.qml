@@ -8,8 +8,7 @@ Text {
     property bool expanded: false
 
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.top: parent.top
-    anchors.topMargin: (Config.pillHeight - height) / 2
+    anchors.verticalCenter: parent.verticalCenter
     font.family: Theme.font
     font.pixelSize: Config.clockFontSize
     font.weight: Font.DemiBold

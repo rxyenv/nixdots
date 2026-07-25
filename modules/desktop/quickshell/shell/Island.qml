@@ -11,7 +11,7 @@ PanelWindow {
     // through everywhere else
     implicitWidth: 640
     implicitHeight: 500
-    exclusiveZone: Config.topMargin + Config.pillHeight
+    exclusiveZone: Config.topMargin + 20
     color: "transparent"
 
     WlrLayershell.keyboardFocus: ShellState.open
