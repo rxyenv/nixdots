@@ -1,17 +1,15 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Wayland
 
 PanelWindow {
     id: bar
     anchors.top: true
-    margins.top: Config.topMargin
-    // Surface never resizes (resizing mid-animation smears frames);
-    // the island morphs inside it and the mask keeps clicks passing
-    // through everywhere else
-    implicitWidth: 640
+    anchors.left: true
+    anchors.right: true
     implicitHeight: 500
-    exclusiveZone: Config.topMargin + 20
+    exclusiveZone: Config.pillHeight
     color: "transparent"
 
     WlrLayershell.keyboardFocus: ShellState.open
@@ -25,39 +23,20 @@ PanelWindow {
         id: island
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        width: ShellState.mode === "clock"
-                 ? (ShellState.osdVisible ? Config.osdWidth
-                    : ShellState.hasNotifs ? Config.notifWidth
-                    : pill.implicitWidth + 48)
-             : ShellState.mode === "menu"    ? Config.menuWidth
-             : ShellState.mode === "control" ? Config.controlWidth
-             : Config.launcherWidth
+        width: parent.width * 0.75
         height: ShellState.mode === "clock"
                   ? (!ShellState.osdVisible && ShellState.hasNotifs
-                      ? Math.min(toasts.implicitHeight + 24, 480)
+                      ? Math.min(toasts.implicitHeight + Config.pillHeight + 8, 480)
                       : Config.pillHeight)
               : ShellState.mode === "menu"
-                  ? Math.min(74 + ShellState.results.length * 46, 480)
-              : ShellState.mode === "control" ? 460
-              : 480
-        radius: ShellState.open || (ShellState.hasNotifs && !ShellState.osdVisible)
-            ? 24 : Config.pillHeight / 2
-        color: Config.islandColor
+                  ? Math.min(Config.pillHeight + 74 + ShellState.results.length * 46, 480)
+              : ShellState.mode === "control" ? 460 + Config.pillHeight
+              : 480 + Config.pillHeight
+        radius: 18
+        color: Theme.c("panel", "#1e1e2e")
         clip: true
 
-        Behavior on width {
-            NumberAnimation {
-                duration: Config.animDuration
-                easing.type: Easing.OutQuint
-            }
-        }
         Behavior on height {
-            NumberAnimation {
-                duration: Config.animDuration
-                easing.type: Easing.OutQuint
-            }
-        }
-        Behavior on radius {
             NumberAnimation {
                 duration: Config.animDuration
                 easing.type: Easing.OutQuint
@@ -66,7 +45,10 @@ PanelWindow {
 
         MouseArea {
             id: pillMouse
-            anchors.fill: parent
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: Config.pillHeight
             hoverEnabled: true
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             visible: !ShellState.open && !ShellState.hasNotifs
@@ -78,12 +60,25 @@ PanelWindow {
             }
         }
 
+        Workspaces {}
+
         Pill {
             id: pill
             expanded: pillMouse.containsMouse
         }
 
         Osd {}
+
+        Rectangle {
+            anchors.top: parent.top
+            anchors.topMargin: Config.pillHeight
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 1
+            color: Theme.c("border", "#313244")
+            opacity: ShellState.open ? 0.5 : 0
+            Behavior on opacity { NumberAnimation { duration: 200 } }
+        }
 
         Launcher {
             id: launcher
