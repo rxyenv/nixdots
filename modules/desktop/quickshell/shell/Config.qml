@@ -34,6 +34,7 @@ Singleton {
     property int notifWidth: 420
     property int launcherWidth: 600
     property int menuWidth: 380
+    property int controlWidth: 380
 
     // Animation
     property int animDuration: 400

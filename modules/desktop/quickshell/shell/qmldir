@@ -7,3 +7,4 @@ Osd Osd.qml
 Launcher Launcher.qml
 NotificationStack NotificationStack.qml
 Settings Settings.qml
+ControlCenter ControlCenter.qml

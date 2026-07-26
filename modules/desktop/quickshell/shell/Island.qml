@@ -29,7 +29,8 @@ PanelWindow {
                  ? (ShellState.osdVisible ? Config.osdWidth
                     : ShellState.hasNotifs ? Config.notifWidth
                     : pill.implicitWidth + 48)
-             : ShellState.mode === "menu" ? Config.menuWidth
+             : ShellState.mode === "menu"    ? Config.menuWidth
+             : ShellState.mode === "control" ? Config.controlWidth
              : Config.launcherWidth
         height: ShellState.mode === "clock"
                   ? (!ShellState.osdVisible && ShellState.hasNotifs
@@ -37,7 +38,8 @@ PanelWindow {
                       : Config.pillHeight)
               : ShellState.mode === "menu"
                   ? Math.min(74 + ShellState.results.length * 46, 480)
-                  : 480
+              : ShellState.mode === "control" ? 460
+              : 480
         radius: ShellState.open || (ShellState.hasNotifs && !ShellState.osdVisible)
             ? 24 : Config.pillHeight / 2
         color: Config.islandColor
@@ -63,16 +65,22 @@ PanelWindow {
         }
 
         MouseArea {
-            id: mouse
+            id: pillMouse
             anchors.fill: parent
             hoverEnabled: true
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             visible: !ShellState.open && !ShellState.hasNotifs
-            onClicked: ShellState.openApps()
+            onClicked: {
+                if (mouse.button === Qt.RightButton)
+                    ShellState.openControl()
+                else
+                    ShellState.openApps()
+            }
         }
 
         Pill {
             id: pill
-            expanded: mouse.containsMouse
+            expanded: pillMouse.containsMouse
         }
 
         Osd {}
@@ -86,6 +94,8 @@ PanelWindow {
         }
 
         Settings {}
+
+        ControlCenter {}
     }
 
     Connections {

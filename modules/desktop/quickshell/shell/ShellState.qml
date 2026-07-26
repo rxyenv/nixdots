@@ -8,9 +8,11 @@ import Quickshell.Services.Notifications
 Singleton {
     id: root
 
-    // "clock" (pill), "apps" (launcher), "menu" (dmenu picker), "settings"
+    // "clock" (pill), "apps" (launcher), "menu" (dmenu picker), "settings", "control"
     property string mode: "clock"
     readonly property bool open: mode !== "clock"
+
+    property bool dndEnabled: false
     property string query: ""
     property var menuItems: []
     property bool resultSent: false
@@ -40,6 +42,10 @@ Singleton {
 
     function openSettings() {
         root.mode = "settings";
+    }
+
+    function openControl() {
+        root.mode = "control";
     }
 
     function closeIsland() {
@@ -104,7 +110,7 @@ Singleton {
         actionsSupported: true
         bodySupported: true
         imageSupported: true
-        onNotification: notif => notif.tracked = true
+        onNotification: notif => notif.tracked = !root.dndEnabled
     }
 
     IpcHandler {
@@ -128,6 +134,14 @@ Singleton {
 
         function open(): void {
             root.openSettings();
+        }
+    }
+
+    IpcHandler {
+        target: "control"
+
+        function open(): void {
+            root.openControl();
         }
     }
 
