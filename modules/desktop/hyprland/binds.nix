@@ -27,7 +27,7 @@
         hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("zen0x-powermenu"))
         hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
         hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
-        hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("zen0x-launch-wifi"))
+        hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("qs -c shell ipc call control open"))
 
         hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
         hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))
