@@ -22,7 +22,16 @@ Item {
     property bool volumeMuted:      false
     property int  brightness:       50
 
-    onVisibleChanged: if (visible) refreshAll()
+    focus: ShellState.mode === "control"
+
+    Keys.onEscapePressed: ShellState.closeIsland()
+
+    onVisibleChanged: {
+        if (visible) {
+            forceActiveFocus()
+            refreshAll()
+        }
+    }
 
     function refreshAll() {
         wifiProc.running   = true

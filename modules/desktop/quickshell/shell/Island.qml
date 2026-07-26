@@ -98,6 +98,8 @@ PanelWindow {
         ControlCenter {}
     }
 
+    Keys.onEscapePressed: if (ShellState.open) ShellState.closeIsland()
+
     Connections {
         target: ShellState
         function onModeChanged() {

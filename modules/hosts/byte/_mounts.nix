@@ -1,4 +1,15 @@
 {
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/7b6be2cf-8041-49d4-b615-0d3fa9a457ae";
+    fsType = "ext4";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/E609-4187";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
   fileSystems."/home/aman/Storage" = {
     device = "/dev/disk/by-label/Storage";
     fsType = "ext4";
