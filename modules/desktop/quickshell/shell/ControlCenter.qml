@@ -118,7 +118,7 @@ Item {
                     : Qt.alpha(Theme.c("panel_alt", "#1e1e2e"), 0.85)
                 Behavior on color { ColorAnimation { duration: 180 } }
 
-                Column { anchors { fill: parent; margins: 14 }; spacing: 8
+                Column { anchors { fill: parent; margins: 14 } spacing: 8
                     Rectangle {
                         width: 36; height: 36; radius: 18
                         color: cc.wifiEnabled
@@ -149,7 +149,7 @@ Item {
                     : Qt.alpha(Theme.c("panel_alt", "#1e1e2e"), 0.85)
                 Behavior on color { ColorAnimation { duration: 180 } }
 
-                Column { anchors { fill: parent; margins: 14 }; spacing: 8
+                Column { anchors { fill: parent; margins: 14 } spacing: 8
                     Rectangle {
                         width: 36; height: 36; radius: 18
                         color: cc.bluetoothEnabled
@@ -188,7 +188,7 @@ Item {
                     : Qt.alpha(Theme.c("panel_alt", "#1e1e2e"), 0.85)
                 Behavior on color { ColorAnimation { duration: 180 } }
 
-                Column { anchors { fill: parent; margins: 14 }; spacing: 8
+                Column { anchors { fill: parent; margins: 14 } spacing: 8
                     Rectangle {
                         width: 36; height: 36; radius: 18
                         color: ShellState.dndEnabled
@@ -217,7 +217,7 @@ Item {
                     : Qt.alpha(Theme.c("panel_alt", "#1e1e2e"), 0.85)
                 Behavior on color { ColorAnimation { duration: 180 } }
 
-                Column { anchors { fill: parent; margins: 14 }; spacing: 8
+                Column { anchors { fill: parent; margins: 14 } spacing: 8
                     Rectangle {
                         width: 36; height: 36; radius: 18
                         color: cc.airplaneEnabled

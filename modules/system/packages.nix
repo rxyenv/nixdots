@@ -14,6 +14,8 @@
         piper         # logitech mouse config GUI
         unityhub      # Unity game engine hub
         nmap
+        btrfs-progs
+        parted
       ];
 
       services.ratbagd.enable = true;  # daemon piper talks to

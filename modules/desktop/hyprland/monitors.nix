@@ -2,8 +2,8 @@
   flake.modules.homeManager.hyprland =
     {
       xdg.configFile."hypr/monitors.lua".text = ''
-        local function hdmi_connected()
-          local p = io.popen("cat /sys/class/drm/card*-HDMI-A-1/status 2>/dev/null")
+        local function monitor_connected(name)
+          local p = io.popen("cat /sys/class/drm/card*-" .. name .. "/status 2>/dev/null")
           if not p then
             return false
           end
@@ -17,7 +17,10 @@
           return false
         end
 
-        if hdmi_connected() then
+        if monitor_connected("DP-1") then
+          hl.monitor({ output = "eDP-1", disabled = true })
+          hl.monitor({ output = "DP-1", mode = "1920x1080@300.00", position = "0x0", scale = "1", })
+        elseif monitor_connected("HDMI-A-1") then
           hl.monitor({ output = "eDP-1", disabled = true })
           hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@180", position = "0x0", scale = "1", })
         else

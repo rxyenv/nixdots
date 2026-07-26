@@ -7,6 +7,7 @@
 
     modules = [
       ./_hardware.nix
+      ./_mounts.nix
       inputs.home-manager.nixosModules.home-manager
 
       {
