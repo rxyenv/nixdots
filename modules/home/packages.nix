@@ -72,6 +72,7 @@
         loupe
         signal-desktop
         qbittorrent
+        protonup-qt
         (
           (wrapOBS.override {
             obs-studio = obs-studio.override { cudaSupport = true; };

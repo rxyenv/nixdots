@@ -56,11 +56,6 @@
             src = pkgs.fishPlugins.fzf-fish.src;
           }
           {
-            # cleans stale history entries (typos, failed commands) on the fly
-            name = "sponge";
-            src = pkgs.fishPlugins.sponge.src;
-          }
-          {
             # desktop notification when a long-running command finishes in an unfocused terminal
             name = "done";
             src = pkgs.fishPlugins.done.src;

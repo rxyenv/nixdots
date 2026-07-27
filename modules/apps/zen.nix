@@ -75,7 +75,7 @@
                 if [ -s "$chrome_dir/userChrome.css" ]; then
                   $DRY_RUN_CMD sed -i '1i @import "hide-window-controls.css";' "$chrome_dir/userChrome.css"
                 else
-                  $DRY_RUN_CMD sh -c 'echo '\'''@import "hide-window-controls.css";'\''' > "$1"' -- "$chrome_dir/userChrome.css"
+                  $DRY_RUN_CMD printf '@import "hide-window-controls.css";\n' > "$chrome_dir/userChrome.css"
                 fi
               fi
             fi

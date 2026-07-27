@@ -25,11 +25,7 @@
         themePackages = [ nixos-mac-style ];
       };
 
-      # hide kernel/stage-1 text so the splash actually shows
-      boot.kernelParams = [
-        "quiet"
-        "splash"
-      ];
+      boot.kernelParams = [ "quiet" ];
       boot.consoleLogLevel = 3;
       boot.initrd.verbose = false;
     }

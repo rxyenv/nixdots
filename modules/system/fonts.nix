@@ -11,6 +11,7 @@
         noto-fonts-color-emoji
         maple-mono.NF
         google-fonts
+        monocraft
       ]);
 
       fonts.fontconfig = {

@@ -19,6 +19,7 @@
           "video"
           "input"
           "audio"
+          "i2c"
         ];
       };
     }

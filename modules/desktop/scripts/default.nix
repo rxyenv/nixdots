@@ -25,9 +25,7 @@
         "zen0x-launch-or-focus-tui"
         "zen0x-launch-tui"
         "zen0x-launch-wifi"
-        "zen0x-osd"
         "zen0x-powermenu"
-        "zen0x-qsmenu"
         "zen0x-terminal-cwd"
         "zen0x-theme-reload"
         "zen0x-toggle-bluetooth"
@@ -61,7 +59,6 @@
           wiremix
           bluetui
           impala
-          swaybg
           jq
           python3
           hyprpicker

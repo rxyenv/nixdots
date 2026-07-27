@@ -4,7 +4,7 @@
       programs.btop = {
         enable = true;
         settings = {
-          color_theme = "zen0x-current";
+          color_theme = "noctalia";
           theme_background = false;
           truecolor = true;
           vim_keys = true;

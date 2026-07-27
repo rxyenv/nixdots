@@ -1,17 +1,20 @@
 {
   flake.modules.homeManager.gtk =
-    { pkgs, inputs, ... }:
-    let
-      system = pkgs.stdenv.hostPlatform.system;
-      abyssal = inputs.abyssal-gtk-theme.packages.${system}.default;
-    in
+    { pkgs, ... }:
     {
-      # Theme/icon packages only; settings.ini and gtk-4.0/gtk.css are
-      # written by the zen0x theme engine so switching needs no rebuild
+      # Theme packages; noctalia writes noctalia.css and sets adw-gtk3 via gsettings
       home.packages = [
-        abyssal
+        pkgs.adw-gtk3
         pkgs.yaru-theme
+        pkgs.capitaine-cursors
       ];
-    }
-;
+
+      home.pointerCursor = {
+        package = pkgs.capitaine-cursors;
+        name = "capitaine-cursors-white";
+        size = 24;
+        gtk.enable = true;
+        x11.enable = true;
+      };
+    };
 }

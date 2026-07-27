@@ -9,7 +9,10 @@
       programs.steam = {
         enable = true;
         package = pkgs.millennium-steam;
+        gamescopeSession.enable = true;
       };
+
+      programs.gamescope.enable = true;
 
       programs.gamemode.enable = true;
 

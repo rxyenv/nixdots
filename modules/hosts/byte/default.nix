@@ -10,6 +10,17 @@
       ./_mounts.nix
       inputs.home-manager.nixosModules.home-manager
 
+      ({ pkgs, ... }: {
+        hardware.graphics.extraPackages = with pkgs; [
+          libvdpau-va-gl
+          mesa
+        ];
+
+        hardware.i2c.enable = true;
+        boot.kernelParams = [ "acpi_enforce_resources=lax" ];
+        environment.systemPackages = with pkgs; [ openrgb ];
+      })
+
       {
         networking.hostName = "byte";
         system.stateVersion = "26.05";
