@@ -182,6 +182,15 @@
           })
         end
 
+        hl.window_rule({
+          name = "float-discord",
+          match = { class = "^(discord|Discord|vesktop|Vesktop)$", fullscreen = false },
+          float = true,
+          center = true,
+          size = { "monitor_w*0.75", "monitor_h*0.8" },
+          workspace = "4",
+        })
+
         local workspace_assignments = {
           { ws = "1", match = { class = "^(zen|Zen)$" } },
           { ws = "2", match = { class = "^(kitty|Kitty|Alacritty|WezTerm|foot)$" } },

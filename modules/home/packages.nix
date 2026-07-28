@@ -18,7 +18,11 @@
         nodejs
         github-cli
         heroic
+        mangohud
+        vkbasalt
         mpv
+        mpvpaper
+        gpu-screen-recorder
         dust
         duf
         tealdeer
@@ -47,6 +51,9 @@
         claude-code
         opencode
 
+        # Security
+        proton-pass-cli
+
         # Files
         udiskie
         nautilus
@@ -71,6 +78,8 @@
         glib
         loupe
         signal-desktop
+        vesktop
+        anydesk
         qbittorrent
         protonup-qt
         (

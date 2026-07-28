@@ -7,6 +7,18 @@
     programs.man.generateCaches = false;
     programs.home-manager.enable = true;
 
+    systemd.user.services.gnome-keyring-secrets = {
+      Unit = {
+        Description = "GNOME Keyring secrets component";
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        ExecStart = "/run/wrappers/bin/gnome-keyring-daemon --start --foreground --components=secrets";
+        Restart = "on-abort";
+      };
+    };
+
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;

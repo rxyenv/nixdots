@@ -7,7 +7,6 @@
 
     modules = [
       ./_hardware.nix
-      ./_mounts.nix
       inputs.home-manager.nixosModules.home-manager
 
       ({ pkgs, ... }: {
@@ -17,7 +16,13 @@
         ];
 
         hardware.i2c.enable = true;
-        boot.kernelParams = [ "acpi_enforce_resources=lax" ];
+        hardware.amdgpu.overdrive.enable = true;
+
+        boot.kernelParams = [
+          "acpi_enforce_resources=lax"
+          "amdgpu.ppfeaturemask=0xffffffff"
+        ];
+
         environment.systemPackages = with pkgs; [ openrgb ];
       })
 

@@ -28,7 +28,8 @@
 
         hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zeditor"))
         hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty --class org.helix.editor -e hx"))
-        hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("zen0x-powermenu"))
+        hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd(ipc .. "panel-toggle session"))
+        hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(ipc .. "panel-toggle wallpaper"))
         hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
         hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
 

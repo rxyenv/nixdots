@@ -5,9 +5,7 @@
     {
       security.polkit.enable = true;
 
-      security.pam.services.hyprlock = {};
-
-      security.pam.services.ly.enableGnomeKeyring = true;
+security.pam.services.ly.enableGnomeKeyring = true;
 
       programs.dconf.enable = true;
 
