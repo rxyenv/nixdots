@@ -38,7 +38,6 @@
 
         # Python
         uv
-        pfetch-rs
 
         # Rust
         rustup
@@ -53,6 +52,7 @@
 
         # Security
         proton-pass-cli
+        tor-browser
 
         # Files
         udiskie
