@@ -2,7 +2,7 @@
   flake.modules.homeManager.gtk =
     { pkgs, ... }:
     {
-      # Theme packages; noctalia writes noctalia.css and sets adw-gtk3 via gsettings
+      # Theme packages
       home.packages = [
         pkgs.adw-gtk3
         pkgs.yaru-theme

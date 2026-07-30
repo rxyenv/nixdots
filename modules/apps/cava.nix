@@ -27,7 +27,12 @@
         };
 
         color = {
-          theme = "'noctalia'";
+          gradient = 1;
+          gradient_count = 4;
+          gradient_color_1 = "'#89b4fa'";
+          gradient_color_2 = "'#cba6f7'";
+          gradient_color_3 = "'#f5c2e7'";
+          gradient_color_4 = "'#f38ba8'";
         };
 
         smoothing = {

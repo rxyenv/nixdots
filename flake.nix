@@ -1,13 +1,6 @@
 {
   description = "My NixOS configuration";
 
-  nixConfig = {
-    extra-substituters = [ "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [
-      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
 
@@ -41,11 +34,6 @@
     abyssal-zed-themes = {
       url = "github:rxyenv/abyssal-zed-themes";
       flake = false;
-    };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia/cachix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

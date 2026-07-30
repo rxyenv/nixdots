@@ -4,7 +4,7 @@
       programs.btop = {
         enable = true;
         settings = {
-          color_theme = "noctalia";
+          color_theme = "catppuccin_mocha";
           theme_background = false;
           truecolor = true;
           vim_keys = true;
