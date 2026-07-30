@@ -19,7 +19,7 @@ RowLayout {
         font.pixelSize: 16
         color: ShellState.osdFlag
             ? Theme.c("danger", "#f38ba8")
-            : Theme.c("fg", "#cdd6f4")
+            : "#ffffff"
         text: ShellState.osdKind === "volume" ? (ShellState.osdFlag ? "󰝟" : "󰕾")
             : ShellState.osdKind === "mic" ? (ShellState.osdFlag ? "󰍭" : "󰍬")
             : ShellState.osdKind === "brightness" ? "󰃠"
@@ -32,7 +32,7 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter
         height: 6
         radius: 3
-        color: Qt.alpha(Theme.c("border", "#313244"), 0.8)
+        color: Qt.alpha("#ffffff", 0.15)
 
         Rectangle {
             anchors.left: parent.left
@@ -54,7 +54,7 @@ RowLayout {
         font.family: Theme.font
         font.pixelSize: 13
         font.weight: Font.DemiBold
-        color: Theme.c("fg", "#cdd6f4")
+        color: "#ffffff"
         text: ShellState.osdKind === "caps"
             ? ("Caps Lock " + (ShellState.osdFlag ? "on" : "off"))
             : ShellState.osdValue + "%"

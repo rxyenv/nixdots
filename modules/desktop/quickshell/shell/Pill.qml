@@ -12,7 +12,7 @@ Text {
     font.family: Theme.font
     font.pixelSize: Config.clockFontSize
     font.weight: Font.DemiBold
-    color: Theme.c("fg", "#cdd6f4")
+    color: "#ffffff"
     // Separate fade factor so the text-swap animation below never
     // stomps the show/hide binding
     property real textFade: 1

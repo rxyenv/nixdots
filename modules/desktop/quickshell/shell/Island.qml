@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Shapes
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
@@ -19,11 +20,23 @@ PanelWindow {
         item: island
     }
 
-    Rectangle {
+    readonly property int islandWidth: {
+        if (ShellState.mode === "apps" || ShellState.mode === "menu")
+            return Math.min(bar.width * 0.55, 680)
+        if (ShellState.mode === "control" || ShellState.mode === "settings")
+            return 420
+        if (ShellState.osdVisible)
+            return Config.osdWidth
+        if (ShellState.hasNotifs)
+            return Config.notifWidth
+        return 200
+    }
+
+    Item {
         id: island
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width * 0.75
+        width: bar.islandWidth
         height: ShellState.mode === "clock"
                   ? (!ShellState.osdVisible && ShellState.hasNotifs
                       ? Math.min(toasts.implicitHeight + Config.pillHeight + 8, 480)
@@ -32,14 +45,65 @@ PanelWindow {
                   ? Math.min(Config.pillHeight + 74 + ShellState.results.length * 46, 480)
               : ShellState.mode === "control" ? 460 + Config.pillHeight
               : 480 + Config.pillHeight
-        radius: 18
-        color: Theme.c("panel", "#1e1e2e")
         clip: true
+
+        Behavior on width {
+            NumberAnimation {
+                duration: Config.animDuration
+                easing.type: Easing.OutExpo
+            }
+        }
 
         Behavior on height {
             NumberAnimation {
                 duration: Config.animDuration
                 easing.type: Easing.OutQuint
+            }
+        }
+
+        Shape {
+            anchors.fill: parent
+            layer.enabled: true
+            layer.samples: 8
+
+            ShapePath {
+                id: sp
+                fillColor: Config.islandColor
+                strokeColor: "transparent"
+                strokeWidth: 0
+
+                readonly property real cr: 16  // concave notch radius at top corners
+                readonly property real br: 22  // convex rounding radius at bottom corners
+
+                startX: sp.cr; startY: 0
+
+                PathLine { x: island.width - sp.cr; y: 0 }
+
+                // top-right: concave notch (CCW = center at corner vertex, scoops inward)
+                PathArc  { x: island.width; y: sp.cr
+                           radiusX: sp.cr; radiusY: sp.cr
+                           direction: PathArc.Counterclockwise }
+
+                PathLine { x: island.width; y: island.height - sp.br }
+
+                // bottom-right: convex rounding
+                PathArc  { x: island.width - sp.br; y: island.height
+                           radiusX: sp.br; radiusY: sp.br
+                           direction: PathArc.Clockwise }
+
+                PathLine { x: sp.br; y: island.height }
+
+                // bottom-left: convex rounding
+                PathArc  { x: 0; y: island.height - sp.br
+                           radiusX: sp.br; radiusY: sp.br
+                           direction: PathArc.Clockwise }
+
+                PathLine { x: 0; y: sp.cr }
+
+                // top-left: concave notch (CCW = center at corner vertex, scoops inward)
+                PathArc  { x: sp.cr; y: 0
+                           radiusX: sp.cr; radiusY: sp.cr
+                           direction: PathArc.Counterclockwise }
             }
         }
 
@@ -60,8 +124,6 @@ PanelWindow {
             }
         }
 
-        Workspaces {}
-
         Pill {
             id: pill
             expanded: pillMouse.containsMouse
@@ -75,8 +137,8 @@ PanelWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             height: 1
-            color: Theme.c("border", "#313244")
-            opacity: ShellState.open ? 0.5 : 0
+            color: Qt.alpha("#ffffff", 0.08)
+            opacity: ShellState.open ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 200 } }
         }
 

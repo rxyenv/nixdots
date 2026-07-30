@@ -22,7 +22,7 @@
           mouse = {
             hide-when-typing = "yes";
           };
-          colors = {
+          "colors-dark" = {
             background = "1e1e2e";
             foreground = "cdd6f4";
             regular0 = "45475a";

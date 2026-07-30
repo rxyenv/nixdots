@@ -2,6 +2,7 @@ singleton Config Config.qml
 singleton Theme Theme.qml
 singleton ShellState ShellState.qml
 Island Island.qml
+Workspaces Workspaces.qml
 Pill Pill.qml
 Osd Osd.qml
 Launcher Launcher.qml
