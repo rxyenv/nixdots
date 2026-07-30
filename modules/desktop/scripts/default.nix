@@ -61,6 +61,7 @@
           impala
           jq
           python3
+          awww
           hyprpicker
           hyprsunset
           cliphist
