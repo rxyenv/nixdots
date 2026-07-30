@@ -13,18 +13,8 @@ window-rule {
 }
 
 layer-rule {
-    match namespace="^quickshell$"
-    place-within-backdrop true
-}
-
-layer-rule {
     match namespace="dms:blurwallpaper"
     place-within-backdrop true
-}
-
-window-rule {
-    match app-id=r#"org.quickshell$"#
-    open-floating true
 }
 
 window-rule {

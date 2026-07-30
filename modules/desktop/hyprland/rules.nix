@@ -23,6 +23,20 @@
           no_anim = true,
         })
 
+        hl.layer_rule({
+          name = "waybar-blur",
+          match = { namespace = "^waybar$" },
+          blur = true,
+          ignore_alpha = 0.2,
+        })
+
+        hl.layer_rule({
+          name = "fuzzel-blur",
+          match = { namespace = "^fuzzel$" },
+          blur = true,
+          ignore_alpha = 0.2,
+        })
+
         -- ── Global window behavior ─────────────────────────────────
 
         hl.window_rule({
