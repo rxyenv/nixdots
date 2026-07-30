@@ -52,7 +52,7 @@
             cpu = {
               interval = 5;
               format = "󰍛";
-              on-click = "kitty btop";
+              on-click = "footclient btop";
             };
 
             clock = {
@@ -95,11 +95,11 @@
             };
 
             bluetooth = {
-              format = "";
+              format = "󰂯";
               format-off = "󰂲";
               format-disabled = "󰂲";
               format-connected = "󰂱";
-              format-no-controller = "";
+              format-no-controller = "󰂲";
               tooltip-format = "Devices connected: {num_connections}";
               on-click = "blueman-manager";
             };
@@ -110,11 +110,11 @@
               on-click-right = "pamixer -t";
               tooltip-format = "Playing at {volume}%";
               scroll-step = 5;
-              format-muted = "";
+              format-muted = "󰝟";
               format-icons = {
                 headphone = "";
                 headset = "";
-                default = [ "" "" "" ];
+                default = [ "󰕿" "󰖀" "󰕾" ];
               };
             };
 

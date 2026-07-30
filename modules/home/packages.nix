@@ -75,6 +75,12 @@
         zed-editor
         helix
 
+        # Audio / Network / Bluetooth
+        blueman
+        pavucontrol
+        pamixer
+        networkmanagerapplet
+
         # Desktop
         glib
         loupe
