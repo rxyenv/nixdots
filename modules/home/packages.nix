@@ -19,6 +19,7 @@
         github-cli
         heroic
         mangohud
+        mangojuice
         vkbasalt
         mpv
         mpvpaper

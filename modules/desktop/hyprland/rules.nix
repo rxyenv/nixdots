@@ -32,7 +32,7 @@
 
         hl.layer_rule({
           name = "fuzzel-blur",
-          match = { namespace = "^fuzzel$" },
+          match = { namespace = "^launcher$" },
           blur = true,
           ignore_alpha = 0.2,
         })

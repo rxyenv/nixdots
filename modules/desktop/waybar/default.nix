@@ -7,154 +7,197 @@
 
         settings = [
           {
+            reload_style_on_change = true;
             layer = "top";
             position = "top";
-            height = 38;
             spacing = 0;
-            exclusive = true;
+            height = 26;
 
             modules-left = [ "hyprland/workspaces" ];
-            modules-center = [ "clock" ];
-            modules-right = [ "tray" "network" "bluetooth" "pulseaudio" "battery" ];
+            modules-center = [ "clock" "cpu" ];
+            modules-right = [
+              "tray"
+              "bluetooth"
+              "network"
+              "pulseaudio"
+              "battery"
+            ];
 
             "hyprland/workspaces" = {
-              format = "";
               on-click = "activate";
+              format = "{icon}";
+              format-icons = {
+                default = "";
+                "1" = "1";
+                "2" = "2";
+                "3" = "3";
+                "4" = "4";
+                "5" = "5";
+                "6" = "6";
+                "7" = "7";
+                "8" = "8";
+                "9" = "9";
+                "10" = "0";
+                active = "󱓻";
+              };
               persistent-workspaces = {
-                "*" = 5;
+                "1" = [ ];
+                "2" = [ ];
+                "3" = [ ];
+                "4" = [ ];
+                "5" = [ ];
               };
             };
 
+            cpu = {
+              interval = 5;
+              format = "󰍛";
+              on-click = "kitty btop";
+            };
+
             clock = {
-              format = "{:%I:%M %p}";
-              format-alt = "{:%A, %B %d}";
-              tooltip-format = "<tt><small>{calendar}</small></tt>";
+              format = "{:L%A %H:%M}";
+              format-alt = "{:L%d %B W%V %Y}";
+              tooltip = false;
             };
 
             network = {
-              format-wifi = "󰤨";
-              format-ethernet = "󰛳";
+              format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
+              format = "{icon}";
+              format-wifi = "{icon}";
+              format-ethernet = "󰀂";
               format-disconnected = "󰤮";
-              format-linked = "󰤮";
-              tooltip-format-wifi = "{essid} ({signalStrength}%)";
-              tooltip-format-ethernet = "{ifname}: {ipaddr}";
+              tooltip-format-wifi = "{essid} ({frequency} GHz)";
+              tooltip-format-ethernet = "Connected";
               tooltip-format-disconnected = "Disconnected";
+              interval = 3;
+              spacing = 1;
+              on-click = "nm-connection-editor";
+            };
+
+            battery = {
+              format = "{capacity}% {icon}";
+              format-discharging = "{icon}";
+              format-charging = "{icon}";
+              format-plugged = "";
+              format-full = "󰂅";
+              format-icons = {
+                charging = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
+                default = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+              };
+              tooltip-format-discharging = "{power:>1.0f}W↓ {capacity}%";
+              tooltip-format-charging = "{power:>1.0f}W↑ {capacity}%";
+              interval = 5;
+              states = {
+                warning = 20;
+                critical = 10;
+              };
             };
 
             bluetooth = {
-              format = "󰂯";
-              format-disabled = "";
-              format-off = "";
-              tooltip-format = "{controller_alias} ({controller_address})";
+              format = "";
+              format-off = "󰂲";
+              format-disabled = "󰂲";
+              format-connected = "󰂱";
+              format-no-controller = "";
+              tooltip-format = "Devices connected: {num_connections}";
+              on-click = "blueman-manager";
             };
 
             pulseaudio = {
               format = "{icon}";
-              format-muted = "󰝟";
-              format-icons = {
-                default = [ "󰕿" "󰖀" "󰕾" ];
-              };
               on-click = "pavucontrol";
+              on-click-right = "pamixer -t";
+              tooltip-format = "Playing at {volume}%";
               scroll-step = 5;
-            };
-
-            battery = {
-              format = "{icon}";
-              format-charging = "󰂄";
-              format-plugged = "󰁹";
-              format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-              states = {
-                warning = 30;
-                critical = 15;
+              format-muted = "";
+              format-icons = {
+                headphone = "";
+                headset = "";
+                default = [ "" "" "" ];
               };
             };
 
             tray = {
-              icon-size = 15;
-              spacing = 6;
+              icon-size = 12;
+              spacing = 17;
             };
           }
         ];
 
         style = ''
           /* Catppuccin Mocha */
+
           * {
-            font-family: "Maple Mono NF", "JetBrainsMono Nerd Font Propo", monospace;
-            font-size: 14px;
-            min-height: 0;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
             border: none;
             border-radius: 0;
-            padding: 0;
-            margin: 0;
+            min-height: 0;
+            font-family: 'Maple Mono NF';
+            font-size: 12px;
           }
 
-          window#waybar {
-            background-color: rgba(24, 24, 37, 0.92);
-            border-bottom: 1px solid rgba(49, 50, 68, 0.6);
-            color: #cdd6f4;
+          .modules-left {
+            margin-left: 8px;
           }
 
-          /* ── Workspaces ────────────────────────────────────── */
-          #workspaces {
-            padding: 0 10px;
+          .modules-right {
+            margin-right: 8px;
           }
 
           #workspaces button {
-            all: unset;
-            min-width: 14px;
-            min-height: 14px;
-            border-radius: 7px;
-            background-color: #585b70;
-            margin: 12px 3px;
-            opacity: 0.35;
-            transition: all 180ms ease;
+            all: initial;
+            padding: 0 6px;
+            margin: 0 1.5px;
+            min-width: 9px;
+            color: #cdd6f4;
+            font-family: 'Maple Mono NF';
+            font-size: 12px;
           }
 
-          #workspaces button.occupied {
-            opacity: 0.9;
+          #workspaces button.empty {
+            opacity: 0.5;
           }
 
           #workspaces button.active {
-            min-width: 32px;
-            background-color: #89b4fa;
-            opacity: 1;
+            color: #89b4fa;
           }
 
           #workspaces button.urgent {
-            background-color: #f38ba8;
-            opacity: 1;
+            color: #f38ba8;
           }
 
-          #workspaces button:hover {
-            background-color: #cdd6f4;
-            min-width: 22px;
-            opacity: 1;
+          #cpu,
+          #battery,
+          #pulseaudio {
+            min-width: 12px;
+            margin: 0 7.5px;
           }
 
-          /* ── Clock ─────────────────────────────────────────── */
+          #tray {
+            margin-right: 16px;
+          }
+
+          #bluetooth {
+            margin-right: 17px;
+          }
+
+          #network {
+            margin-right: 13px;
+          }
+
+          tooltip {
+            padding: 2px;
+          }
+
           #clock {
-            color: #cdd6f4;
-            font-weight: bold;
-            padding: 0 8px;
+            margin-left: 8.75px;
+            margin-right: 8.75px;
           }
 
-          /* ── Right modules ─────────────────────────────────── */
-          #tray,
-          #network,
-          #bluetooth,
-          #pulseaudio,
-          #battery {
-            padding: 0 6px;
-            color: #cdd6f4;
-          }
-
-          #network.disconnected,
-          #network.linked {
-            color: #6c7086;
-          }
-
-          #pulseaudio.muted {
-            color: #6c7086;
+          .hidden {
+            opacity: 0;
           }
 
           #battery.charging {
@@ -167,6 +210,14 @@
 
           #battery.critical {
             color: #f38ba8;
+          }
+
+          #pulseaudio.muted {
+            color: #45475a;
+          }
+
+          #network.disconnected {
+            color: #45475a;
           }
 
           #tray > .passive {
