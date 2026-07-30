@@ -9,6 +9,10 @@
         interactiveShellInit = ''
           set -gx BAT_THEME "base16"
           set fish_greeting
+
+          if status is-interactive
+            nitch
+          end
         '';
 
         shellAliases = {

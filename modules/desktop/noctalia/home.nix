@@ -13,7 +13,7 @@
           builtin = "Catppuccin";
           templates = {
             enable_builtin_templates = true;
-            builtin_ids = [ "btop" "cava" ];
+            builtin_ids = [ "btop" "cava" "foot" ];
           };
         };
         wallpaper.enabled = true;

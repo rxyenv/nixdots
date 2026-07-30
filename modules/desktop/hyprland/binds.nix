@@ -27,7 +27,7 @@
         hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 
         hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zeditor"))
-        hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty --class org.helix.editor -e hx"))
+        hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("foot --app-id org.helix.editor -e hx"))
         hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd(ipc .. "panel-toggle session"))
         hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(ipc .. "panel-toggle wallpaper"))
         hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
@@ -97,12 +97,6 @@
         hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("zen0x-clipboard"))
         hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
         hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
-        hl.bind(mainMod .. " + Tab", function()
-            if hl.plugin and hl.plugin.scrolloverview then
-                hl.plugin.scrolloverview.overview("toggle")
-            end
-        end)
-
         hl.bind("Print", hl.dsp.exec_cmd("zen0x-capture-screenshot smart"))
         hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
         hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))

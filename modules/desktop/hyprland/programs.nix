@@ -3,7 +3,7 @@
     {
       xdg.configFile."hypr/programs.lua".text = ''
         return {
-          terminal = "kitty",
+          terminal = "foot",
           file_manager = "nautilus",
           browser = "zen",
         }
