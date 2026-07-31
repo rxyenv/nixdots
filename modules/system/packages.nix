@@ -11,6 +11,8 @@
         libsecret     # libraries
         libimobiledevice
         ifuse
+        idevicerestore
+        libirecovery
         piper         # logitech mouse config GUI
         unityhub      # Unity game engine hub
         nmap
@@ -19,6 +21,7 @@
       ];
 
       services.ratbagd.enable = true;  # daemon piper talks to
+      services.usbmuxd.enable = true;
     }
 ;
 }

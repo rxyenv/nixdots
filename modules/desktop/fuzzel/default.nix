@@ -17,7 +17,7 @@
             exit-on-keyboard-focus-loss = "no";
           };
           colors = {
-            background = "1e1e2edd";
+            background = "1e1e2eff";
             text = "cdd6f4ff";
             prompt = "bac2deff";
             placeholder = "7f849cff";
@@ -27,7 +27,7 @@
             selection-text = "cdd6f4ff";
             selection-match = "fab387ff";
             counter = "7f849cff";
-            border = "fab387ff";
+            border = "cba6f7ff";
           };
         };
       };

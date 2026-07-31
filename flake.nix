@@ -31,9 +31,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    helium-browser = {
+      url = "github:schembriaiden/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     abyssal-zed-themes = {
       url = "github:rxyenv/abyssal-zed-themes";
       flake = false;
+    };
+
+    iloader = {
+      url = "github:nab138/iloader";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
