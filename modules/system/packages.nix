@@ -18,6 +18,9 @@
         nmap
         btrfs-progs
         parted
+        woeusb-ng
+        persepolis
+        ntfs3g
       ];
 
       services.ratbagd.enable = true;  # daemon piper talks to
