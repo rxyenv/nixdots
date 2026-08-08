@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# zen0x:summary=Pick an entry from clipboard history and copy it.
+# zen0x:args=(none)
+
+selection="$(cliphist list | zen0x-qsmenu || true)"
+[[ -z "$selection" ]] && exit 0
+printf '%s' "$selection" | cliphist decode | wl-copy

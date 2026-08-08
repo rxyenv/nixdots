@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# zen0x:summary=Toggle hyprsunset night light (warm color temperature).
+# zen0x:args=[temperature]
+
+temp="${1:-4000}"
+
+notify() {
+  command -v notify-send >/dev/null 2>&1 && notify-send "$@"
+}
+
+if pgrep -x hyprsunset >/dev/null 2>&1; then
+  pkill -x hyprsunset
+  notify "Night light off"
+else
+  setsid hyprsunset --temperature "$temp" >/dev/null 2>&1 &
+  notify "Night light on" "${temp}K"
+fi

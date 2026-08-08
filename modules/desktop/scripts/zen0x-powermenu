@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ENTRIES=(
+    "  Lock"
+    "  Suspend"
+    "  Hibernate"
+    "  Reboot"
+    "  Shutdown"
+    "  Logout"
+)
+
+selected=$(printf '%s\n' "${ENTRIES[@]}" | zen0x-qsmenu)
+
+case "$selected" in
+    *Lock)      hyprlock ;;
+    *Suspend)   systemctl suspend ;;
+    *Hibernate) systemctl hibernate ;;
+    *Reboot)    systemctl reboot ;;
+    *Shutdown)  systemctl poweroff ;;
+    *Logout)    hyprctl dispatch exit ;;
+esac

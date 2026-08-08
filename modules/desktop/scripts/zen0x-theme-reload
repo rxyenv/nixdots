@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+status=0
+
+if command -v hyprctl >/dev/null 2>&1; then
+    if ! hyprctl reload; then
+        echo "Warning: Hyprland reload failed." >&2
+        status=1
+    fi
+fi
+
+if command -v pkill >/dev/null 2>&1; then
+    pkill -SIGUSR1 kitty 2>/dev/null || true
+fi
+
+# GTK4/libadwaita parses gtk-4.0/gtk.css only at startup — running apps
+# cannot hot-reload it. Restart the daemon-style ones; the rest pick the
+# new theme on next launch.
+if command -v nautilus >/dev/null 2>&1; then
+    nautilus -q 2>/dev/null || true
+fi
+
+# Nudge GTK3 apps that watch the settings portal
+if command -v gsettings >/dev/null 2>&1; then
+    current_gtk_theme="$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'")"
+    if [ -n "$current_gtk_theme" ]; then
+        gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita' 2>/dev/null || true
+        gsettings set org.gnome.desktop.interface gtk-theme "$current_gtk_theme" 2>/dev/null || true
+    fi
+fi
+
+if [ "$status" -eq 0 ]; then
+    notify-send "Theme" "Reloaded successfully."
+else
+    notify-send -u critical "Theme" "Reload had errors — check logs."
+fi
+
+exit "$status"

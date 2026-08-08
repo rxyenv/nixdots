@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+state=$(bluetoothctl show | awk '/Powered:/{print $2}')
+if [ "$state" = "yes" ]; then
+  bluetoothctl power off
+else
+  bluetoothctl power on
+fi

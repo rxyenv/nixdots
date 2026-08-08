@@ -1,0 +1,9 @@
+.agents/
+.claude/
+.clinerules/
+.cursor/
+.github/
+.opencode/
+.windsurf/
+AGENTS.md
+skills-lock.json
