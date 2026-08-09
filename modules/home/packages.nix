@@ -15,8 +15,6 @@
         nixd
         nixfmt
         ripgrep
-        tree
-        sassc
         nodejs
         github-cli
         heroic
@@ -29,14 +27,12 @@
         dust
         duf
         tealdeer
-        ncdu
         just
         p7zip
         rsync
         socat
         psmisc
         wl-clipboard
-        zenity
         yazi
 
         # Python
@@ -59,13 +55,10 @@
         # Files
         udiskie
         nautilus
-        file-roller
-        gnome-disk-utility
         ffmpegthumbnailer
         poppler-utils
 
         # Theming
-        nwg-look
         qgnomeplatform-qt6
 
         # Editors
@@ -75,7 +68,6 @@
         # Desktop
         glib
         loupe
-        signal-desktop
         vesktop
         anydesk
         qbittorrent

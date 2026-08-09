@@ -14,7 +14,6 @@
         "zen0x-capture-ocr"
         "zen0x-capture-screenrecording"
         "zen0x-capture-screenshot"
-        "zen0x-clipboard"
         "zen0x-default-browser"
         "zen0x-default-editor"
         "zen0x-default-terminal"
@@ -62,7 +61,6 @@
           python3
           hyprpicker
           hyprsunset
-          cliphist
           tesseract
           perl
           wl-clipboard

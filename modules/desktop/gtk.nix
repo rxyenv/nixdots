@@ -9,6 +9,17 @@
         pkgs.capitaine-cursors
       ];
 
+      gtk = {
+        theme = {
+          package = pkgs.adw-gtk3;
+          name = "adw-gtk3-dark";
+        };
+        iconTheme = {
+          package = pkgs.yaru-theme;
+          name = "Yaru-dark";
+        };
+      };
+
       home.pointerCursor = {
         package = pkgs.capitaine-cursors;
         name = "capitaine-cursors-white";

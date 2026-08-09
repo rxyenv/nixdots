@@ -17,7 +17,7 @@
             mainMod .. " + SHIFT + M",
             hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop")
         )
-        hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(programs.file_manager))
+        hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("zen0x-launch-or-focus nautilus 'uwsm-app -- nautilus'"))
         hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(programs.browser))
         hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 
@@ -25,11 +25,14 @@
         hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(noctalia .. "panel-toggle control-center"))
         hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(noctalia .. "settings-toggle"))
         hl.bind("ALT + Tab", hl.dsp.exec_cmd(noctalia .. "window-switcher"))
-        hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zeditor"))
+        hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zen0x-launch-or-focus zed 'uwsm-app -- zeditor'"))
+        hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("zen0x-launch-or-focus zen 'uwsm-app -- zen'"))
+        hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("zen0x-launch-or-focus vesktop 'uwsm-app -- vesktop'"))
         hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("foot --class org.helix.editor -e hx"))
-        hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("zen0x-powermenu"))
+        hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"))
         hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
         hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
+        hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("zen0x-launch-wifi"))
 
         hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
         hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))
@@ -91,7 +94,7 @@
         hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.swap({ direction = "d" }))
 
         hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-        hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("zen0x-clipboard"))
+        hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(noctalia .. "panel-toggle clipboard"))
         hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
         hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
         hl.bind(mainMod .. " + Tab", function()

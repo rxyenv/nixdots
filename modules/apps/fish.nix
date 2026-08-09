@@ -97,6 +97,17 @@
         enableFishIntegration = true;
       };
 
+      programs.atuin = {
+        enable = true;
+        enableFishIntegration = true;
+        settings = {
+          search_mode = "fuzzy";
+          filter_mode = "global";
+          style = "compact";
+          enter_accept = true;
+        };
+      };
+
       programs.zoxide = {
         enable = true;
         enableFishIntegration = true;

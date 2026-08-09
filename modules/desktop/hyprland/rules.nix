@@ -86,7 +86,7 @@
 
       -- TUI utilities (network, audio, bluetooth) + floating terminal
       float_centered("float-tui-tools",
-        { class = "^(org.zen0x.impala|org.zen0x.wiremix|org.zen0x.bluetui|org.zen0x.floating-terminal)$" },
+        { class = "^org\\.zen0x\\.(impala|wiremix|bluetui|floating-terminal)$" },
         0.55, 0.6)
 
       -- btop wants room for all its boxes
@@ -157,7 +157,7 @@
       for _, s in ipairs({ "term", "notes", "files", "mixer", "monitor" }) do
         hl.window_rule({
           name = "scratch-" .. s,
-          match = { class = "^org%.zen0x%.scratch-" .. s .. "$" },
+          match = { class = "^org\\.zen0x\\.scratch-" .. s .. "$" },
           workspace = "special:" .. s,
           float = true,
           center = true,

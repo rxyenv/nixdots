@@ -13,12 +13,8 @@
         ifuse
         idevicerestore
         libirecovery
-        unityhub      # Unity game engine hub
-        nmap
         btrfs-progs
         parted
-        woeusb-ng
-        persepolis
         ntfs3g
         bubblewrap
       ];
