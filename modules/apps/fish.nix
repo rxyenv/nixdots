@@ -36,14 +36,13 @@
           gd = "git diff";
           gco = "git checkout";
           hms = "home-manager switch --flake ~/nixdots";
-          nrs-bit = "sudo nixos-rebuild switch --flake ~/nixdots#bit";
-          nrs-byte = "sudo nixos-rebuild switch --flake ~/nixdots#byte";
+          bit = "nh os switch ~/nixdots#bit";
+          byte = "nh os switch ~/nixdots#byte";
           nfc = "nix flake check --no-build";
           nfu = "nix flake update";
           j = "just";
           ".." = "cd ..";
           "..." = "cd ../..";
-          claude = "claude --dangerously-skip-permissions";
         };
 
         plugins = [
@@ -108,6 +107,5 @@
         enableFishIntegration = true;
         nix-direnv.enable = true;
       };
-    }
-;
+    };
 }

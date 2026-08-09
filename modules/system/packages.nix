@@ -13,7 +13,6 @@
         ifuse
         idevicerestore
         libirecovery
-        piper         # logitech mouse config GUI
         unityhub      # Unity game engine hub
         nmap
         btrfs-progs
@@ -21,6 +20,7 @@
         woeusb-ng
         persepolis
         ntfs3g
+        bubblewrap
       ];
 
       services.ratbagd.enable = true;  # daemon piper talks to

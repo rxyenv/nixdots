@@ -11,6 +11,8 @@
         grc
         jq
         localsend
+        nil
+        nixd
         nixfmt
         ripgrep
         tree
@@ -48,9 +50,7 @@
         android-tools
 
         # AI
-        claude-code
         opencode
-        codex
 
         # Security
         proton-pass-cli
@@ -61,26 +61,16 @@
         nautilus
         file-roller
         gnome-disk-utility
-        cliphist
         ffmpegthumbnailer
         poppler-utils
-        satty
-
 
         # Theming
-        pywalfox-native
         nwg-look
         qgnomeplatform-qt6
 
         # Editors
         zed-editor
         helix
-
-        # Audio / Network / Bluetooth
-        blueman
-        pavucontrol
-        pamixer
-        networkmanagerapplet
 
         # Desktop
         glib
@@ -89,7 +79,6 @@
         vesktop
         anydesk
         qbittorrent
-        protonup-qt
         (
           (wrapOBS.override {
             obs-studio = obs-studio.override { cudaSupport = true; };

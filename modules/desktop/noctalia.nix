@@ -20,7 +20,10 @@
     {
       imports = [ inputs.noctalia.homeModules.default ];
 
-      programs.noctalia.enable = true;
+      programs.noctalia = {
+        enable = true;
+        settings.theme.templates.builtin_ids = [ "foot" ];
+      };
     }
   ;
 }
