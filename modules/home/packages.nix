@@ -40,6 +40,10 @@
 
         # Rust
         rustup
+        cargo-nextest
+        cargo-watch
+        cargo-audit
+        cargo-deny
 
         # Flutter
         flutter
