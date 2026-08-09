@@ -4,7 +4,7 @@
       xdg.configFile."hypr/layouts.lua".text = ''
         hl.config({
             dwindle = {
-                preserve_split = true,
+                preserve_split = false,
             },
             master = {
                 new_status = "master",
