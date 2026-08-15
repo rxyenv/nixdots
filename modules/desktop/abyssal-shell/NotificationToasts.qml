@@ -35,14 +35,16 @@ PanelWindow {
         Repeater {
             model: root.shell.toastNotifications.slice(0, 4)
 
-            delegate: GlassPanel {
+            delegate: Rectangle {
                 id: toast
                 required property var modelData
 
                 width: toastColumn.width
                 height: Math.max(92, bodyColumn.implicitHeight + 30)
                 radius: root.palette.radius
-                strong: true
+                color: Qt.rgba(0.045, 0.085, 0.095, 0.65)
+                border.width: 1
+                border.color: root.palette.border
 
                 RowLayout {
                     anchors.fill: parent

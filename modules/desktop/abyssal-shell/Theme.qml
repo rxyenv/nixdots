@@ -20,11 +20,11 @@ QtObject {
     readonly property color success: "#8BD5CA"
     readonly property color warning: "#FFD16D"
 
-    readonly property int barHeight: 48
+    readonly property int barHeight: 56
     readonly property int radius: 16
     readonly property int radiusLarge: 24
     readonly property int spacing: 10
     readonly property int durationFast: 140
     readonly property int duration: 240
-    readonly property string fontFamily: "Maple Mono NF"
+    readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
 }

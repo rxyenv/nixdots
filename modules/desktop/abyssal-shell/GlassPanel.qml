@@ -30,17 +30,6 @@ Item {
             GradientStop { position: 0.52; color: root.strong ? root.palette.panelStrong : root.palette.panel }
             GradientStop { position: 1; color: root.strong ? Qt.darker(root.palette.panelStrong, 1.08) : Qt.darker(root.palette.panel, 1.08) }
         }
-
-        Rectangle {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: 1
-            height: 1
-            radius: root.radius
-            color: root.palette.borderBright
-            opacity: root.bordered ? 0.7 : 0
-        }
     }
 
     Item {

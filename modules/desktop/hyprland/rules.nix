@@ -24,11 +24,11 @@
 
       hl.layer_rule({
         name = "abyssal-shell",
-        match = { namespace = "^abyssal-" },
+        match = { namespace = "^abyssal-.*$" },
         no_anim = true,
         blur = true,
         blur_popups = true,
-        ignore_alpha = 0.5,
+        ignore_alpha = 0.0,
       })
 
       -- ── Global window behavior ─────────────────────────────────

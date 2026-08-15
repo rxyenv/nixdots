@@ -23,6 +23,7 @@
         vkbasalt
         mpv
         mpvpaper
+        awww
         gpu-screen-recorder
         dust
         duf
@@ -92,6 +93,5 @@
 
         # (flake packages go here)
       ];
-    }
-;
+    };
 }

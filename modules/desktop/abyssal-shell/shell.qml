@@ -57,6 +57,7 @@ ShellRoot {
     }
 
     SystemStatus { id: systemStatusObject }
+    OsdWindow { shell: root }
 
     NotificationServer {
         id: notificationServerObject
@@ -78,6 +79,7 @@ ShellRoot {
 
         function toggleLauncher() { root.toggleSurface("launcher", null) }
         function toggleControlCenter() { root.toggleSurface("control", null) }
+        function toggleWallpaper() { root.toggleSurface("wallpaper", null) }
         function toggleNotifications() { root.toggleSurface("notifications", null) }
         function close() { root.closeSurfaces() }
     }
@@ -95,6 +97,11 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
         delegate: ControlCenterWindow { shell: root }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        delegate: WallpaperSwitcherWindow { shell: root }
     }
 
     Variants {

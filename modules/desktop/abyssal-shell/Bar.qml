@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Services.SystemTray
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
@@ -21,27 +22,19 @@ PanelWindow {
     anchors { top: true; left: true; right: true }
     WlrLayershell.namespace: "abyssal-bar"
 
-    GlassPanel {
+    Rectangle {
         anchors.fill: parent
-        anchors.margins: 5
-        radius: 14
-        elevated: true
+        anchors.margins: 7
+        radius: 12
+        color: Qt.rgba(0.063, 0.129, 0.153, 0.65)
+        border.width: 1
+        border.color: root.palette.border
 
         RowLayout {
             anchors.fill: parent
             anchors.leftMargin: 8
             anchors.rightMargin: 8
             spacing: 8
-
-            GlassButton {
-                Layout.preferredWidth: 36
-                Layout.preferredHeight: 30
-                icon: "󰣇"
-                compact: true
-                accent: true
-                bordered: false
-                onClicked: root.shell.toggleSurface("launcher", root.modelData)
-            }
 
             Row {
                 id: workspaces
@@ -54,8 +47,8 @@ PanelWindow {
                         id: workspace
                         required property var modelData
 
-                        width: modelData.focused ? 28 : 23
-                        height: 24
+                        width: modelData.focused ? 32 : 27
+                        height: 30
                         radius: 8
                         color: modelData.focused ? root.palette.accent
                             : modelData.urgent ? root.palette.danger
@@ -70,7 +63,7 @@ PanelWindow {
                             text: workspace.modelData.id
                             color: workspace.modelData.focused ? root.palette.background : root.palette.foreground
                             font.family: root.palette.fontFamily
-                            font.pixelSize: 10
+                            font.pixelSize: 12
                             font.bold: workspace.modelData.focused
                         }
 
@@ -87,103 +80,148 @@ PanelWindow {
 
             Item {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 30
+                Layout.preferredHeight: 36
+            }
 
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: Math.min(title.implicitWidth + 28, parent.width - 10)
-                    height: 26
-                    radius: 10
-                    color: Qt.rgba(1, 1, 1, titleMouse.containsMouse ? 0.065 : 0.035)
-                    Text {
-                        id: title
-                        anchors.centerIn: parent
-                        width: Math.min(implicitWidth, parent.width - 20)
-                        elide: Text.ElideRight
-                        horizontalAlignment: Text.AlignHCenter
-                        text: Hyprland.activeToplevel ? Hyprland.activeToplevel.title : "Abyssal"
-                        color: root.palette.muted
-                        font.family: root.palette.fontFamily
-                        font.pixelSize: 10
+            Item {
+                id: tray
+                property bool expanded: false
+                Layout.preferredWidth: expanded ? trayIcons.implicitWidth + 28 : 28
+                Layout.preferredHeight: 36
+
+                Row {
+                    id: trayIcons
+                    anchors.left: parent.left
+                    anchors.leftMargin: 2
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 8
+                    visible: tray.expanded
+
+                    Repeater {
+                        model: SystemTray.items.values
+
+                        delegate: Item {
+                            required property var modelData
+                            width: 20
+                            height: 28
+
+                            Image {
+                                anchors.centerIn: parent
+                                width: 16
+                                height: 16
+                                source: modelData.icon
+                                sourceSize: Qt.size(16, 16)
+                                smooth: true
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: modelData.activate()
+                                onPressed: mouse => {
+                                    if (mouse.button === Qt.RightButton) modelData.secondaryActivate()
+                                }
+                            }
+                        }
                     }
-
-                    MouseArea {
-                        id: titleMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: root.shell.toggleSurface("launcher", root.modelData)
-                    }
                 }
-            }
-
-            Rectangle {
-                visible: root.status.battery.length > 0
-                Layout.preferredWidth: batteryText.implicitWidth + 16
-                Layout.preferredHeight: 28
-                radius: 10
-                color: Qt.rgba(1, 1, 1, 0.04)
-                Text {
-                    id: batteryText
-                    anchors.centerIn: parent
-                    text: "󰁹 " + root.status.battery
-                    color: root.palette.foreground
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 10
-                }
-            }
-
-            GlassButton {
-                Layout.preferredWidth: statusText.implicitWidth + 24
-                Layout.preferredHeight: 30
-                compact: true
-                bordered: false
-                onClicked: root.shell.toggleSurface("control", root.modelData)
 
                 Text {
-                    id: statusText
-                    anchors.centerIn: parent
-                    text: (root.status.wifiEnabled ? "󰖩" : "󰖪") + "  "
-                        + (root.status.bluetoothEnabled ? "󰂯" : "󰂲") + "  "
-                        + (root.status.muted ? "󰝟" : "") + " " + root.status.volume
-                    color: root.palette.foreground
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: tray.expanded ? "" : ""
+                    color: root.palette.muted
                     font.family: root.palette.fontFamily
-                    font.pixelSize: 11
-                }
-            }
-
-            GlassButton {
-                Layout.preferredWidth: 35
-                Layout.preferredHeight: 30
-                icon: root.shell.notificationServer.trackedNotifications.values.length > 0 ? "󰂚" : "󰂜"
-                compact: true
-                bordered: false
-                checked: root.shell.activeSurface === "notifications"
-                onClicked: root.shell.toggleSurface("notifications", root.modelData)
-            }
-
-            Rectangle {
-                Layout.preferredWidth: clockText.implicitWidth + 20
-                Layout.preferredHeight: 30
-                radius: 10
-                color: clockMouse.containsMouse ? root.palette.accentSoft : Qt.rgba(1, 1, 1, 0.04)
-                Text {
-                    id: clockText
-                    anchors.centerIn: parent
-                    text: Qt.formatDateTime(root.clock.date, "ddd  d MMM  HH:mm")
-                    color: root.palette.foreground
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 10
-                    font.weight: Font.DemiBold
+                    font.pixelSize: 13
                 }
 
                 MouseArea {
-                    id: clockMouse
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: 28
+                    onClicked: tray.expanded = !tray.expanded
+                }
+            }
+
+            Item {
+                Layout.preferredWidth: 28
+                Layout.preferredHeight: 36
+
+                Text {
+                    anchors.centerIn: parent
+                    text: root.status.wifiEnabled ? "" : "󰖪"
+                    color: root.palette.foreground
+                    font.family: root.palette.fontFamily
+                    font.pixelSize: 14
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: root.shell.toggleSurface("control", root.modelData)
+                }
+            }
+
+            Item {
+                Layout.preferredWidth: 28
+                Layout.preferredHeight: 36
+
+                Text {
+                    id: volumeText
+                    anchors.centerIn: parent
+                    text: root.status.muted ? "" : ""
+                    color: root.palette.foreground
+                    font.family: root.palette.fontFamily
+                    font.pixelSize: 14
+                }
+
+                MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: root.shell.toggleSurface("notifications", root.modelData)
+                    onClicked: root.shell.toggleSurface("control", root.modelData)
+                    onWheel: wheel => {
+                        const step = wheel.angleDelta.y > 0 ? "5%+" : "5%-"
+                        Quickshell.execDetached([
+                            "sh", "-c",
+                            "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ " + step
+                                + " && qs -p \"$HOME/.config/quickshell/abyssal\" ipc call osd volume"
+                        ])
+                        volumeRefresh.restart()
+                        wheel.accepted = true
+                    }
                 }
+
+                Timer {
+                    id: volumeRefresh
+                    interval: 180
+                    onTriggered: root.status.refresh()
+                }
+            }
+
+        }
+
+        Item {
+            id: clock
+            anchors.centerIn: parent
+            width: clockText.implicitWidth + 20
+            height: 36
+
+            Text {
+                id: clockText
+                anchors.centerIn: parent
+                text: Qt.formatDateTime(root.clock.date, "hh:mm AP  ·  ddd, MMM d")
+                color: root.palette.foreground
+                font.family: root.palette.fontFamily
+                font.pixelSize: 13
+                font.weight: Font.Bold
+            }
+
+            MouseArea {
+                id: clockMouse
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.shell.toggleSurface("notifications", root.modelData)
             }
         }
     }

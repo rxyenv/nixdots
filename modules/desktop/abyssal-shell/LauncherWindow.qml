@@ -42,10 +42,11 @@ PanelWindow {
 
     screen: modelData
     visible: shell.surfaceVisible("launcher", modelData)
-    color: palette.scrim
+    implicitWidth: Math.min(600, modelData.width - 64)
+    implicitHeight: Math.min(650, results.contentHeight + 162)
+    color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
-    anchors { top: true; bottom: true; left: true; right: true }
     WlrLayershell.namespace: "abyssal-launcher"
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
@@ -59,20 +60,13 @@ PanelWindow {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: root.shell.closeSurfaces()
-    }
-
-    GlassPanel {
+    Rectangle {
         id: card
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: Math.max(90, parent.height * 0.13)
-        width: Math.min(700, parent.width - 64)
-        height: Math.min(650, results.contentHeight + 162)
+        anchors.fill: parent
         radius: root.palette.radiusLarge
-        strong: true
+        color: Qt.rgba(0.045, 0.085, 0.095, 0.65)
+        border.width: 1
+        border.color: root.palette.border
         scale: 1
         opacity: 1
 
@@ -136,12 +130,6 @@ PanelWindow {
                     }
                 }
 
-                Text {
-                    text: "ESC"
-                    color: root.palette.muted
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 10
-                }
             }
 
             Rectangle {
@@ -171,8 +159,6 @@ PanelWindow {
                     height: 48
                     radius: 13
                     color: index === root.selectedIndex ? root.palette.accentSoft : hover.containsMouse ? Qt.rgba(1, 1, 1, 0.055) : "transparent"
-                    border.width: index === root.selectedIndex ? 1 : 0
-                    border.color: root.palette.borderBright
 
                     RowLayout {
                         anchors.fill: parent
@@ -189,38 +175,16 @@ PanelWindow {
                             smooth: true
                         }
 
-                        ColumnLayout {
-                            Layout.fillWidth: true
-                            spacing: 0
-
-                            Text {
-                                Layout.fillWidth: true
-                                text: result.modelData.name
-                                color: root.palette.foreground
-                                elide: Text.ElideRight
-                                font.family: root.palette.fontFamily
-                                font.pixelSize: 13
-                                font.weight: Font.DemiBold
-                            }
-
-                            Text {
-                                visible: result.modelData.genericName.length > 0
-                                Layout.fillWidth: true
-                                text: result.modelData.genericName
-                                color: root.palette.muted
-                                elide: Text.ElideRight
-                                font.family: root.palette.fontFamily
-                                font.pixelSize: 10
-                            }
-                        }
-
                         Text {
-                            visible: result.index === root.selectedIndex
-                            text: "↵"
-                            color: root.palette.accent
+                            Layout.fillWidth: true
+                            text: result.modelData.name
+                            color: root.palette.foreground
+                            elide: Text.ElideRight
                             font.family: root.palette.fontFamily
-                            font.pixelSize: 15
+                            font.pixelSize: 13
+                            font.weight: Font.DemiBold
                         }
+
                     }
 
                     MouseArea {
@@ -246,14 +210,6 @@ PanelWindow {
                 }
             }
 
-            Text {
-                Layout.fillWidth: true
-                text: "↑↓ navigate   ↵ launch   esc close"
-                color: root.palette.subtle
-                horizontalAlignment: Text.AlignRight
-                font.family: root.palette.fontFamily
-                font.pixelSize: 10
-            }
         }
     }
 
