@@ -5,8 +5,6 @@
         local programs = require("programs")
 
         local mainMod = "SUPER"
-        local noctalia = "noctalia msg "
-
         hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(programs.terminal))
         hl.bind(
             mainMod .. " + SHIFT + Return",
@@ -20,16 +18,14 @@
         hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("zen0x-launch-or-focus nautilus 'uwsm-app -- nautilus'"))
         hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(programs.browser))
         hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
+        hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("abyssal-shell toggleLauncher"))
+        hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("abyssal-shell toggleControlCenter"))
+        hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("abyssal-shell toggleNotifications"))
 
-        hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(noctalia .. "panel-toggle launcher"))
-        hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(noctalia .. "panel-toggle control-center"))
-        hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(noctalia .. "settings-toggle"))
-        hl.bind("ALT + Tab", hl.dsp.exec_cmd(noctalia .. "window-switcher"))
         hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zen0x-launch-or-focus zed 'uwsm-app -- zeditor'"))
         hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("zen0x-launch-or-focus zen 'uwsm-app -- zen'"))
         hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("zen0x-launch-or-focus vesktop 'uwsm-app -- vesktop'"))
         hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("foot --class org.helix.editor -e hx"))
-        hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"))
         hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
         hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
         hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("zen0x-launch-wifi"))
@@ -94,7 +90,6 @@
         hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.swap({ direction = "d" }))
 
         hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-        hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(noctalia .. "panel-toggle clipboard"))
         hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
         hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
         hl.bind(mainMod .. " + Tab", function()
@@ -110,12 +105,12 @@
         hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
         hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
 
-        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(noctalia .. "volume-up"))
-        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(noctalia .. "volume-down"))
-        hl.bind("XF86AudioMute", hl.dsp.exec_cmd(noctalia .. "volume-mute"))
-        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(noctalia .. "brightness-up"))
-        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctalia .. "brightness-down"))
-        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(noctalia .. "mic-mute"))
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true })
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true })
+        hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
+        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
+        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("zen0x-brightness-display +5%"), { locked = true })
+        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("zen0x-brightness-display 5%-"), { locked = true })
 
         hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
         hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })

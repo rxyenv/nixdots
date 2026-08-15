@@ -293,38 +293,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1785571196,
-        "narHash": "sha256-xwSqxTsama0YTtS78+4YyCm6jJg09v78QWfP1cAyoVA=",
-        "rev": "148bab9c1c3c53136ecb44a6ea356a0ed5b39b06",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1045728.148bab9c1c3c/nixexprs.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
-      }
-    },
-    "noctalia": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1786219602,
-        "narHash": "sha256-r8F5ltMYEpZ5LjXohhJ2sqAXlxQtrEq7OWxAzA7F2lw=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia",
-        "rev": "1fe13a043c6dd3e8d7901b32ae6a1637a236c4dd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "ref": "cachix",
-        "repo": "noctalia",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "abyssal-zed-themes": "abyssal-zed-themes",
@@ -336,7 +304,6 @@
         "import-tree": "import-tree",
         "millennium": "millennium",
         "nixpkgs": "nixpkgs",
-        "noctalia": "noctalia",
         "zen-browser": "zen-browser"
       }
     },

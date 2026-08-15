@@ -1,7 +1,6 @@
 {
-  flake.modules.homeManager.hyprland =
-    {
-      xdg.configFile."hypr/rules.lua".text = ''
+  flake.modules.homeManager.hyprland = {
+    xdg.configFile."hypr/rules.lua".text = ''
       -- ── Helpers ────────────────────────────────────────────────
 
       -- Centered floating window, size as fraction of the monitor
@@ -24,8 +23,8 @@
       })
 
       hl.layer_rule({
-        name = "noctalia",
-        match = { namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$" },
+        name = "abyssal-shell",
+        match = { namespace = "^abyssal-" },
         no_anim = true,
         blur = true,
         blur_popups = true,
@@ -129,13 +128,6 @@
         float = true,
       })
 
-      hl.window_rule({
-        name = "noctalia-settings",
-        match = { class = "dev.noctalia.Noctalia" },
-        float = true,
-        size = { 1080, 920 },
-      })
-
       -- ── Steam ──────────────────────────────────────────────────
 
       local steam_class = "^(steam|Steam|steamwebhelper)$"
@@ -201,6 +193,5 @@
         })
       end
     '';
-    }
-;
+  };
 }
