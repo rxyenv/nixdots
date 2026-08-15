@@ -43,7 +43,7 @@ PanelWindow {
     screen: modelData
     visible: shell.surfaceVisible("launcher", modelData)
     implicitWidth: Math.min(600, modelData.width - 64)
-    implicitHeight: Math.min(650, results.contentHeight + 162)
+    implicitHeight: Math.min(650, Math.max(48, results.contentHeight) + 90)
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
@@ -79,15 +79,7 @@ PanelWindow {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 54
-                spacing: 13
-
-                Text {
-                    text: ""
-                    color: root.palette.accent
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 21
-                }
+                Layout.preferredHeight: 42
 
                 TextInput {
                     id: search
@@ -97,7 +89,7 @@ PanelWindow {
                     selectionColor: root.palette.accent
                     selectedTextColor: root.palette.background
                     font.family: root.palette.fontFamily
-                    font.pixelSize: 19
+                    font.pixelSize: 17
                     clip: true
 
                     onTextChanged: {
@@ -130,12 +122,6 @@ PanelWindow {
                     }
                 }
 
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: root.palette.border
             }
 
             ListView {

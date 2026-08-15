@@ -47,6 +47,16 @@
         opacity = "0.97 0.92",
       })
 
+      -- Keep VS Code translucent; the global decoration blur shows through.
+      hl.window_rule({
+        name = "transparent-vscode",
+        match = {
+          class = "^Code$",
+          float = false,
+        },
+        opacity = "0.90 0.84",
+      })
+
       hl.window_rule({
         name = "fix-xwayland-drags",
         match = {
@@ -100,9 +110,6 @@
       float_centered("float-android-studio-welcome",
         { class = "^(jetbrains-studio)$", title = "^Welcome to Android Studio$", fullscreen = false },
         0.45, 0.55)
-      float_centered("float-zed-settings",
-        { class = "dev.zed.Zed", title = "Zed — Settings", fullscreen = false },
-        0.55, 0.6)
       float_centered("float-nwg-look",
         { class = "^(nwg-look)$", fullscreen = false },
         0.6, 0.7)
@@ -159,8 +166,8 @@
 
       -- ── Workspaces ─────────────────────────────────────────────
 
-      -- Persistent workspaces 1-5
-      for i = 1, 5 do
+      -- Persistent workspaces 1-6
+      for i = 1, 6 do
         hl.workspace_rule({
           workspace = tostring(i),
           persistent = true,
@@ -176,10 +183,16 @@
         workspace = "4",
       })
 
+      hl.window_rule({
+        name = "webapps-on-workspace-6",
+        match = { class = "^chrome-.*-Default$" },
+        workspace = "6",
+      })
+
       local workspace_assignments = {
-        { ws = "1", match = { class = "^(zen|Zen)$" } },
+        { ws = "1", match = { class = "^(helium|Helium)$" } },
           { ws = "2", match = { class = "^(foot|footclient|Alacritty|WezTerm)$" } },
-        { ws = "3", match = { class = "^(dev.zed.Zed|org.helix.editor)$" } },
+        { ws = "3", match = { class = "^Code$" } },
         { ws = "4", match = { class = "^(Spotify)$" } },
         { ws = "5", match = { class = "^(steam|Steam|heroic|Heroic)$" } },
         { ws = "6", match = { title = "^(.*%.exe|.*game|.*Game)$" } },

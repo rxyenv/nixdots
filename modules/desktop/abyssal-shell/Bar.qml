@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.SystemTray
+import Quickshell.Widgets
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
@@ -14,11 +15,36 @@ PanelWindow {
     readonly property Theme palette: Theme {}
     readonly property var status: shell.systemStatus
     readonly property SystemClock clock: SystemClock { precision: SystemClock.Minutes }
+    readonly property int statusIconSize: 14
+    readonly property int statusItemSize: 26
+    property Item tooltipTarget: null
+    property string tooltipText: ""
+
+    function showTooltip(target, text) {
+        tooltipTarget = target
+        tooltipText = text
+        tooltipDelay.restart()
+    }
+
+    function hideTooltip(target) {
+        if (tooltipTarget !== target) return
+        tooltipDelay.stop()
+        tooltipWindow.visible = false
+        tooltipTarget = null
+    }
+
+    Timer {
+        id: tooltipDelay
+        interval: 420
+        onTriggered: tooltipWindow.visible = root.tooltipTarget !== null
+    }
 
     screen: modelData
     implicitHeight: palette.barHeight
     color: "transparent"
-    exclusiveZone: implicitHeight
+    // Let tiled windows sit closer to the panel while retaining Hyprland's
+    // regular outer gap around the rest of the workspace.
+    exclusiveZone: implicitHeight - 10
     anchors { top: true; left: true; right: true }
     WlrLayershell.namespace: "abyssal-bar"
 
@@ -72,6 +98,10 @@ PanelWindow {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(workspaceMouse,
+                                "Workspace " + workspace.modelData.id
+                                    + (workspace.modelData.focused ? " · Active" : ""))
+                            onExited: root.hideTooltip(workspaceMouse)
                             onClicked: workspace.modelData.activate()
                         }
                     }
@@ -84,117 +114,165 @@ PanelWindow {
             }
 
             Item {
-                id: tray
-                property bool expanded: false
-                Layout.preferredWidth: expanded ? trayIcons.implicitWidth + 28 : 28
-                Layout.preferredHeight: 36
+                id: statusArea
+                Layout.preferredWidth: statusRow.implicitWidth
+                Layout.preferredHeight: root.statusItemSize
 
                 Row {
-                    id: trayIcons
-                    anchors.left: parent.left
-                    anchors.leftMargin: 2
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 8
-                    visible: tray.expanded
+                    id: statusRow
+                    anchors.centerIn: parent
+                    height: root.statusItemSize
+                    spacing: 4
 
-                    Repeater {
-                        model: SystemTray.items.values
+                    Item {
+                        id: tray
+                        width: trayIcons.implicitWidth
+                        height: root.statusItemSize
+                        visible: SystemTray.items.values.length > 0
 
-                        delegate: Item {
-                            required property var modelData
-                            width: 20
-                            height: 28
+                        Row {
+                            id: trayIcons
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 4
 
-                            Image {
-                                anchors.centerIn: parent
-                                width: 16
-                                height: 16
-                                source: modelData.icon
-                                sourceSize: Qt.size(16, 16)
-                                smooth: true
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: modelData.activate()
-                                onPressed: mouse => {
-                                    if (mouse.button === Qt.RightButton) modelData.secondaryActivate()
+                            Repeater {
+                                model: SystemTray.items.values
+                                delegate: Item {
+                                    required property var modelData
+                                    width: root.statusItemSize
+                                    height: root.statusItemSize
+                                    IconImage {
+                                        id: trayIcon
+                                        anchors.centerIn: parent
+                                        width: 16
+                                        height: 16
+                                        source: modelData.icon
+                                        mipmap: true
+                                    }
+                                    MouseArea {
+                                        id: trayMouse
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        cursorShape: Qt.PointingHandCursor
+                                        onEntered: {
+                                            const title = modelData.tooltipTitle || modelData.title || modelData.id
+                                            const detail = modelData.tooltipDescription
+                                            root.showTooltip(trayMouse, title + (detail ? " · " + detail : ""))
+                                        }
+                                        onExited: root.hideTooltip(trayMouse)
+                                        onClicked: modelData.activate()
+                                        onPressed: mouse => {
+                                            if (mouse.button === Qt.RightButton) modelData.secondaryActivate()
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                Text {
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: tray.expanded ? "" : ""
-                    color: root.palette.muted
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 13
-                }
-
-                MouseArea {
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: 28
-                    onClicked: tray.expanded = !tray.expanded
-                }
-            }
-
-            Item {
-                Layout.preferredWidth: 28
-                Layout.preferredHeight: 36
-
-                Text {
-                    anchors.centerIn: parent
-                    text: root.status.wifiEnabled ? "" : "󰖪"
-                    color: root.palette.foreground
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 14
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: root.shell.toggleSurface("control", root.modelData)
-                }
-            }
-
-            Item {
-                Layout.preferredWidth: 28
-                Layout.preferredHeight: 36
-
-                Text {
-                    id: volumeText
-                    anchors.centerIn: parent
-                    text: root.status.muted ? "" : ""
-                    color: root.palette.foreground
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 14
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.shell.toggleSurface("control", root.modelData)
-                    onWheel: wheel => {
-                        const step = wheel.angleDelta.y > 0 ? "5%+" : "5%-"
-                        Quickshell.execDetached([
-                            "sh", "-c",
-                            "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ " + step
-                                + " && qs -p \"$HOME/.config/quickshell/abyssal\" ipc call osd volume"
-                        ])
-                        volumeRefresh.restart()
-                        wheel.accepted = true
+                    Rectangle {
+                        visible: tray.visible
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 1
+                        height: 16
+                        color: Qt.rgba(1, 1, 1, 0.12)
                     }
-                }
 
-                Timer {
-                    id: volumeRefresh
-                    interval: 180
-                    onTriggered: root.status.refresh()
+                    Item {
+                        width: root.statusItemSize
+                        height: root.statusItemSize
+                        Text {
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: !root.status.networkConnected ? "󰤭"
+                                : root.status.wifiSignal <= 0 ? "󰤨"
+                                : root.status.wifiSignal >= 75 ? "󰤨"
+                                : root.status.wifiSignal >= 50 ? "󰤥"
+                                : root.status.wifiSignal >= 25 ? "󰤢" : "󰤟"
+                            color: root.palette.foreground
+                            font.family: root.palette.fontFamily
+                            font.pixelSize: root.statusIconSize
+                        }
+                        MouseArea {
+                            id: networkMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(networkMouse,
+                                !root.status.networkConnected ? "Network disconnected"
+                                    : root.status.wifiSignal > 0
+                                        ? root.status.wifi + " · " + root.status.wifiSignal + "%"
+                                        : "Network connected")
+                            onExited: root.hideTooltip(networkMouse)
+                            onClicked: root.shell.toggleSurface("control", root.modelData)
+                        }
+                    }
+
+                    Item {
+                        width: root.statusItemSize
+                        height: root.statusItemSize
+                        Text {
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: root.status.bluetoothConnected ? "󰂱"
+                                : root.status.bluetoothEnabled ? "" : "󰂲"
+                            color: root.status.bluetoothEnabled ? root.palette.foreground : root.palette.muted
+                            font.family: root.palette.fontFamily
+                            font.pixelSize: root.statusIconSize
+                        }
+                        MouseArea {
+                            id: bluetoothMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(bluetoothMouse, "Bluetooth · " + root.status.bluetooth)
+                            onExited: root.hideTooltip(bluetoothMouse)
+                            onClicked: root.shell.toggleSurface("control", root.modelData)
+                        }
+                    }
+
+                    Item {
+                        width: root.statusItemSize
+                        height: root.statusItemSize
+                        Text {
+                            id: volumeText
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: root.status.muted ? "" : ""
+                            color: root.palette.foreground
+                            font.family: root.palette.fontFamily
+                            font.pixelSize: root.statusIconSize
+                        }
+                        MouseArea {
+                            id: volumeMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(volumeMouse,
+                                root.status.muted ? "Sound muted" : "Volume · " + root.status.volume)
+                            onExited: root.hideTooltip(volumeMouse)
+                            onClicked: root.shell.toggleSurface("control", root.modelData)
+                            onWheel: wheel => {
+                                const step = wheel.angleDelta.y > 0 ? "5%+" : "5%-"
+                                Quickshell.execDetached([
+                                    "sh", "-c",
+                                    "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ " + step
+                                        + " && qs -p \"$HOME/.config/quickshell/abyssal\" ipc call osd volume"
+                                ])
+                                volumeRefresh.restart()
+                                wheel.accepted = true
+                            }
+                        }
+                        Timer {
+                            id: volumeRefresh
+                            interval: 180
+                            onTriggered: root.status.refresh()
+                        }
+                    }
                 }
             }
 
@@ -221,7 +299,63 @@ PanelWindow {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
+                onEntered: root.showTooltip(clockMouse,
+                    Qt.formatDateTime(root.clock.date, "dddd, MMMM d, yyyy"))
+                onExited: root.hideTooltip(clockMouse)
                 onClicked: root.shell.toggleSurface("notifications", root.modelData)
+            }
+        }
+    }
+
+    PanelWindow {
+        id: tooltipWindow
+
+        screen: root.modelData
+        visible: false
+        color: "transparent"
+        implicitWidth: tooltipLabel.width + 10
+        implicitHeight: tooltipLabel.contentHeight + 8
+        exclusiveZone: 0
+        exclusionMode: ExclusionMode.Ignore
+        anchors { top: true; left: true }
+        margins {
+            top: 4
+            left: {
+                if (!root.tooltipTarget) return 8
+                const point = root.tooltipTarget.mapToItem(
+                    root.contentItem, root.tooltipTarget.width / 2, 0)
+                return Math.max(8, Math.min(root.width - tooltipWindow.implicitWidth - 8,
+                    point.x - tooltipWindow.implicitWidth / 2))
+            }
+        }
+        WlrLayershell.namespace: "abyssal-tooltip"
+        WlrLayershell.layer: WlrLayer.Overlay
+
+        Rectangle {
+            id: tooltipCard
+            anchors.fill: parent
+            anchors.margins: 1
+            radius: 7
+            border.width: 1
+            border.color: root.palette.border
+            color: root.palette.panelStrong
+
+            Item {
+                anchors.centerIn: parent
+                width: tooltipLabel.width
+                height: tooltipLabel.height
+
+                Text {
+                    id: tooltipLabel
+                    width: Math.min(Math.ceil(implicitWidth) + 1, root.width - 24)
+                    text: root.tooltipText
+                    color: root.palette.foreground
+                    font.family: root.palette.fontFamily
+                    font.pixelSize: 11
+                    wrapMode: Text.Wrap
+                    maximumLineCount: 2
+                    elide: Text.ElideRight
+                }
             }
         }
     }

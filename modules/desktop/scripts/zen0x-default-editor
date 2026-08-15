@@ -25,9 +25,9 @@ if (($# == 0)); then
 fi
 
 case "$1" in
-  micro|nvim|vim|helix|code|cursor|zed|emacs) ;;
+  micro|nvim|vim|code|cursor|emacs) ;;
   *)
-    echo "Usage: zen0x-default-editor [micro|nvim|vim|helix|code|cursor|zed|emacs]" >&2
+    echo "Usage: zen0x-default-editor [micro|nvim|vim|code|cursor|emacs]" >&2
     exit 1
     ;;
 esac

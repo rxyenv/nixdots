@@ -21,15 +21,17 @@
         hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("abyssal-shell toggleLauncher"))
         hl.bind(mainMod .. " + SHIFT + Space", hl.dsp.exec_cmd("abyssal-shell toggleWallpaper"))
         hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("abyssal-shell toggleControlCenter"))
-        hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("abyssal-shell toggleNotifications"))
+        hl.bind(mainMod .. " + CTRL + N", hl.dsp.exec_cmd("abyssal-shell toggleNotifications"))
 
-        hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zen0x-launch-or-focus zed 'uwsm-app -- zeditor'"))
-        hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("zen0x-launch-or-focus zen 'uwsm-app -- zen'"))
+        hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("zen0x-launch-or-focus Code 'uwsm-app -- code'"))
         hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("zen0x-launch-or-focus vesktop 'uwsm-app -- vesktop'"))
-        hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("foot --class org.helix.editor -e hx"))
         hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
         hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
-        hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("zen0x-launch-wifi"))
+        hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("zen0x-launch-wifi"))
+        hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://www.netflix.com/"))
+        hl.bind(mainMod .. " + SHIFT + Y", hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://www.youtube.com/"))
+        hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://www.reddit.com/"))
+        hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://web.whatsapp.com/"))
 
         hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
         hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))
@@ -51,7 +53,6 @@
         -- (window rules pin the org.zen0x.scratch-* classes to their special workspace)
         local scratchpads = {
             { key = 1, name = "term",    cmd = programs.terminal .. " --class org.zen0x.scratch-term" },
-            { key = 2, name = "notes",   cmd = programs.terminal .. " --class org.zen0x.scratch-notes -e hx" },
             { key = 3, name = "files",   cmd = programs.terminal .. " --class org.zen0x.scratch-files -e yazi" },
             { key = 4, name = "mixer",   cmd = programs.terminal .. " --class org.zen0x.scratch-mixer -e wiremix" },
             { key = 5, name = "monitor", cmd = programs.terminal .. " --class org.zen0x.scratch-monitor -e btop" },
@@ -74,7 +75,7 @@
         hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("zen0x-capture-screenshot region"))
         hl.bind(mainMod .. " + CTRL + S", hl.dsp.exec_cmd("zen0x-capture-screenshot window"))
         hl.bind("CTRL + Print", hl.dsp.exec_cmd("zen0x-capture-screenshot fullscreen"))
-        hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("zen0x-capture-screenrecording region"))
+        hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("zen0x-capture-screenrecording region"))
         hl.bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("zen0x-capture-screenrecording fullscreen"))
         hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("zen0x-toggle-nightlight"))
         hl.bind(mainMod .. " + CTRL + Escape", hl.dsp.exec_cmd("systemctl suspend"))

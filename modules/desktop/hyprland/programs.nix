@@ -5,7 +5,7 @@
         return {
           terminal = "footclient",
           file_manager = "nautilus",
-          browser = "zen",
+          browser = "uwsm-app -- helium",
         }
       '';
     }

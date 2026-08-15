@@ -1,18 +1,22 @@
 {
   "nodes": {
-    "abyssal-zed-themes": {
-      "flake": false,
+    "abyssal-gtk-theme": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1784789338,
-        "narHash": "sha256-i4Z7rS/rB/QnKOYLzSgFanQp9W1sAL3/phcPCtxbEY4=",
+        "lastModified": 1784792617,
+        "narHash": "sha256-wv/Obb9K4br/HDRYnltFg+4PrUGGKtGfo1+bzf0HJ0s=",
         "owner": "rxyenv",
-        "repo": "abyssal-zed-themes",
-        "rev": "642a5658a2da81043571a05086ce8f0a8e7ade63",
+        "repo": "abyssal-gtk-theme",
+        "rev": "78bea00a5c1122cb27e79b31d3b74f99e4a0c4c2",
         "type": "github"
       },
       "original": {
         "owner": "rxyenv",
-        "repo": "abyssal-zed-themes",
+        "repo": "abyssal-gtk-theme",
         "type": "github"
       }
     },
@@ -295,7 +299,7 @@
     },
     "root": {
       "inputs": {
-        "abyssal-zed-themes": "abyssal-zed-themes",
+        "abyssal-gtk-theme": "abyssal-gtk-theme",
         "dms": "dms",
         "flake-parts": "flake-parts",
         "helium-browser": "helium-browser",
@@ -303,8 +307,7 @@
         "iloader": "iloader",
         "import-tree": "import-tree",
         "millennium": "millennium",
-        "nixpkgs": "nixpkgs",
-        "zen-browser": "zen-browser"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {
@@ -388,26 +391,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "zen-browser": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783668749,
-        "narHash": "sha256-EDJjJYGT5pQKTBqmz+OA2sqE20kjj6mP699JFGDzse4=",
-        "owner": "youwen5",
-        "repo": "zen-browser-flake",
-        "rev": "e8041a3571e8cadb57dc18a3d6362d753510b94a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "youwen5",
-        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

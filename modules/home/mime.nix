@@ -38,13 +38,13 @@
           "audio/mp4" = "mpv.desktop";
           "audio/opus" = "mpv.desktop";
 
-          "text/plain" = "zeditor.desktop";
+          "text/plain" = "code.desktop";
 
-          "x-scheme-handler/http" = "zen.desktop";
-          "x-scheme-handler/https" = "zen.desktop";
-          "text/html" = "zen.desktop";
-          "application/xhtml+xml" = "zen.desktop";
-          "x-scheme-handler/mailto" = "zen.desktop";
+          "x-scheme-handler/http" = "helium.desktop";
+          "x-scheme-handler/https" = "helium.desktop";
+          "text/html" = "helium.desktop";
+          "application/xhtml+xml" = "helium.desktop";
+          "x-scheme-handler/mailto" = "helium.desktop";
 
           "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
           "x-scheme-handler/magnet" = "org.qbittorrent.qBittorrent.desktop";

@@ -65,10 +65,10 @@
 
         # Theming
         qgnomeplatform-qt6
+        nwg-look
 
         # Editors
-        zed-editor
-        helix
+        vscode
 
         # Desktop
         glib
