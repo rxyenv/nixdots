@@ -2,7 +2,9 @@ import QtQuick
 
 QtObject {
     readonly property color transparent: "transparent"
-    readonly property color scrim: Qt.rgba(0.067, 0.067, 0.106, 0.97)
+    // Keep the area outside modal cards empty. Fully transparent pixels are
+    // excluded from Hyprland's layer blur by the ignore_alpha rule.
+    readonly property color scrim: "transparent"
     readonly property color background: "#1E1E2E"
     readonly property color surface: Qt.rgba(0.094, 0.094, 0.145, 0.97)
     readonly property color panel: Qt.rgba(0.118, 0.118, 0.180, 0.97)

@@ -15,6 +15,8 @@ PanelWindow {
     readonly property var status: shell.systemStatus
     readonly property SystemClock clock: SystemClock { precision: SystemClock.Minutes }
     readonly property int statusIconSize: 14
+    readonly property int trayIconSize: 16
+    readonly property int trayToggleIconSize: 20
     readonly property int contentPadding: 8
     readonly property int itemSpacing: 4
     readonly property int barItemSize: 28
@@ -143,10 +145,10 @@ PanelWindow {
                                 Text {
                                     anchors.centerIn: parent
                                     text: "󰅂"
-                                    rotation: root.trayExpanded ? 180 : 0
+                                    rotation: root.trayExpanded ? 0 : 180
                                     color: root.palette.foreground
                                     font.family: root.palette.fontFamily
-                                    font.pixelSize: root.statusIconSize
+                                    font.pixelSize: root.trayToggleIconSize
 
                                     Behavior on rotation {
                                         NumberAnimation { duration: 600; easing.type: Easing.OutCubic }
@@ -168,8 +170,8 @@ PanelWindow {
 
                                         IconImage {
                                             anchors.centerIn: parent
-                                            width: 16
-                                            height: 16
+                                            width: root.trayIconSize
+                                            height: root.trayIconSize
                                             source: modelData.icon
                                             mipmap: true
                                         }
@@ -203,14 +205,6 @@ PanelWindow {
                                 }
                             }
                         }
-                    }
-
-                    Rectangle {
-                        visible: tray.visible
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 1
-                        height: 16
-                        color: Qt.rgba(0.804, 0.839, 0.957, 0.97)
                     }
 
                     Item {
@@ -338,6 +332,35 @@ PanelWindow {
                             onExited: root.hideTooltip(batteryMouse)
                         }
                     }
+
+                    Item {
+                        width: root.barItemSize
+                        height: root.barItemSize
+
+                        Text {
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: root.shell.preferences.doNotDisturb ? "󰂛" : "󰂚"
+                            color: root.shell.preferences.doNotDisturb
+                                ? root.palette.muted : root.palette.foreground
+                            font.family: root.palette.fontFamily
+                            font.pixelSize: root.statusIconSize
+                        }
+
+                        MouseArea {
+                            id: notificationMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(notificationMouse,
+                                root.shell.preferences.doNotDisturb
+                                    ? "Notifications · Do not disturb"
+                                    : "Notifications")
+                            onExited: root.hideTooltip(notificationMouse)
+                            onClicked: root.shell.toggleSurface("control", root.modelData)
+                        }
+                    }
         }
 
         Item {
@@ -364,7 +387,7 @@ PanelWindow {
                 onEntered: root.showTooltip(clockMouse,
                     Qt.formatDateTime(root.clock.date, "dddd, MMMM d, yyyy"))
                 onExited: root.hideTooltip(clockMouse)
-                onClicked: root.shell.toggleSurface("notifications", root.modelData)
+                onClicked: root.shell.toggleSurface("control", root.modelData)
             }
         }
     }

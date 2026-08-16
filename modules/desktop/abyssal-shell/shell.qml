@@ -81,7 +81,7 @@ ShellRoot {
         function toggleControlCenter() { root.toggleSurface("control", null) }
         function toggleSession() { root.toggleSurface("session", null) }
         function toggleWallpaper() { root.toggleSurface("wallpaper", null) }
-        function toggleNotifications() { root.toggleSurface("notifications", null) }
+        function toggleNotifications() { root.toggleSurface("control", null) }
         function close() { root.closeSurfaces() }
     }
 
@@ -97,7 +97,10 @@ ShellRoot {
 
     Variants {
         model: Quickshell.screens
-        delegate: ControlCenterWindow { shell: root }
+        delegate: ControlCenterWindow {
+            shell: root
+            notificationServer: notificationServerObject
+        }
     }
 
     Variants {
@@ -108,14 +111,6 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
         delegate: WallpaperSwitcherWindow { shell: root }
-    }
-
-    Variants {
-        model: Quickshell.screens
-        delegate: NotificationCenterWindow {
-            shell: root
-            notificationServer: notificationServerObject
-        }
     }
 
     Variants {
