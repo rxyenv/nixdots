@@ -29,7 +29,6 @@
         "zen0x-theme-reload"
         "zen0x-toggle-bluetooth"
         "zen0x-toggle-mute"
-        "zen0x-toggle-nightlight"
         "zen0x-toggle-wifi"
       ];
 
@@ -60,7 +59,6 @@
           jq
           python3
           hyprpicker
-          hyprsunset
           tesseract
           perl
           wl-clipboard

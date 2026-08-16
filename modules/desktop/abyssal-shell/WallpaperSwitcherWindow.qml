@@ -19,15 +19,14 @@ PanelWindow {
 
     function apply(path) {
         Quickshell.execDetached([
-            "awww", "img", "--transition-type", "random",
-            "--transition-duration", "1", path
+            "awww", "img", "--transition-type", "none", path
         ])
         shell.closeSurfaces()
     }
 
     screen: modelData
     visible: shell.surfaceVisible("wallpaper", modelData)
-    color: "transparent"
+    color: palette.scrim
     exclusionMode: ExclusionMode.Ignore
     anchors { top: true; bottom: true; left: true; right: true }
     WlrLayershell.namespace: "abyssal-wallpaper-switcher"
@@ -56,100 +55,91 @@ PanelWindow {
         onClicked: root.shell.closeSurfaces()
     }
 
-    Item {
+    GlassPanel {
         id: card
+        opacity: 0.97
         anchors.centerIn: parent
-        width: Math.min(780, parent.width - 24)
-        height: Math.min(400, parent.height - 40)
+        width: Math.min(760, parent.width - 16)
+        height: Math.min(520, parent.height - 16)
+        strong: true
 
-        ListView {
-                id: deck
-                anchors.fill: parent
-                orientation: ListView.Horizontal
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.NoButton }
+
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 12
+            spacing: 8
+
+            Text {
+                text: "Wallpapers"
+                color: root.palette.foreground
+                font.family: root.palette.fontFamily
+                font.pixelSize: 14
+                font.weight: Font.DemiBold
+            }
+
+            GridView {
+                id: grid
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 clip: true
                 focus: root.visible
-                snapMode: ListView.SnapToItem
-                spacing: -125
-                highlightRangeMode: ListView.StrictlyEnforceRange
-                preferredHighlightBegin: width / 2 - 120
-                preferredHighlightEnd: width / 2 + 120
+                cellWidth: 184
+                cellHeight: 124
                 model: root.wallpapers
 
                 Keys.onReturnPressed: if (currentItem) root.apply(currentItem.modelData)
                 Keys.onEnterPressed: if (currentItem) root.apply(currentItem.modelData)
 
-                delegate: Item {
+                delegate: Rectangle {
                     required property string modelData
                     required property int index
-                    width: 240
-                    height: 380
-                    z: 100 - Math.abs(index - deck.currentIndex)
+                    width: grid.cellWidth - 6
+                    height: grid.cellHeight - 6
+                    radius: root.palette.radius
+                    clip: true
+                    color: hover.containsMouse || GridView.isCurrentItem
+                        ? root.palette.accentSoft : root.palette.panel
+                    border.width: GridView.isCurrentItem ? 1 : 0
+                    border.color: root.palette.accent
 
-                    Rectangle {
-                        id: card
-                        anchors.centerIn: parent
-                        width: 220
-                        height: 340
-                        radius: 18
-                        clip: true
-                        scale: index === deck.currentIndex ? 1.0 : 0.78
-                        rotation: index === deck.currentIndex ? 0 : (index < deck.currentIndex ? -12 : 12)
-                        color: hover.containsMouse || index === deck.currentIndex
-                            ? root.palette.accentSoft : Qt.rgba(1, 1, 1, 0.04)
-                        border.width: 1
-                        border.color: index === deck.currentIndex ? root.palette.accent : root.palette.border
+                    Accessible.name: modelData.substring(modelData.lastIndexOf("/") + 1)
+                    Accessible.role: Accessible.Button
 
-                        Behavior on scale { NumberAnimation { duration: root.palette.duration; easing.type: Easing.OutBack } }
-                        Behavior on rotation { NumberAnimation { duration: root.palette.duration; easing.type: Easing.OutCubic } }
+                    Image {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        height: parent.height - 26
+                        source: "file://" + modelData
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                        cache: true
+                        smooth: true
+                    }
 
-                        Accessible.name: modelData.substring(modelData.lastIndexOf("/") + 1)
-                        Accessible.role: Accessible.Button
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        anchors.leftMargin: 6
+                        anchors.rightMargin: 6
+                        height: 26
+                        verticalAlignment: Text.AlignVCenter
+                        text: modelData.substring(modelData.lastIndexOf("/") + 1)
+                        color: root.palette.foreground
+                        elide: Text.ElideMiddle
+                        font.family: root.palette.fontFamily
+                        font.pixelSize: 9
+                    }
 
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.margins: 3
-                            radius: 15
-                            clip: true
-
-                            Image {
-                                anchors.fill: parent
-                                source: "file://" + modelData
-                                fillMode: Image.PreserveAspectCrop
-                                asynchronous: true
-                                cache: true
-                                smooth: true
-                            }
-                        }
-
-                        Rectangle {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.bottom: parent.bottom
-                            anchors.margins: 3
-                            height: 42
-                            radius: 14
-                            color: Qt.rgba(0, 0, 0, 0.68)
-
-                            Text {
-                                anchors.fill: parent
-                                anchors.leftMargin: 12
-                                anchors.rightMargin: 10
-                                verticalAlignment: Text.AlignVCenter
-                                text: modelData.substring(modelData.lastIndexOf("/") + 1)
-                                color: root.palette.foreground
-                                elide: Text.ElideMiddle
-                                font.family: root.palette.fontFamily
-                                font.pixelSize: 10
-                            }
-                        }
-
-                        MouseArea {
-                            id: hover
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: root.apply(modelData)
-                        }
+                    MouseArea {
+                        id: hover
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onEntered: grid.currentIndex = index
+                        onClicked: root.apply(modelData)
                     }
                 }
 
@@ -162,6 +152,7 @@ PanelWindow {
                     font.family: root.palette.fontFamily
                     font.pixelSize: 12
                 }
+            }
         }
     }
 }

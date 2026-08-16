@@ -25,8 +25,6 @@ PanelWindow {
         sequence: "Escape"
         onActivated: root.shell.closeSurfaces()
     }
-    onVisibleChanged: if (visible) entrance.restart()
-
     MouseArea {
         anchors.fill: parent
         onClicked: root.shell.closeSurfaces()
@@ -34,12 +32,13 @@ PanelWindow {
 
     GlassPanel {
         id: card
+        opacity: 0.97
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: root.palette.barHeight + 12
-        anchors.rightMargin: 12
-        width: Math.min(410, parent.width - 32)
-        height: Math.min(680, parent.height - root.palette.barHeight - 28)
+        anchors.topMargin: root.palette.barHeight + 4
+        anchors.rightMargin: 4
+        width: Math.min(380, parent.width - 16)
+        height: Math.min(620, parent.height - root.palette.barHeight - 12)
         radius: root.palette.radiusLarge
         strong: true
 
@@ -47,8 +46,8 @@ PanelWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 18
-            spacing: 12
+            anchors.margins: 12
+            spacing: 8
 
             RowLayout {
                 Layout.fillWidth: true
@@ -57,12 +56,12 @@ PanelWindow {
                     text: "Notifications"
                     color: root.palette.foreground
                     font.family: root.palette.fontFamily
-                    font.pixelSize: 17
+                    font.pixelSize: 14
                     font.weight: Font.DemiBold
                 }
                 GlassButton {
-                    Layout.preferredWidth: 42
-                    Layout.preferredHeight: 38
+                    Layout.preferredWidth: 32
+                    Layout.preferredHeight: 30
                     icon: root.shell.preferences.doNotDisturb ? "󰂛" : "󰂚"
                     compact: true
                     checked: root.shell.preferences.doNotDisturb
@@ -77,7 +76,7 @@ PanelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                spacing: 9
+                spacing: 6
                 model: root.notificationServer.trackedNotifications
 
                 delegate: GlassPanel {
@@ -85,21 +84,21 @@ PanelWindow {
                     required property var modelData
 
                     width: ListView.view.width
-                    height: Math.max(92, content.implicitHeight + 28)
+                    height: Math.max(72, content.implicitHeight + 20)
                     elevated: false
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.margins: 13
-                        spacing: 11
+                        anchors.margins: 10
+                        spacing: 8
 
                         Image {
-                            Layout.preferredWidth: 30
-                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                             Layout.alignment: Qt.AlignTop
                             source: notification.modelData.image || Quickshell.iconPath(notification.modelData.appIcon, "dialog-information")
-                            sourceSize.width: 30
-                            sourceSize.height: 30
+                            sourceSize.width: 24
+                            sourceSize.height: 24
                             fillMode: Image.PreserveAspectFit
                         }
 
@@ -168,13 +167,4 @@ PanelWindow {
         }
     }
 
-    SequentialAnimation {
-        id: entrance
-        PropertyAction { target: card; property: "opacity"; value: 0 }
-        PropertyAction { target: card; property: "scale"; value: 0.96 }
-        ParallelAnimation {
-            NumberAnimation { target: card; property: "opacity"; to: 1; duration: root.shell.preferences.animationsEnabled ? 180 : 0 }
-            NumberAnimation { target: card; property: "scale"; to: 1; duration: root.shell.preferences.animationsEnabled ? 280 : 0; easing.type: Easing.OutBack; easing.overshoot: 1.06 }
-        }
-    }
 }

@@ -4,7 +4,6 @@ import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import Quickshell.Wayland
 import QtQuick
-import QtQuick.Layouts
 
 PanelWindow {
     id: root
@@ -16,7 +15,10 @@ PanelWindow {
     readonly property var status: shell.systemStatus
     readonly property SystemClock clock: SystemClock { precision: SystemClock.Minutes }
     readonly property int statusIconSize: 14
-    readonly property int statusItemSize: 26
+    readonly property int contentPadding: 8
+    readonly property int itemSpacing: 4
+    readonly property int barItemSize: 28
+    property bool trayExpanded: false
     property Item tooltipTarget: null
     property string tooltipText: ""
 
@@ -42,128 +44,160 @@ PanelWindow {
     screen: modelData
     implicitHeight: palette.barHeight
     color: "transparent"
-    // Let tiled windows sit closer to the panel while retaining Hyprland's
-    // regular outer gap around the rest of the workspace.
-    exclusiveZone: implicitHeight - 10
+    // Reserve the full panel height; Hyprland's outer gap then leaves a small
+    // amount of breathing room between the bar and tiled windows.
+    exclusiveZone: implicitHeight
     anchors { top: true; left: true; right: true }
+    margins { top: 0; left: 0; right: 0 }
     WlrLayershell.namespace: "abyssal-bar"
 
     Rectangle {
         anchors.fill: parent
-        anchors.margins: 7
-        radius: 12
-        color: Qt.rgba(0.063, 0.129, 0.153, 0.65)
-        border.width: 1
-        border.color: root.palette.border
+        opacity: 0.97
+        radius: 0
+        color: Qt.rgba(0.118, 0.118, 0.180, 0.97)
+        border.width: 0
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.leftMargin: 8
-            anchors.rightMargin: 8
-            spacing: 8
+        Row {
+            id: workspaces
+            anchors.left: parent.left
+            anchors.leftMargin: root.contentPadding
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: root.itemSpacing
 
-            Row {
-                id: workspaces
-                spacing: 4
+            Repeater {
+                model: Hyprland.workspaces.values.filter(workspace => workspace.id > 0 && workspace.id <= 10)
 
-                Repeater {
-                    model: Hyprland.workspaces.values.filter(workspace => workspace.id > 0 && workspace.id <= 10)
+                delegate: Rectangle {
+                    id: workspace
+                    required property var modelData
 
-                    delegate: Rectangle {
-                        id: workspace
-                        required property var modelData
+                    width: root.barItemSize
+                    height: root.barItemSize
+                    radius: root.palette.radius
+                    color: modelData.focused ? root.palette.accent
+                        : modelData.urgent ? root.palette.danger
+                        : modelData.active ? root.palette.accentSoft
+                        : workspaceMouse.containsMouse ? root.palette.hover
+                        : "transparent"
 
-                        width: modelData.focused ? 32 : 27
-                        height: 30
-                        radius: 8
-                        color: modelData.focused ? root.palette.accent
-                            : modelData.urgent ? root.palette.danger
-                            : modelData.active ? root.palette.accentSoft
-                            : workspaceMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.07)
-                            : "transparent"
-                        Behavior on width { NumberAnimation { duration: root.palette.duration; easing.type: Easing.OutBack } }
-                        Behavior on color { ColorAnimation { duration: root.palette.durationFast } }
+                    Text {
+                        anchors.centerIn: parent
+                        text: workspace.modelData.id
+                        color: workspace.modelData.focused ? root.palette.background : root.palette.foreground
+                        font.family: root.palette.fontFamily
+                        font.pixelSize: 12
+                        font.bold: workspace.modelData.focused
+                    }
 
-                        Text {
-                            anchors.centerIn: parent
-                            text: workspace.modelData.id
-                            color: workspace.modelData.focused ? root.palette.background : root.palette.foreground
-                            font.family: root.palette.fontFamily
-                            font.pixelSize: 12
-                            font.bold: workspace.modelData.focused
-                        }
-
-                        MouseArea {
-                            id: workspaceMouse
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onEntered: root.showTooltip(workspaceMouse,
-                                "Workspace " + workspace.modelData.id
-                                    + (workspace.modelData.focused ? " · Active" : ""))
-                            onExited: root.hideTooltip(workspaceMouse)
-                            onClicked: workspace.modelData.activate()
-                        }
+                    MouseArea {
+                        id: workspaceMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onEntered: root.showTooltip(workspaceMouse,
+                            "Workspace " + workspace.modelData.id
+                                + (workspace.modelData.focused ? " · Active" : ""))
+                        onExited: root.hideTooltip(workspaceMouse)
+                        onClicked: workspace.modelData.activate()
                     }
                 }
             }
+        }
 
-            Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-            }
-
-            Item {
-                id: statusArea
-                Layout.preferredWidth: statusRow.implicitWidth
-                Layout.preferredHeight: root.statusItemSize
-
-                Row {
-                    id: statusRow
-                    anchors.centerIn: parent
-                    height: root.statusItemSize
-                    spacing: 4
+        Row {
+            id: statusRow
+            anchors.right: parent.right
+            anchors.rightMargin: root.contentPadding
+            anchors.verticalCenter: parent.verticalCenter
+            height: root.barItemSize
+            spacing: root.itemSpacing
 
                     Item {
                         id: tray
-                        width: trayIcons.implicitWidth
-                        height: root.statusItemSize
-                        visible: SystemTray.items.values.length > 0
+                        readonly property var activeItems: SystemTray.items.values.filter(
+                            item => item.status !== Status.Passive)
+
+                        width: trayToggle.width + (root.trayExpanded ? trayIcons.implicitWidth : 0)
+                        height: root.barItemSize
+                        visible: activeItems.length > 0
+                        clip: true
+
+                        Behavior on width {
+                            NumberAnimation { duration: 600; easing.type: Easing.OutCubic }
+                        }
+
+                        HoverHandler {
+                            onHoveredChanged: root.trayExpanded = hovered
+                        }
 
                         Row {
-                            id: trayIcons
-                            anchors.left: parent.left
+                            x: 0
                             anchors.verticalCenter: parent.verticalCenter
-                            spacing: 4
 
-                            Repeater {
-                                model: SystemTray.items.values
-                                delegate: Item {
-                                    required property var modelData
-                                    width: root.statusItemSize
-                                    height: root.statusItemSize
-                                    IconImage {
-                                        id: trayIcon
-                                        anchors.centerIn: parent
-                                        width: 16
-                                        height: 16
-                                        source: modelData.icon
-                                        mipmap: true
+                            Item {
+                                id: trayToggle
+                                width: root.barItemSize
+                                height: root.barItemSize
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: "󰅂"
+                                    rotation: root.trayExpanded ? 180 : 0
+                                    color: root.palette.foreground
+                                    font.family: root.palette.fontFamily
+                                    font.pixelSize: root.statusIconSize
+
+                                    Behavior on rotation {
+                                        NumberAnimation { duration: 600; easing.type: Easing.OutCubic }
                                     }
-                                    MouseArea {
-                                        id: trayMouse
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        onEntered: {
-                                            const title = modelData.tooltipTitle || modelData.title || modelData.id
-                                            const detail = modelData.tooltipDescription
-                                            root.showTooltip(trayMouse, title + (detail ? " · " + detail : ""))
+                                }
+                            }
+
+                            Row {
+                                id: trayIcons
+                                height: root.barItemSize
+                                spacing: 0
+
+                                Repeater {
+                                    model: tray.activeItems
+                                    delegate: Item {
+                                        required property var modelData
+                                        width: root.barItemSize
+                                        height: root.barItemSize
+
+                                        IconImage {
+                                            anchors.centerIn: parent
+                                            width: 16
+                                            height: 16
+                                            source: modelData.icon
+                                            mipmap: true
                                         }
-                                        onExited: root.hideTooltip(trayMouse)
-                                        onClicked: modelData.activate()
-                                        onPressed: mouse => {
-                                            if (mouse.button === Qt.RightButton) modelData.secondaryActivate()
+
+                                        MouseArea {
+                                            id: trayMouse
+                                            anchors.fill: parent
+                                            acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onEntered: {
+                                                const title = modelData.tooltipTitle || modelData.title || modelData.id
+                                                const detail = modelData.tooltipDescription
+                                                root.showTooltip(trayMouse, title + (detail ? " · " + detail : ""))
+                                            }
+                                            onExited: root.hideTooltip(trayMouse)
+                                            onClicked: mouse => {
+                                                if (mouse.button === Qt.MiddleButton)
+                                                    modelData.secondaryActivate()
+                                                else if (mouse.button === Qt.RightButton)
+                                                    modelData.secondaryActivate()
+                                                else
+                                                    modelData.activate()
+                                            }
+                                            onWheel: wheel => {
+                                                modelData.scroll(wheel.angleDelta.y, false)
+                                                wheel.accepted = true
+                                            }
                                         }
                                     }
                                 }
@@ -176,12 +210,36 @@ PanelWindow {
                         anchors.verticalCenter: parent.verticalCenter
                         width: 1
                         height: 16
-                        color: Qt.rgba(1, 1, 1, 0.12)
+                        color: Qt.rgba(0.804, 0.839, 0.957, 0.97)
                     }
 
                     Item {
-                        width: root.statusItemSize
-                        height: root.statusItemSize
+                        width: root.barItemSize
+                        height: root.barItemSize
+                        Text {
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: root.status.bluetoothConnected ? "󰂱"
+                                : root.status.bluetoothEnabled ? "" : "󰂲"
+                            color: root.status.bluetoothEnabled ? root.palette.foreground : root.palette.muted
+                            font.family: root.palette.fontFamily
+                            font.pixelSize: root.statusIconSize
+                        }
+                        MouseArea {
+                            id: bluetoothMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(bluetoothMouse, "Bluetooth · " + root.status.bluetooth)
+                            onExited: root.hideTooltip(bluetoothMouse)
+                            onClicked: root.shell.toggleSurface("control", root.modelData)
+                        }
+                    }
+
+                    Item {
+                        width: root.barItemSize
+                        height: root.barItemSize
                         Text {
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
@@ -211,32 +269,8 @@ PanelWindow {
                     }
 
                     Item {
-                        width: root.statusItemSize
-                        height: root.statusItemSize
-                        Text {
-                            anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: root.status.bluetoothConnected ? "󰂱"
-                                : root.status.bluetoothEnabled ? "" : "󰂲"
-                            color: root.status.bluetoothEnabled ? root.palette.foreground : root.palette.muted
-                            font.family: root.palette.fontFamily
-                            font.pixelSize: root.statusIconSize
-                        }
-                        MouseArea {
-                            id: bluetoothMouse
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onEntered: root.showTooltip(bluetoothMouse, "Bluetooth · " + root.status.bluetooth)
-                            onExited: root.hideTooltip(bluetoothMouse)
-                            onClicked: root.shell.toggleSurface("control", root.modelData)
-                        }
-                    }
-
-                    Item {
-                        width: root.statusItemSize
-                        height: root.statusItemSize
+                        width: root.barItemSize
+                        height: root.barItemSize
                         Text {
                             id: volumeText
                             anchors.fill: parent
@@ -273,16 +307,44 @@ PanelWindow {
                             onTriggered: root.status.refresh()
                         }
                     }
-                }
-            }
 
+                    Item {
+                        readonly property int percentage: parseInt(root.status.battery) || 0
+
+                        visible: root.status.battery !== ""
+                        width: root.barItemSize
+                        height: root.barItemSize
+
+                        Text {
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: parent.percentage >= 90 ? "󰁹"
+                                : parent.percentage >= 70 ? "󰂀"
+                                : parent.percentage >= 50 ? "󰁾"
+                                : parent.percentage >= 30 ? "󰁼"
+                                : parent.percentage >= 10 ? "󰁺" : "󰂎"
+                            color: parent.percentage <= 15 ? root.palette.danger : root.palette.foreground
+                            font.family: root.palette.fontFamily
+                            font.pixelSize: root.statusIconSize
+                        }
+
+                        MouseArea {
+                            id: batteryMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onEntered: root.showTooltip(batteryMouse, "Battery · " + root.status.battery)
+                            onExited: root.hideTooltip(batteryMouse)
+                        }
+                    }
         }
 
         Item {
             id: clock
             anchors.centerIn: parent
             width: clockText.implicitWidth + 20
-            height: 36
+            height: root.barItemSize
 
             Text {
                 id: clockText
@@ -335,7 +397,8 @@ PanelWindow {
             id: tooltipCard
             anchors.fill: parent
             anchors.margins: 1
-            radius: 7
+            opacity: 0.97
+            radius: root.palette.radius
             border.width: 1
             border.color: root.palette.border
             color: root.palette.panelStrong

@@ -13,6 +13,7 @@ PanelWindow {
     readonly property Theme palette: Theme {}
     property string query: ""
     property int selectedIndex: 0
+    property bool surfaceRequested: shell.surfaceVisible("launcher", modelData)
 
     function filteredApps() {
         const needle = query.trim().toLowerCase()
@@ -41,9 +42,9 @@ PanelWindow {
     }
 
     screen: modelData
-    visible: shell.surfaceVisible("launcher", modelData)
-    implicitWidth: Math.min(600, modelData.width - 64)
-    implicitHeight: Math.min(650, Math.max(48, results.contentHeight) + 90)
+    visible: surfaceRequested
+    implicitWidth: Math.min(520, modelData.width - 32)
+    implicitHeight: Math.min(520, Math.max(40, results.contentHeight) + 68)
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
@@ -51,35 +52,33 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
-    onVisibleChanged: {
-        if (visible) {
+    onSurfaceRequestedChanged: {
+        if (surfaceRequested) {
             query = ""
             selectedIndex = 0
             focusTimer.restart()
-            entrance.restart()
         }
     }
 
     Rectangle {
         id: card
+        opacity: 0.97
         anchors.fill: parent
         radius: root.palette.radiusLarge
-        color: Qt.rgba(0.045, 0.085, 0.095, 0.65)
+        color: Qt.rgba(0.118, 0.118, 0.180, 0.97)
         border.width: 1
         border.color: root.palette.border
-        scale: 1
-        opacity: 1
 
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.NoButton }
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 18
-            spacing: 12
+            anchors.margins: 12
+            spacing: 8
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 42
+                Layout.preferredHeight: 34
 
                 TextInput {
                     id: search
@@ -89,7 +88,7 @@ PanelWindow {
                     selectionColor: root.palette.accent
                     selectedTextColor: root.palette.background
                     font.family: root.palette.fontFamily
-                    font.pixelSize: 17
+                    font.pixelSize: 14
                     clip: true
 
                     onTextChanged: {
@@ -129,7 +128,7 @@ PanelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-                spacing: 5
+                spacing: 2
                 model: ScriptModel {
                     id: appsModel
                     values: root.filteredApps()
@@ -142,22 +141,23 @@ PanelWindow {
                     required property int index
 
                     width: ListView.view.width
-                    height: 48
-                    radius: 13
-                    color: index === root.selectedIndex ? root.palette.accentSoft : hover.containsMouse ? Qt.rgba(1, 1, 1, 0.055) : "transparent"
+                    height: 40
+                    radius: root.palette.radius
+                    color: index === root.selectedIndex ? root.palette.accentSoft
+                        : hover.containsMouse ? root.palette.hover : "transparent"
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 12
-                        anchors.rightMargin: 12
-                        spacing: 12
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        spacing: 8
 
                         Image {
-                            Layout.preferredWidth: 28
-                            Layout.preferredHeight: 28
+                            Layout.preferredWidth: 22
+                            Layout.preferredHeight: 22
                             source: Quickshell.iconPath(result.modelData.icon, "application-x-executable")
-                            sourceSize.width: 28
-                            sourceSize.height: 28
+                            sourceSize.width: 22
+                            sourceSize.height: 22
                             smooth: true
                         }
 
@@ -205,13 +205,4 @@ PanelWindow {
         onTriggered: search.forceActiveFocus()
     }
 
-    SequentialAnimation {
-        id: entrance
-        PropertyAction { target: card; property: "opacity"; value: 0 }
-        PropertyAction { target: card; property: "scale"; value: 0.92 }
-        ParallelAnimation {
-            NumberAnimation { target: card; property: "opacity"; to: 1; duration: root.shell.preferences.animationsEnabled ? 220 : 0; easing.type: Easing.OutCubic }
-            NumberAnimation { target: card; property: "scale"; to: 1; duration: root.shell.preferences.animationsEnabled ? 300 : 0; easing.type: Easing.OutBack; easing.overshoot: 1.15 }
-        }
-    }
 }

@@ -20,52 +20,52 @@ PanelWindow {
         value = Math.max(0, Math.min(100, Number(newValue)))
         muted = newMuted === true
         shown = true
-        entrance.restart()
         hideTimer.restart()
     }
 
     screen: Quickshell.screens.find(candidate => shell.isFocusedScreen(candidate)) || Quickshell.screens[0]
     visible: shown
     color: "transparent"
-    implicitWidth: 360
-    implicitHeight: 92
+    implicitWidth: 300
+    implicitHeight: 52
     exclusionMode: ExclusionMode.Ignore
     anchors { bottom: true }
-    margins.bottom: 80
+    margins.bottom: 24
     WlrLayershell.namespace: "abyssal-osd"
     WlrLayershell.layer: WlrLayer.Overlay
 
     Rectangle {
         id: card
+        opacity: 0.97
         anchors.fill: parent
-        radius: 22
-        color: Qt.rgba(0.045, 0.085, 0.095, 0.65)
+        radius: root.palette.radiusLarge
+        color: Qt.rgba(0.118, 0.118, 0.180, 0.97)
         border.width: 1
         border.color: root.palette.border
 
         RowLayout {
             anchors.fill: parent
-            anchors.margins: 16
-            spacing: 10
+            anchors.margins: 10
+            spacing: 8
 
             Item {
-                Layout.preferredWidth: 42
-                Layout.preferredHeight: 54
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 32
 
                 Text {
                     anchors.centerIn: parent
                     text: root.kind === "brightness" ? "󰃠" : root.muted ? "" : ""
                     color: root.muted ? root.palette.muted : root.palette.accent
                     font.family: root.palette.fontFamily
-                    font.pixelSize: 23
+                    font.pixelSize: 16
                 }
             }
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 12
-                radius: 6
-                color: Qt.rgba(1, 1, 1, 0.055)
+                Layout.preferredHeight: 8
+                radius: root.palette.radius
+                color: Qt.rgba(0.804, 0.839, 0.957, 0.97)
                 border.width: 1
                 border.color: root.palette.border
 
@@ -75,25 +75,9 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     width: Math.max(0, (parent.width - 2) * root.value / 100)
                     height: parent.height - 2
-                    radius: 5
+                    radius: root.palette.radius
                     color: root.muted ? root.palette.subtle : root.palette.accent
 
-                    Behavior on width {
-                        NumberAnimation {
-                            duration: root.palette.durationFast
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-
-                    Rectangle {
-                        visible: parent.width > 10 && !root.muted
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 8
-                        height: 8
-                        radius: 4
-                        color: root.palette.foreground
-                    }
                 }
             }
 
@@ -101,7 +85,7 @@ PanelWindow {
                 text: root.value + "%"
                 color: root.palette.foreground
                 font.family: root.palette.fontFamily
-                font.pixelSize: 16
+                font.pixelSize: 12
                 font.weight: Font.Bold
             }
         }
@@ -137,26 +121,4 @@ PanelWindow {
         onTriggered: root.shown = false
     }
 
-    SequentialAnimation {
-        id: entrance
-        PropertyAction { target: card; property: "opacity"; value: 0 }
-        PropertyAction { target: card; property: "scale"; value: 0.92 }
-        ParallelAnimation {
-            NumberAnimation {
-                target: card
-                property: "opacity"
-                to: 1
-                duration: root.shell.preferences.animationsEnabled ? 140 : 0
-                easing.type: Easing.OutCubic
-            }
-            NumberAnimation {
-                target: card
-                property: "scale"
-                to: 1
-                duration: root.shell.preferences.animationsEnabled ? 240 : 0
-                easing.type: Easing.OutBack
-                easing.overshoot: 1.04
-            }
-        }
-    }
 }

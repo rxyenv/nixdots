@@ -53,7 +53,7 @@ ShellRoot {
     PersistentProperties {
         id: preferencesObject
         property bool doNotDisturb: false
-        property bool animationsEnabled: true
+        property bool animationsEnabled: false
     }
 
     SystemStatus { id: systemStatusObject }
@@ -79,6 +79,7 @@ ShellRoot {
 
         function toggleLauncher() { root.toggleSurface("launcher", null) }
         function toggleControlCenter() { root.toggleSurface("control", null) }
+        function toggleSession() { root.toggleSurface("session", null) }
         function toggleWallpaper() { root.toggleSurface("wallpaper", null) }
         function toggleNotifications() { root.toggleSurface("notifications", null) }
         function close() { root.closeSurfaces() }
@@ -97,6 +98,11 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
         delegate: ControlCenterWindow { shell: root }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        delegate: SessionMenuWindow { shell: root }
     }
 
     Variants {

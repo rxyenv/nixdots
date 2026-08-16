@@ -14,28 +14,28 @@ GlassPanel {
     property bool compact: false
 
     palette: Theme {}
-    radius: compact ? 12 : 15
+    radius: root.palette.radius
     elevated: false
 
     Rectangle {
         anchors.fill: parent
         radius: root.radius
-        color: root.checked || root.accent ? root.palette.accentSoft : mouse.containsMouse ? Qt.rgba(1, 1, 1, 0.07) : "transparent"
+        color: root.checked || root.accent ? root.palette.accentSoft
+            : mouse.containsMouse ? root.palette.hover : "transparent"
 
-        Behavior on color { ColorAnimation { duration: root.palette.durationFast } }
     }
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: root.compact ? 10 : 14
-        anchors.rightMargin: root.compact ? 10 : 14
-        spacing: 11
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        spacing: 8
 
         Text {
             text: root.icon
             color: root.checked || root.accent ? root.palette.accent : root.palette.foreground
             font.family: root.palette.fontFamily
-            font.pixelSize: root.compact ? 14 : 19
+            font.pixelSize: root.compact ? 13 : 16
         }
 
         ColumnLayout {
@@ -64,9 +64,6 @@ GlassPanel {
             }
         }
     }
-
-    scale: mouse.pressed ? 0.96 : mouse.containsMouse ? 1.015 : 1
-    Behavior on scale { NumberAnimation { duration: root.palette.durationFast; easing.type: Easing.OutCubic } }
 
     MouseArea {
         id: mouse

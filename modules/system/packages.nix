@@ -17,6 +17,9 @@
         parted
         ntfs3g
         bubblewrap
+        unityhub
+        mono
+        dotnet-sdk
       ];
 
       services.ratbagd.enable = true;  # daemon piper talks to

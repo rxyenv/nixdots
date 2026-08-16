@@ -31,10 +31,7 @@ PanelWindow {
         onActivated: root.shell.closeSurfaces()
     }
 
-    onVisibleChanged: if (visible) {
-        status.refresh()
-        entrance.restart()
-    }
+    onVisibleChanged: if (visible) status.refresh()
 
     MouseArea {
         anchors.fill: parent
@@ -43,12 +40,13 @@ PanelWindow {
 
     GlassPanel {
         id: card
+        opacity: 0.97
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: root.palette.barHeight + 12
-        anchors.rightMargin: 12
-        width: Math.min(390, parent.width - 32)
-        height: Math.min(540, parent.height - root.palette.barHeight - 28)
+        anchors.topMargin: root.palette.barHeight + 4
+        anchors.rightMargin: 4
+        width: Math.min(340, parent.width - 16)
+        height: Math.min(390, parent.height - root.palette.barHeight - 12)
         radius: root.palette.radiusLarge
         strong: true
 
@@ -56,8 +54,8 @@ PanelWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 18
-            spacing: 13
+            anchors.margins: 12
+            spacing: 8
 
             RowLayout {
                 Layout.fillWidth: true
@@ -69,7 +67,7 @@ PanelWindow {
                         text: "Control center"
                         color: root.palette.foreground
                         font.family: root.palette.fontFamily
-                        font.pixelSize: 17
+                        font.pixelSize: 14
                         font.weight: Font.DemiBold
                     }
                     Text {
@@ -81,8 +79,8 @@ PanelWindow {
                 }
 
                 GlassButton {
-                    Layout.preferredWidth: 42
-                    Layout.preferredHeight: 38
+                    Layout.preferredWidth: 32
+                    Layout.preferredHeight: 30
                     icon: ""
                     compact: true
                     onClicked: root.shell.closeSurfaces()
@@ -92,12 +90,12 @@ PanelWindow {
             GridLayout {
                 Layout.fillWidth: true
                 columns: 2
-                columnSpacing: 9
-                rowSpacing: 9
+                columnSpacing: 6
+                rowSpacing: 6
 
                 GlassButton {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 70
+                    Layout.preferredHeight: 48
                     icon: status.muted ? "󰝟" : ""
                     label: "Audio"
                     detail: status.muted ? "Muted" : status.volume
@@ -107,7 +105,7 @@ PanelWindow {
 
                 GlassButton {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 70
+                    Layout.preferredHeight: 48
                     icon: status.wifiEnabled ? "󰖩" : "󰖪"
                     label: "Wi-Fi"
                     detail: status.wifi
@@ -117,7 +115,7 @@ PanelWindow {
 
                 GlassButton {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 70
+                    Layout.preferredHeight: 48
                     icon: status.bluetoothEnabled ? "󰂯" : "󰂲"
                     label: "Bluetooth"
                     detail: status.bluetooth
@@ -125,14 +123,6 @@ PanelWindow {
                     onClicked: root.run("zen0x-launch-bluetooth")
                 }
 
-                GlassButton {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 70
-                    icon: "󰖔"
-                    label: "Night light"
-                    detail: "Toggle warmth"
-                    onClicked: root.run("zen0x-toggle-nightlight")
-                }
             }
 
             Rectangle { Layout.fillWidth: true; height: 1; color: root.palette.border }
@@ -147,7 +137,7 @@ PanelWindow {
 
             GlassButton {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 54
+                Layout.preferredHeight: 42
                 icon: shell.preferences.doNotDisturb ? "󰂛" : "󰂚"
                 label: "Do not disturb"
                 detail: shell.preferences.doNotDisturb ? "Notification popups hidden" : "Notification popups enabled"
@@ -155,25 +145,15 @@ PanelWindow {
                 onClicked: shell.preferences.doNotDisturb = !shell.preferences.doNotDisturb
             }
 
-            GlassButton {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 54
-                icon: "󰆦"
-                label: "Expressive motion"
-                detail: shell.preferences.animationsEnabled ? "Springs and glass transitions" : "Reduced motion"
-                checked: shell.preferences.animationsEnabled
-                onClicked: shell.preferences.animationsEnabled = !shell.preferences.animationsEnabled
-            }
-
             Item { Layout.fillHeight: true }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 9
+                spacing: 6
 
                 GlassButton {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 48
+                    Layout.preferredHeight: 38
                     compact: true
                     icon: "󰍃"
                     label: "Notifications"
@@ -181,23 +161,14 @@ PanelWindow {
                 }
 
                 GlassButton {
-                    Layout.preferredWidth: 52
-                    Layout.preferredHeight: 48
+                    Layout.preferredWidth: 42
+                    Layout.preferredHeight: 38
                     compact: true
                     icon: ""
-                    onClicked: root.run("zen0x-powermenu")
+                    onClicked: shell.toggleSurface("session", root.modelData)
                 }
             }
         }
     }
 
-    SequentialAnimation {
-        id: entrance
-        PropertyAction { target: card; property: "opacity"; value: 0 }
-        PropertyAction { target: card; property: "scale"; value: 0.96 }
-        ParallelAnimation {
-            NumberAnimation { target: card; property: "opacity"; to: 1; duration: root.shell.preferences.animationsEnabled ? 180 : 0 }
-            NumberAnimation { target: card; property: "scale"; to: 1; duration: root.shell.preferences.animationsEnabled ? 320 : 0; easing.type: Easing.OutBack; easing.overshoot: 1.08 }
-        }
-    }
 }

@@ -17,20 +17,21 @@ PanelWindow {
         && !shell.preferences.doNotDisturb
         && shell.isPrimaryScreen(modelData)
     color: "transparent"
-    implicitWidth: 390
-    implicitHeight: Math.min(500, toastColumn.implicitHeight + 24)
+    implicitWidth: 350
+    implicitHeight: Math.min(500, toastColumn.implicitHeight + 12)
     exclusionMode: ExclusionMode.Ignore
     anchors { top: true; right: true }
-    margins { top: palette.barHeight + 10; right: 12 }
+    margins { top: palette.barHeight + 4; right: 4 }
     WlrLayershell.namespace: "abyssal-notification-toasts"
     WlrLayershell.layer: WlrLayer.Overlay
 
     Column {
         id: toastColumn
+        opacity: 0.97
         anchors.top: parent.top
         anchors.right: parent.right
-        width: 378
-        spacing: 9
+        width: 346
+        spacing: 4
 
         Repeater {
             model: root.shell.toastNotifications.slice(0, 4)
@@ -40,24 +41,34 @@ PanelWindow {
                 required property var modelData
 
                 width: toastColumn.width
-                height: Math.max(92, bodyColumn.implicitHeight + 30)
+                height: Math.max(72, bodyColumn.implicitHeight + 20)
                 radius: root.palette.radius
-                color: Qt.rgba(0.045, 0.085, 0.095, 0.65)
+                color: Qt.rgba(0.118, 0.118, 0.180, 0.97)
                 border.width: 1
                 border.color: root.palette.border
 
+                function dismissToast() {
+                    toast.modelData.dismiss()
+                    root.shell.hideToast(toast.modelData)
+                }
+
+                TapHandler {
+                    acceptedButtons: Qt.RightButton
+                    onTapped: toast.dismissToast()
+                }
+
                 RowLayout {
                     anchors.fill: parent
-                    anchors.margins: 14
-                    spacing: 12
+                    anchors.margins: 10
+                    spacing: 8
 
                     Image {
-                        Layout.preferredWidth: 34
-                        Layout.preferredHeight: 34
+                        Layout.preferredWidth: 24
+                        Layout.preferredHeight: 24
                         Layout.alignment: Qt.AlignTop
                         source: toast.modelData.image || Quickshell.iconPath(toast.modelData.appIcon, "dialog-information")
-                        sourceSize.width: 34
-                        sourceSize.height: 34
+                        sourceSize.width: 24
+                        sourceSize.height: 24
                         fillMode: Image.PreserveAspectFit
                     }
 
@@ -88,10 +99,7 @@ PanelWindow {
                                     anchors.margins: -7
                                     hoverEnabled: true
                                     cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        toast.modelData.dismiss()
-                                        root.shell.hideToast(toast.modelData)
-                                    }
+                                    onClicked: toast.dismissToast()
                                 }
                             }
                         }
@@ -123,21 +131,11 @@ PanelWindow {
                 }
 
                 Timer {
-                    interval: toast.modelData.expireTimeout > 0 ? Math.max(2500, toast.modelData.expireTimeout) : 6500
+                    interval: 1000
                     running: true
                     onTriggered: root.shell.hideToast(toast.modelData)
                 }
 
-                Component.onCompleted: entrance.restart()
-                SequentialAnimation {
-                    id: entrance
-                    PropertyAction { target: toast; property: "opacity"; value: 0 }
-                    PropertyAction { target: toast; property: "scale"; value: 0.94 }
-                    ParallelAnimation {
-                        NumberAnimation { target: toast; property: "opacity"; to: 1; duration: root.shell.preferences.animationsEnabled ? 160 : 0 }
-                        NumberAnimation { target: toast; property: "scale"; to: 1; duration: root.shell.preferences.animationsEnabled ? 280 : 0; easing.type: Easing.OutBack; easing.overshoot: 1.08 }
-                    }
-                }
             }
         }
     }
