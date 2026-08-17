@@ -65,7 +65,7 @@ PanelWindow {
             anchors.left: parent.left
             anchors.leftMargin: root.contentPadding
             anchors.verticalCenter: parent.verticalCenter
-            spacing: root.itemSpacing
+            spacing: 3
 
             Repeater {
                 model: Hyprland.workspaces.values.filter(workspace => workspace.id > 0 && workspace.id <= 10)
@@ -73,23 +73,19 @@ PanelWindow {
                 delegate: Rectangle {
                     id: workspace
                     required property var modelData
+                    readonly property bool occupied: modelData.toplevels.values.length > 0
 
-                    width: root.barItemSize
-                    height: root.barItemSize
-                    radius: root.palette.radius
-                    color: modelData.focused ? root.palette.accent
+                    width: modelData.focused ? root.statusIconSize * 2 : root.statusIconSize
+                    height: root.statusIconSize
+                    radius: height / 2
+                    color: modelData.focused ? root.palette.borderBright
                         : modelData.urgent ? root.palette.danger
-                        : modelData.active ? root.palette.accentSoft
-                        : workspaceMouse.containsMouse ? root.palette.hover
-                        : "transparent"
+                        : occupied ? root.palette.subtle
+                        : workspaceMouse.containsMouse ? root.palette.elevated
+                        : root.palette.accentSoft
 
-                    Text {
-                        anchors.centerIn: parent
-                        text: workspace.modelData.id
-                        color: workspace.modelData.focused ? root.palette.background : root.palette.foreground
-                        font.family: root.palette.fontFamily
-                        font.pixelSize: 12
-                        font.bold: workspace.modelData.focused
+                    Behavior on width {
+                        NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
                     }
 
                     MouseArea {
@@ -99,7 +95,8 @@ PanelWindow {
                         cursorShape: Qt.PointingHandCursor
                         onEntered: root.showTooltip(workspaceMouse,
                             "Workspace " + workspace.modelData.id
-                                + (workspace.modelData.focused ? " · Active" : ""))
+                                + (workspace.modelData.focused ? " · Active"
+                                    : workspace.occupied ? " · Occupied" : " · Empty"))
                         onExited: root.hideTooltip(workspaceMouse)
                         onClicked: workspace.modelData.activate()
                     }

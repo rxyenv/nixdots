@@ -1,8 +1,8 @@
 local programs = require("programs")
 
 local mainMod = "SUPER"
-hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(programs.terminal))
-hl.bind(mainMod .. " + SHIFT + Return",
+hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(programs.terminal))
+hl.bind(mainMod .. " + Return",
   hl.dsp.exec_cmd(programs.terminal .. " --app-id org.zen0x.tmux -e tmux new-session -A -s main"))
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(

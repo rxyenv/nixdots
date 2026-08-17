@@ -20,6 +20,7 @@
           cat = "bat";
           du = "dust";
           df = "duf";
+          cx = "codex --yolo";
         };
 
         shellAbbrs = {
