@@ -8,7 +8,7 @@
         server.enable = true;
         settings = {
           main = {
-            font = "Maple Mono NF:size=16";
+            font = "Maple Mono NF:size=13";
             shell = "fish";
             pad = "14x14 center";
           };

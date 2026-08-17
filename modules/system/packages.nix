@@ -13,6 +13,7 @@
         ifuse
         idevicerestore
         libirecovery
+        efibootmgr
         btrfs-progs
         parted
         ntfs3g

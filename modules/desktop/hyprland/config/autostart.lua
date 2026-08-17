@@ -1,4 +1,5 @@
 hl.on("hyprland.start", function()
+  hl.exec_cmd("openrgb -p white")
   hl.exec_cmd("uwsm app -- foot --server")
   hl.exec_cmd("uwsm app -- udiskie --no-automount --smart-tray")
   hl.exec_cmd("uwsm app -- awww-daemon")

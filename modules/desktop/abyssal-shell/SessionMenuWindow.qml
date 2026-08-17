@@ -135,7 +135,7 @@ PanelWindow {
                                 horizontalAlignment: Text.AlignLeft
                                 color: root.palette.foreground
                                 font.family: root.palette.fontFamily
-                                font.pixelSize: 10
+                                font.pixelSize: 12
                                 font.weight: Font.DemiBold
                             }
                         }
