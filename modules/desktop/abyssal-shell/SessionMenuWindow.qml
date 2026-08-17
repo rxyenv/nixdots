@@ -17,6 +17,8 @@ PanelWindow {
         { label: "Shutdown", icon: "", command: "systemctl poweroff", tone: "danger" },
         { label: "Reboot", icon: "󰜉", command: "systemctl reboot", tone: "warning" }
     ]
+    property int selectedIndex: 0
+    property bool surfaceRequested: shell.surfaceVisible("session", modelData)
 
     function run(action) {
         shell.closeSurfaces()
@@ -24,7 +26,7 @@ PanelWindow {
     }
 
     screen: modelData
-    visible: shell.surfaceVisible("session", modelData)
+    visible: surfaceRequested
     color: palette.scrim
     exclusionMode: ExclusionMode.Ignore
     anchors { top: true; bottom: true; left: true; right: true }
@@ -32,14 +34,40 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
+    onSurfaceRequestedChanged: {
+        if (surfaceRequested) {
+            selectedIndex = 0
+            focusTimer.restart()
+        }
+    }
+
     Shortcut {
         sequence: "Escape"
         onActivated: root.shell.closeSurfaces()
     }
 
-    MouseArea {
+    FocusScope {
+        id: keyboardScope
         anchors.fill: parent
-        onClicked: root.shell.closeSurfaces()
+        focus: true
+
+        Keys.onPressed: event => {
+            if (event.key === Qt.Key_Down) {
+                root.selectedIndex = Math.min(root.selectedIndex + 1, root.actions.length - 1)
+                event.accepted = true
+            } else if (event.key === Qt.Key_Up) {
+                root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
+                event.accepted = true
+            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                root.run(root.actions[root.selectedIndex])
+                event.accepted = true
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.shell.closeSurfaces()
+        }
     }
 
     GlassPanel {
@@ -58,26 +86,6 @@ PanelWindow {
             anchors.margins: 12
             spacing: 8
 
-            RowLayout {
-                Layout.fillWidth: true
-
-                Text {
-                    Layout.fillWidth: true
-                    text: "Session"
-                    color: root.palette.foreground
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 14
-                    font.weight: Font.DemiBold
-                }
-
-                Text {
-                    text: "ESC to close"
-                    color: root.palette.subtle
-                    font.family: root.palette.fontFamily
-                    font.pixelSize: 9
-                }
-            }
-
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -88,11 +96,12 @@ PanelWindow {
 
                     delegate: Rectangle {
                         required property var modelData
+                        required property int index
 
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         radius: root.palette.radius
-                        color: buttonMouse.containsMouse
+                        color: index === root.selectedIndex || buttonMouse.containsMouse
                             ? modelData.tone === "danger" ? root.palette.dangerSoft
                             : modelData.tone === "warning" ? root.palette.warningSoft
                             : root.palette.accentSoft
@@ -136,12 +145,19 @@ PanelWindow {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
+                            onEntered: root.selectedIndex = index
                             onClicked: root.run(modelData)
                         }
                     }
                 }
             }
         }
+    }
+
+    Timer {
+        id: focusTimer
+        interval: 25
+        onTriggered: keyboardScope.forceActiveFocus()
     }
 
 }
