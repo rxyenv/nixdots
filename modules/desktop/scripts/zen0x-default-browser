@@ -26,13 +26,14 @@ fi
 
 case "$1" in
   firefox) desktop_id="firefox.desktop"; command_name="firefox" ;;
+  zen) desktop_id="zen.desktop"; command_name="zen-browser" ;;
   helium) desktop_id="helium.desktop"; command_name="helium" ;;
   chromium) desktop_id="chromium.desktop"; command_name="chromium" ;;
   chrome) desktop_id="google-chrome.desktop"; command_name="google-chrome-stable" ;;
   brave) desktop_id="brave-browser.desktop"; command_name="brave-browser" ;;
   edge) desktop_id="microsoft-edge.desktop"; command_name="microsoft-edge-stable" ;;
   *)
-    echo "Usage: zen0x-default-browser [firefox|helium|chromium|chrome|brave|edge]" >&2
+    echo "Usage: zen0x-default-browser [firefox|zen|helium|chromium|chrome|brave|edge]" >&2
     exit 1
     ;;
 esac

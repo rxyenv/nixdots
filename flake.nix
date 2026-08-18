@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
+    unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -23,6 +24,11 @@
 
     millennium = {
       url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

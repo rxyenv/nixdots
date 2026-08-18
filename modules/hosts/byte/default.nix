@@ -12,7 +12,6 @@
       ({ pkgs, ... }: {
         hardware.graphics.extraPackages = with pkgs; [
           libvdpau-va-gl
-          mesa
         ];
 
         hardware.i2c.enable = true;

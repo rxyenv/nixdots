@@ -28,6 +28,8 @@
           bind l select-pane -R
           bind p previous-window
           bind n next-window
+          bind Tab next-window
+          bind BTab previous-window
           bind c new-window -c '#{pane_current_path}'
           bind v split-window -h -c '#{pane_current_path}'
           bind - split-window -v -c '#{pane_current_path}'

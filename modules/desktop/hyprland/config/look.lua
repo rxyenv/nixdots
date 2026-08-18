@@ -1,9 +1,9 @@
 hl.config({
   general = {
-    gaps_in = 4,
-    gaps_out = 8,
+    gaps_in = 10,
+    gaps_out = 20,
     gaps_workspaces = 0,
-    border_size = 1,
+    border_size = 2,
     ["col.active_border"] = "rgba(cba6f7ff)",
     ["col.inactive_border"] = "rgba(313244ff)",
     resize_on_border = true,
@@ -13,8 +13,8 @@ hl.config({
   decoration = {
     rounding = 4,
     rounding_power = 2,
-    active_opacity = 1,
-    inactive_opacity = 1,
+    active_opacity = 0.77,
+    inactive_opacity = 0.65,
     fullscreen_opacity = 1,
     shadow = {
       enabled = false,
