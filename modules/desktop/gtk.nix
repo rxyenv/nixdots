@@ -15,11 +15,11 @@
       gtk = {
         theme = {
           package = abyssal-gtk-theme;
-          name = "Abyssal-Default";
+          name = "Abyssal-Catppuccin";
         };
         iconTheme = {
           package = pkgs.yaru-theme;
-          name = "Yaru-dark";
+          name = "Yaru-purple";
         };
       };
 
@@ -27,7 +27,7 @@
       xdg.configFile."gtk-4.0/gtk.css" = {
         force = true;
         text = ''
-          @import "${abyssal-gtk-theme}/share/themes/Abyssal-Default/gtk-4.0/libadwaita.css";
+          @import "${abyssal-gtk-theme}/share/themes/Abyssal-Catppuccin/gtk-4.0/libadwaita.css";
         '';
       };
 

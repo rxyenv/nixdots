@@ -26,14 +26,6 @@ hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("zen0x-launch-or-focus veskto
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("zen0x-launch-audio"))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("zen0x-launch-bluetooth"))
 hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("zen0x-launch-wifi"))
-hl.bind(mainMod .. " + SHIFT + N",
-  hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://www.netflix.com/"))
-hl.bind(mainMod .. " + SHIFT + Y",
-  hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://www.youtube.com/"))
-hl.bind(mainMod .. " + SHIFT + R",
-  hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://www.reddit.com/"))
-hl.bind(mainMod .. " + SHIFT + W",
-  hl.dsp.exec_cmd("uwsm-app -- helium --class=zen0x-webapp --app=https://web.whatsapp.com/"))
 
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))

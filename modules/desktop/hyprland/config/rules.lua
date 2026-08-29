@@ -177,14 +177,8 @@ hl.window_rule({
   workspace = "4",
 })
 
-hl.window_rule({
-  name = "webapps-on-workspace-6",
-  match = { class = "^chrome-.*-Default$" },
-  workspace = "6",
-})
-
 local workspace_assignments = {
-  { ws = "1", match = { class = "^(helium|Helium)$" } },
+  { ws = "1", match = { class = "^(brave-origin-beta|Brave-origin-beta)$" } },
   { ws = "2", match = { class = "^(foot|footclient|org\\.zen0x\\.tmux|Alacritty|WezTerm)$" } },
   { ws = "3", match = { class = "^code$" } },
   { ws = "4", match = { class = "^(Spotify)$" } },

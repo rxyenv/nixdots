@@ -115,6 +115,7 @@
         # Desktop
         glib
         loupe
+        kdePackages.kdenlive
         vesktop
         anydesk
         qbittorrent

@@ -27,16 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    helium-browser = {
-      url = "github:schembriaiden/helium-browser-nix-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     abyssal-gtk-theme = {
       url = "github:rxyenv/abyssal-gtk-theme";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +34,11 @@
 
     iloader = {
       url = "github:nab138/iloader";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    brave-browser = {
+      url = "github:drishal/brave-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
