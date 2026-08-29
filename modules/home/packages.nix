@@ -43,9 +43,23 @@
           platforms = pkgs.lib.platforms.linux;
         };
       };
+
+      kdenlive = pkgs.symlinkJoin {
+        name = "kdenlive-${pkgs.kdePackages.kdenlive.version}";
+        paths = [ pkgs.kdePackages.kdenlive ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+
+        postBuild = ''
+          wrapProgram "$out/bin/kdenlive" \
+            --unset QT_QPA_PLATFORMTHEME
+        '';
+      };
     in
     {
-      home.packages = [ writer ] ++ (with pkgs; [
+      home.packages = [
+        writer
+        kdenlive
+      ] ++ (with pkgs; [
         # CLI utilities
         bat
         btop
@@ -115,7 +129,6 @@
         # Desktop
         glib
         loupe
-        kdePackages.kdenlive
         vesktop
         anydesk
         qbittorrent
