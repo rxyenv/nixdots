@@ -79,7 +79,6 @@
         vkbasalt
         mpv
         mpvpaper
-        awww
         gpu-screen-recorder
         dust
         duf

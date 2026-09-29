@@ -8,3 +8,6 @@ require("layouts")
 require("inputs")
 require("binds")
 require("rules")
+
+-- For Noctalia Color templates
+require("noctalia").apply_theme()

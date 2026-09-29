@@ -20,12 +20,20 @@ hl.layer_rule({
 })
 
 hl.layer_rule({
-  name = "abyssal-shell",
-  match = { namespace = "^abyssal-.*$" },
+  name = "noctalia",
+  match = { namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$" },
   no_anim = true,
   blur = true,
   blur_popups = true,
-  ignore_alpha = 0.1,
+  ignore_alpha = 0.5,
+})
+
+hl.window_rule({
+  name = "noctalia-settings",
+  match = { class = "^dev\\.noctalia\\.Noctalia$" },
+  float = true,
+  center = true,
+  size = { 1080, 920 },
 })
 
 -- ── Global window behavior ─────────────────────────────────
