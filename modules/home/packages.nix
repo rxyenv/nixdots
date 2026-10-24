@@ -128,7 +128,7 @@
         # Desktop
         glib
         loupe
-        vesktop
+        discord
         anydesk
         qbittorrent
         (
