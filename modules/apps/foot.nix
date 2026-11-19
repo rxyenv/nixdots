@@ -9,7 +9,7 @@
         settings = {
           main = {
             font = "Maple Mono NF:size=13";
-            shell = "fish";
+            shell = "zsh";
             pad = "14x14 center";
           };
           cursor = {

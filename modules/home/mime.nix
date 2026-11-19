@@ -39,11 +39,11 @@
 
         "text/plain" = "code.desktop";
 
-          "x-scheme-handler/http" = "brave-origin-beta.desktop";
-          "x-scheme-handler/https" = "brave-origin-beta.desktop";
-          "text/html" = "brave-origin-beta.desktop";
-          "application/xhtml+xml" = "brave-origin-beta.desktop";
-          "x-scheme-handler/mailto" = "brave-origin-beta.desktop";
+        "x-scheme-handler/http" = "zen-beta.desktop";
+        "x-scheme-handler/https" = "zen-beta.desktop";
+        "text/html" = "zen-beta.desktop";
+        "application/xhtml+xml" = "zen-beta.desktop";
+        "x-scheme-handler/mailto" = "zen-beta.desktop";
 
         "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
         "x-scheme-handler/magnet" = "org.qbittorrent.qBittorrent.desktop";

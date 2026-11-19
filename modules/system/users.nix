@@ -3,15 +3,15 @@
     { pkgs, ... }:
 
     {
-      programs.fish.enable = true;
+      programs.zsh.enable = true;
 
-      users.defaultUserShell = pkgs.fish;
+      users.defaultUserShell = pkgs.zsh;
 
       users.users.aman = {
         isNormalUser = true;
         description = "Aman K M";
 
-        shell = pkgs.fish;
+        shell = pkgs.zsh;
 
         extraGroups = [
           "wheel"

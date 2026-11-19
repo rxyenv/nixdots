@@ -131,15 +131,27 @@ hl.window_rule({
 -- ── Steam ──────────────────────────────────────────────────
 
 local steam_class = "^(steam|Steam|steamwebhelper)$"
+local steam_main_title = "^Steam$"
 
 hl.window_rule({
-  name = "steam-floating",
+  name = "steam-appearance",
   match = { class = steam_class },
-  float = true,
-  center = true,
   tag = "-default-opacity",
   opacity = "1 1",
   idle_inhibit = "fullscreen",
+})
+
+hl.window_rule({
+  name = "steam-main-tiled",
+  match = { initial_class = steam_class, initial_title = steam_main_title },
+  tile = true,
+})
+
+hl.window_rule({
+  name = "steam-subwindows-floating",
+  match = { initial_class = steam_class, initial_title = "negative:" .. steam_main_title },
+  float = true,
+  center = true,
 })
 
 -- ── Scratchpads ────────────────────────────────────────────
@@ -168,11 +180,9 @@ for i = 1, 5 do
 end
 
 hl.window_rule({
-  name = "float-discord",
-  match = { class = "^(discord|Discord|vesktop|Vesktop)$", fullscreen = false },
-  float = true,
-  center = true,
-  size = { "monitor_w*0.75", "monitor_h*0.8" },
+  name = "discord-tiled",
+  match = { class = "^(discord|Discord|vesktop|Vesktop)$" },
+  tile = true,
   workspace = "4",
 })
 
@@ -186,7 +196,7 @@ hl.window_rule({
 })
 
 local workspace_assignments = {
-  { ws = "1", match = { class = "^(brave-origin-beta|Brave-origin-beta)$" } },
+  { ws = "1", match = { class = "^(zen-beta|zen|Zen)$" } },
   { ws = "2", match = { class = "^(foot|footclient|org\\.zen0x\\.tmux|Alacritty|WezTerm)$" } },
   { ws = "3", match = { class = "^code$" } },
   { ws = "4", match = { class = "^(Spotify)$" } },

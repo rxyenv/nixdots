@@ -32,8 +32,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    brave-browser = {
-      url = "github:drishal/brave-browser-flake";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

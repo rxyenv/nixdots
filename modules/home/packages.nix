@@ -59,7 +59,8 @@
       home.packages = [
         writer
         kdenlive
-      ] ++ (with pkgs; [
+      ]
+      ++ (with pkgs; [
         # CLI utilities
         bat
         btop
@@ -126,9 +127,11 @@
         vscode
 
         # Desktop
+        ghidra
         glib
         loupe
         discord
+        betterdiscordctl
         anydesk
         qbittorrent
         (

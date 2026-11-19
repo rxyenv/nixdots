@@ -12,7 +12,7 @@
         mouse = true;
         prefix = "C-s";
         sensibleOnTop = false;
-        shell = "${pkgs.fish}/bin/fish";
+        shell = "${pkgs.zsh}/bin/zsh";
         terminal = "tmux-256color";
 
         extraConfig = ''
