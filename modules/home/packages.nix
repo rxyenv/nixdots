@@ -132,6 +132,8 @@
         loupe
         discord
         betterdiscordctl
+        telegram-desktop
+        spotiflac
         anydesk
         qbittorrent
         (

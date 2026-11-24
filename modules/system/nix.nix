@@ -49,6 +49,12 @@
       };
 
       environment.systemPackages = with pkgs; [
+        (appimage-run.override {
+          extraPkgs = pkgs: [
+            pkgs.json-glib
+            pkgs.libepoxy
+          ];
+        })
         nix-output-monitor
         nix-search-cli
       ];

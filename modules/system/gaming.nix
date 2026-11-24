@@ -10,8 +10,9 @@
         enable = true;
         package = pkgs.millennium-steam;
         gamescopeSession.enable = true;
-        protontricks.enable = true;
       };
+
+      environment.systemPackages = [ pkgs.protonup-qt ];
 
       programs.gamescope.enable = true;
 
